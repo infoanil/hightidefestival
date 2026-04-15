@@ -15,17 +15,17 @@
            <p class="font-semibold">{{ section.settings.description }}</p>
         </div>
     </div>
-    <div class="flex flex-col lg:flex-row w-full  h-[853px] lg:h-[600px] gap-2"
+    <div class="flex {% if template.suffix == 'artist-ab-test' %}flex-col h-auto{% else %}flex-col lg:flex-row h-[853px] lg:h-[600px]{% endif %} w-full gap-2"
         x-data="{ active: 0 }">
       
       {% for block in section.blocks %}
         {% assign index = forloop.index0 %}
         
         <div 
-          @mouseenter="active = {{ index }}"
+          {% if template.suffix != 'artist-ab-test' %}@mouseenter="active = {{ index }}"{% endif %}
           @click="active = {{ index }}"
-          class="relative  overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] shadow-2xl rounded-xl flex items-end"
-          :class="active === {{ index }} ? 'flex-[3] md:flex-[5] lg:flex-[6]  bg-[#363636]' : 'flex-1 h-auto bg-[#2a2a2a]'"
+          class="relative overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] shadow-2xl rounded-xl flex items-end"
+          :class="active === {{ index }} ? 'flex-[3] md:flex-[5] lg:flex-[6] bg-[#363636] min-h-[400px]' : 'flex-1 h-auto bg-[#2a2a2a] min-h-[80px]'"
         >
           
           <img 
@@ -37,8 +37,8 @@
 
           <div x-show="active !== {{ index }}" x-transition.opacity class="gradient absolute inset-0 bg-black/50"></div>
           
-          <div x-show="active !== {{ index }}" x-transition.opacity class="bg-black/50 w-full h-full flex lg:flex-col-reverse items-center justify-between [&_*]:z-1  lg:pt-[33px] lg:pb-[42px] px-5" >
-            <h3 class="font-extrabold text-white uppercase text-[25px] md:text-[30px] leading-[24px] tracking-[-1px] lg:[writing-mode:vertical-rl] lg:rotate-180   z-1 pointer-events-none max-sm:w-[164px]">
+          <div x-show="active !== {{ index }}" x-transition.opacity class="bg-black/50 w-full h-full flex {% if template.suffix == 'artist-ab-test' %}flex-row{% else %}lg:flex-col-reverse{% endif %} items-center justify-between [&_*]:z-1 lg:pt-[33px] lg:pb-[42px] px-5" >
+            <h3 class="font-extrabold text-white uppercase text-[25px] md:text-[30px] leading-[24px] tracking-[-1px] {% if template.suffix != 'artist-ab-test' %}lg:[writing-mode:vertical-rl] lg:rotate-180{% endif %} z-1 pointer-events-none max-sm:w-[164px]">
               {{ block.settings.title }}
             </h3>
             <img
