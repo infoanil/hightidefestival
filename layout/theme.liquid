@@ -28,7 +28,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="bg-bg-color">
+  <body class="bg-bg-color{% if template.suffix == 'artist-ab-test' %} artist-ab-test{% endif %}">
     {% sections 'header-group' %}
 
     {% comment %} Password protection for passes page {% endcomment %}
