@@ -1,14 +1,16 @@
-{% comment %}
-  Array de datos en Liquid (esto suele venir de tu esquema de Shopify o un archivo JSON)
-{% endcomment %}
-{% assign projects = "Main Stage,pool stage,silent disco,sunset stage,night stage" | split: ',' %}
-
+{% if template.suffix == 'artist-ab-test' %}
+<div id="choose-your-vibe-{{ section.id }}" class="choose-your-vibe-wrapper" style="display: none;">
+<div class="vibe-container-inner container mx-auto py-10 lg:py-20">
+{% else %}
 <div class="container mx-auto py-20">
+{% endif %}
     <div class="headings flex flex-col lg:flex-row lg:justify-between lg:items-end lg:mb-[50px] text-secondary-navy">
+        {% if section.settings.heading != blank or section.settings.legend != blank %}
         <div class="">
-            <p class="legend uppercase text-lg font-bold mb-4">{{  section.settings.legend}}</p>
+            <p class="legend uppercase text-lg font-bold mb-4">{{ section.settings.legend }}</p>
             <h2 class="font-amaya text-[50px] leading-[46px] lg:text-[100px] lg:leading-[88px] uppercase letter-spacing-[-1px]">{{ section.settings.heading }}</h2>
         </div>
+        {% endif %}
         <div class="tabs flex lg:max-w-[533px]  mt-5 mb-8 lg:my-0">
            <p class="font-semibold">{{ section.settings.description }}</p>
         </div>
@@ -28,7 +30,7 @@
           
           <img 
             src="{{ block.settings.image | img_url: 'master' }}" 
-            alt="{{ project }}"
+            alt="{{ block.settings.title }}"
             class="absolute inset-0 w-full h-full object-cover transition-all duration-700"
             :class="active === {{ index }} ? 'opacity-100 scale-100' : 'opacity-100 scale-110'"
           />
@@ -72,8 +74,38 @@
 
     </div>
   </div>
+{% if template.suffix == 'artist-ab-test' %}
+</div>
+</div>
 
+<script>
+  (function() {
+    function moveVibeSection() {
+      const wrapper = document.getElementById('choose-your-vibe-{{ section.id }}');
+      const target = document.querySelector('[data-what-to-expect]');
+      
+      if (wrapper && target) {
+        target.appendChild(wrapper);
+        wrapper.style.display = 'block';
 
+        const inner = wrapper.querySelector('.vibe-container-inner');
+        if (inner) {
+          inner.classList.remove('container', 'mx-auto', 'py-10', 'lg:py-20');
+          inner.classList.add('pb-4');
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', moveVibeSection);
+    } else {
+      moveVibeSection();
+    }
+  })();
+</script>
+{% else %}
+</div>
+{% endif %}
 
 
   {% schema %}

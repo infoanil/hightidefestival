@@ -12,10 +12,15 @@
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
   </summary>
-
-  <div class="ds-accordion-content mt-2 pb-4 text-[17px] tracking-[-1px] text-primary-black [&_ul]:list-disc [&_ul]:ml-4">
-    {{ content }}
-  </div>
+    {% if content contains 'what_to_expect' %}
+        <div class="ds-accordion-content mt-2 pb-4 text-[17px] tracking-[-1px] text-primary-black [&_ul]:list-disc [&_ul]:ml-4">
+            <section data-what-to-expect></section>
+        </div>
+    {% else %}
+        <div class="ds-accordion-content mt-2 pb-4 text-[17px] tracking-[-1px] text-primary-black [&_ul]:list-disc [&_ul]:ml-4">
+            {{ content }}
+        </div>
+    {% endif %}
 </details>
 
 <style>

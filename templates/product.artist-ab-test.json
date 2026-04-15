@@ -44,16 +44,32 @@
     "main_productv2_wLKRCj": {
       "type": "main-productv2",
       "blocks": {
+        "accordion_3JPPNJ": {
+          "type": "accordion",
+          "settings": {
+            "title": "WHAT TO EXPECT",
+            "content": "<p>&lcub;what_to_expect&rcub;</p>"
+          }
+        },
         "accordion_y9zm4f": {
           "type": "accordion",
           "settings": {
             "title": "Shipping Details",
             "content": "<p>Passes will be delivered digitally closer to the festival dates.</p>"
           }
+        },
+        "accordion_9gcgbK": {
+          "type": "accordion",
+          "settings": {
+            "title": "FULL LINEUP",
+            "content": "{{ product.metafields.custom.artist_ab_test_details.value.full_lineup | metafield_tag }}"
+          }
         }
       },
       "block_order": [
-        "accordion_y9zm4f"
+        "accordion_3JPPNJ",
+        "accordion_y9zm4f",
+        "accordion_9gcgbK"
       ],
       "name": "Main Product V2",
       "settings": {
@@ -167,11 +183,75 @@
       "settings": {
         "heading": "high tide, all the ways up"
       }
+    },
+    "choose_your_vibe_3ffcVR": {
+      "type": "choose-your-vibe",
+      "blocks": {
+        "stage_i4yi9b": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1128.svg",
+            "title": "Main Stage",
+            "image": "shopify://shop_images/Stage_Image.jpg",
+            "description": "THE HEARTBEAT OF THE FESTIVAL. MASSIVE SOUND AND WORLD CLASS TALENT ALL WITH A SUNSET BACKDROP"
+          }
+        },
+        "stage_W9dzc3": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1127.svg",
+            "title": "the park",
+            "image": "shopify://shop_images/Stage_Image-1.jpg",
+            "description": "ENJOY OUR GREEN GRASS, BEAUTIFUL SUNSETS & RIVERSIDE LOUNGING ALL AT OUR VENUE, RIVERFRONT PARK"
+          }
+        },
+        "stage_yhMNeC": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1129.svg",
+            "title": "silent disco",
+            "image": "shopify://shop_images/Stage_Image-2.jpg",
+            "description": "YOU GET THE POINT. HONESTLY THIS ONE'S FOR THE FREAKS"
+          }
+        },
+        "stage_3qGL3k": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1125.svg",
+            "title": "HIGH TIDE CITY MARKET",
+            "image": "shopify://shop_images/Stage_Image-3.jpg",
+            "description": "VISIT OUR MARKETPLACE ON SITE FEATURING LOCAL BUSINESSES, ARTISTS, AND MORE"
+          }
+        },
+        "stage_zTUEqG": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1126.svg",
+            "title": "food & bev",
+            "image": "shopify://shop_images/Stage_Image-4.jpg",
+            "description": "Y'ALL GONNA BE EATIN' GOOD WE PROMISE. GRAB A QUICK BITE AND GET BACK TO THE ACTION"
+          }
+        }
+      },
+      "block_order": [
+        "stage_i4yi9b",
+        "stage_W9dzc3",
+        "stage_yhMNeC",
+        "stage_3qGL3k",
+        "stage_zTUEqG"
+      ],
+      "name": "Choose Your Vibe",
+      "settings": {
+        "legend": "",
+        "heading": "",
+        "description": "There’s so much more than just the music, maybe even the future love of your life!"
+      }
     }
   },
   "order": [
     "main_product_section",
     "main_productv2_wLKRCj",
-    "fun_gallery_V6tYkN"
+    "fun_gallery_V6tYkN",
+    "choose_your_vibe_3ffcVR"
   ]
 }
