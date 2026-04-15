@@ -23,6 +23,7 @@
       "block_order": [
         "accordion_8kw7EL"
       ],
+      "disabled": true,
       "settings": {
         "show_thumbnails": true,
         "enable_sticky_media": true,
@@ -38,6 +39,52 @@
         "side_cart_often_bought_limit": 2,
         "show_related_products": true,
         "related_limit": 8
+      }
+    },
+    "main_productv2_wLKRCj": {
+      "type": "main-productv2",
+      "blocks": {
+        "accordion_y9zm4f": {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipping Details",
+            "content": "<p>Passes will be delivered digitally closer to the festival dates.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_y9zm4f"
+      ],
+      "name": "Main Product V2",
+      "settings": {
+        "hide_on_mobile": false,
+        "hide_on_desktop": false,
+        "enable_sticky_media": true,
+        "gallery_title": "",
+        "gallery_title_mobile_spacing": 16,
+        "manual_product_title": "",
+        "product_title_mobile_padding_top": 0,
+        "gallery_image_1": "shopify://shop_images/715ee921b262f8e40b489f06fed5c49cc0e86db9.png",
+        "gallery_video_1": "shopify://files/videos/download.mp4",
+        "play_video_inline": true,
+        "play_video_audio_on_click": true,
+        "show_video_controls": false,
+        "autoplay_muted_inline": true,
+        "show_vendor": false,
+        "review_rating": "5.0",
+        "review_count": 534,
+        "hide_review_count": false,
+        "show_rating_number": false,
+        "show_review_container": false,
+        "rating_prefix": "",
+        "rating_suffix": "",
+        "review_link": "",
+        "manual_pre_description": "",
+        "manual_product_description": "",
+        "manual_post_button_info": "",
+        "use_ab_cart_descriptions": false,
+        "show_related_products": true,
+        "related_limit": 4
       }
     },
     "fun_gallery_V6tYkN": {
@@ -124,6 +171,7 @@
   },
   "order": [
     "main_product_section",
+    "main_productv2_wLKRCj",
     "fun_gallery_V6tYkN"
   ]
 }

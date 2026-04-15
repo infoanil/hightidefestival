@@ -201,6 +201,64 @@
       width: auto;
     }
   }
+
+  /*AB test design starts*/
+  
+  @media (max-width: 1023px) {
+      .artist-ab-test .product-v2-gallery-slide {
+          width: 80%;
+      }
+
+      .artist-ab-test .product-v2-title {
+          font-weight: 400 !important;
+          font-size: 36.7px !important;
+          line-height: 46px !important;
+          letter-spacing: -1px !important;
+      }
+      
+      .artist-ab-test .product-v2-gallery-dot {
+          width: 10px !important;
+          height: 10px !important;
+      }
+      .artist-ab-test .product-v2-gallery-dot-container {
+          margin-bottom: 14px !important;
+      }
+      .artist-ab-test .product-v2-rating-container {
+          margin-top: 8px !important;
+      }
+      .artist-ab-test .product-description {
+          margin-top: 10px !important;
+      }
+      .artist-ab-test .product-description ul{
+          margin-top: 10px !important;
+          list-style: none !important;
+          padding-left: 0;
+      }
+      .artist-ab-test .product-description li {
+          position: relative;
+          padding-left: 29px;
+      }
+
+      .artist-ab-test .product-description li + li {
+          margin-top: 12px;
+      }
+
+      .artist-ab-test .product-description li::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 0;
+          width: 18px;
+          height: 18px;
+          transform: translateY(-50%);
+          background-repeat: no-repeat;
+          background-size: 18px 18px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M18 9C18 11.3869 17.0518 13.6761 15.364 15.364C13.6761 17.0518 11.3869 18 9 18C6.61305 18 4.32387 17.0518 2.63604 15.364C0.948212 13.6761 0 11.3869 0 9C0 6.61305 0.948212 4.32387 2.63604 2.63604C4.32387 0.948212 6.61305 0 9 0C11.3869 0 13.6761 0.948212 15.364 2.63604C17.0518 4.32387 18 6.61305 18 9ZM13.5337 5.59125C13.4534 5.51117 13.3577 5.44812 13.2524 5.40587C13.1471 5.36361 13.0344 5.34303 12.921 5.34534C12.8076 5.34765 12.6958 5.37281 12.5923 5.41931C12.4888 5.46582 12.3958 5.53271 12.3187 5.616L8.41162 10.5941L6.057 8.23837C5.89705 8.08933 5.6855 8.0082 5.46691 8.01205C5.24832 8.01591 5.03976 8.10446 4.88518 8.25905C4.73059 8.41364 4.64204 8.6222 4.63818 8.84079C4.63432 9.05938 4.71546 9.27093 4.8645 9.43088L7.84125 12.4087C7.92144 12.4888 8.01693 12.5519 8.12203 12.5942C8.22713 12.6366 8.33968 12.6573 8.45296 12.6552C8.56625 12.6531 8.67795 12.6282 8.78141 12.582C8.88486 12.5358 8.97795 12.4692 9.05512 12.3863L13.5461 6.7725C13.6992 6.61331 13.7838 6.40043 13.7817 6.17958C13.7796 5.95872 13.691 5.74749 13.5349 5.59125H13.5337Z' fill='%230B4166'/%3E%3C/svg%3E");
+      }
+      
+  }
+
+  /*AB test design ends*/
 </style>
 
 <div class="{% if section.settings.hide_on_mobile %}hidden md:block{% endif %}{% if section.settings.hide_on_desktop %} md:hidden{% endif %}">
@@ -444,7 +502,7 @@
           </div>
 
           {% if show_gallery_dots %}
-            <div class="flex items-center justify-center gap-[5px] md:hidden mb-5">
+            <div class="flex items-center justify-center gap-[5px] md:hidden mb-5 product-v2-gallery-dot-container">
               {% for i in (1..7) %}
                 {% if i <= gallery_item_count %}
                   <button
@@ -502,42 +560,44 @@
         {% endif %}
 
         <h1
-          class="font-amaya text-[50px] leading-[46px] md:text-[80px] md:leading-[74px] tracking-[-1px] text-secondary-navy uppercase"
+          class="font-amaya text-[50px] leading-[46px] md:text-[80px] md:leading-[74px] tracking-[-1px] text-secondary-navy uppercase product-v2-title"
           style="padding-top: {{ section.settings.product_title_mobile_padding_top }}px;"
         >
           {{ display_product_title }}
         </h1>
 
-        <div class="mt-5 flex items-start justify-between gap-4">
-          <div class="flex min-w-0 items-center gap-[5px]">
-            <div class="flex items-center gap-[2px] pb-[3px] text-trietary-orange" aria-label="{{ review_rating_value }}/5 stars">
-              {% for i in (1..5) %}
-                <svg class="product-v2-review-star shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none" aria-hidden="true">
-                  <path d="M16.4684 6.0101C16.4684 5.77812 16.2891 5.63051 15.9306 5.56724L11.0276 4.83969L8.84491 0.411119C8.71838 0.158057 8.56022 0.0315266 8.37042 0.0315266C8.18062 0.0315266 8.02246 0.158057 7.89593 0.411119L5.71328 4.83969L0.810216 5.56724C0.451713 5.63051 0.272461 5.77812 0.272461 6.0101C0.272461 6.15772 0.356815 6.31588 0.525522 6.48459L4.06838 9.93255L3.2143 14.804C3.2143 14.8883 3.2143 14.9516 3.2143 14.9938C3.2143 15.1203 3.24593 15.231 3.3092 15.3259C3.37246 15.4208 3.4779 15.4683 3.62552 15.4683C3.73096 15.4683 3.8575 15.4261 4.00511 15.3417L8.37042 13.0642L12.7357 15.3417C12.8833 15.4261 13.0099 15.4683 13.1153 15.4683C13.2629 15.4683 13.3684 15.4208 13.4316 15.3259C13.4949 15.231 13.5265 15.1203 13.5265 14.9938C13.5265 14.9094 13.5265 14.8462 13.5265 14.804L12.6725 9.93255L16.2153 6.48459C16.384 6.31588 16.4684 6.15772 16.4684 6.0101Z" fill="#E6772A"/>
-                </svg>
-              {% endfor %}
-            </div>
-
-            {% if section.settings.show_rating_number %}
-              {% capture rating_label %}
-                {% if section.settings.rating_prefix != blank %}{{ section.settings.rating_prefix }} {% endif %}{{ review_rating_value }}{% if section.settings.rating_suffix != blank %} {{ section.settings.rating_suffix }}{% endif %}
-              {% endcapture %}
-              <p class="text-[17px] leading-[20px] font-extrabold tracking-[-1px] text-secondary-navy/80">
-                {{ rating_label | strip }}
-              </p>
+        <div class="mt-5 flex items-start justify-between gap-4 product-v2-rating-container">
+            
+            {% if section.settings.show_review_container %}
+              <div class="flex min-w-0 items-center gap-[5px]">
+                <div class="flex items-center gap-[2px] pb-[3px] text-trietary-orange" aria-label="{{ review_rating_value }}/5 stars">
+                  {% for i in (1..5) %}
+                    <svg class="product-v2-review-star shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none" aria-hidden="true">
+                      <path d="M16.4684 6.0101C16.4684 5.77812 16.2891 5.63051 15.9306 5.56724L11.0276 4.83969L8.84491 0.411119C8.71838 0.158057 8.56022 0.0315266 8.37042 0.0315266C8.18062 0.0315266 8.02246 0.158057 7.89593 0.411119L5.71328 4.83969L0.810216 5.56724C0.451713 5.63051 0.272461 5.77812 0.272461 6.0101C0.272461 6.15772 0.356815 6.31588 0.525522 6.48459L4.06838 9.93255L3.2143 14.804C3.2143 14.8883 3.2143 14.9516 3.2143 14.9938C3.2143 15.1203 3.24593 15.231 3.3092 15.3259C3.37246 15.4208 3.4779 15.4683 3.62552 15.4683C3.73096 15.4683 3.8575 15.4261 4.00511 15.3417L8.37042 13.0642L12.7357 15.3417C12.8833 15.4261 13.0099 15.4683 13.1153 15.4683C13.2629 15.4683 13.3684 15.4208 13.4316 15.3259C13.4949 15.231 13.5265 15.1203 13.5265 14.9938C13.5265 14.9094 13.5265 14.8462 13.5265 14.804L12.6725 9.93255L16.2153 6.48459C16.384 6.31588 16.4684 6.15772 16.4684 6.0101Z" fill="#E6772A"/>
+                    </svg>
+                  {% endfor %}
+                </div>
+    
+                {% if section.settings.show_rating_number %}
+                  {% capture rating_label %}
+                    {% if section.settings.rating_prefix != blank %}{{ section.settings.rating_prefix }} {% endif %}{{ review_rating_value }}{% if section.settings.rating_suffix != blank %} {{ section.settings.rating_suffix }}{% endif %}
+                  {% endcapture %}
+                  <p class="text-[17px] leading-[20px] font-extrabold tracking-[-1px] text-secondary-navy/80">
+                    {{ rating_label | strip }}
+                  </p>
+                {% endif %}
+    
+                {% if section.settings.hide_review_count != true and section.settings.review_link != blank and section.settings.review_count > 0 %}
+                  <a href="{{ section.settings.review_link }}" class="text-[17px] leading-[20px] font-extrabold tracking-[-1px] text-secondary-navy/80 underline-offset-2 hover:underline">
+                    {{ section.settings.review_count }} Reviews
+                  </a>
+                {% elsif section.settings.hide_review_count != true and section.settings.review_count > 0 %}
+                  <p class="text-[17px] leading-[20px] font-extrabold tracking-[-1px] text-secondary-navy/80">
+                    {{ section.settings.review_count }} Reviews
+                  </p>
+                {% endif %}
+              </div>
             {% endif %}
-
-            {% if section.settings.hide_review_count != true and section.settings.review_link != blank and section.settings.review_count > 0 %}
-              <a href="{{ section.settings.review_link }}" class="text-[17px] leading-[20px] font-extrabold tracking-[-1px] text-secondary-navy/80 underline-offset-2 hover:underline">
-                {{ section.settings.review_count }} Reviews
-              </a>
-            {% elsif section.settings.hide_review_count != true and section.settings.review_count > 0 %}
-              <p class="text-[17px] leading-[20px] font-extrabold tracking-[-1px] text-secondary-navy/80">
-                {{ section.settings.review_count }} Reviews
-              </p>
-            {% endif %}
-          </div>
-
           <p class="shrink-0 text-[20px] leading-[37.5px] text-primary-deepblue font-extrabold tracking-[-1px] md:text-[25px] md:leading-[25px]">
             {{ product.price | money }}
           </p>
@@ -967,6 +1027,12 @@
       "label": "Show rating number text",
       "default": false
     },
+   {
+      "type": "checkbox",
+      "id": "show_review_container",
+      "label": "Show review container (stars and rating)",
+      "default": true
+   },
     {
       "type": "text",
       "id": "rating_prefix",
