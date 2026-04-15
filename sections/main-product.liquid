@@ -235,6 +235,8 @@
               {% case block.type %}
                 {% when 'accordion' %}
                   {% render 'accordion-item', title: block.settings.title, content: block.settings.content %}
+                {% when 'reviews' %}
+                  {% render 'product-reviews' %}
               {% endcase %}
             {% endfor %}
           </div>
@@ -497,6 +499,10 @@
           "default": "<p>Accordion content goes here.</p>"
         }
       ]
+    },
+    {
+      "type": "reviews",
+      "name": "Product Reviews"
     }
   ],
   "presets": [
