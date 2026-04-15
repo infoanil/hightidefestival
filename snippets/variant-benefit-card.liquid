@@ -1,0 +1,28 @@
+{% comment %}
+  Variant Benefit Card Snippet - Same to Same Design
+  Displays detailed benefits for a specific variant value.
+{% endcomment %}
+
+{% liquid
+  assign description = "Full GA & VIP + Stage Access Benefits: 50+ djs, food & cocktail gardens, art installations, brand partner activations, no-line festival entry, a/c restrooms, and premium vip bar"
+  case value
+    when 'General Admission'
+      assign description = "Admission to High Tide Festival, 50+ artists, food & cocktail gardens, art installations, and brand partner activations."
+    when 'VIP'
+      assign description = "All GA benefits plus: dedicated VIP entry, premium viewing areas, private VIP bars, and air-conditioned restrooms."
+    when 'Stage Access'
+      assign description = "Full GA + VIP benefits: 50+ djs, food & cocktail gardens, art installations, brand partner activations, no-line festival entry, a/c restrooms, and premium vip bars."
+  endcase
+%}
+
+<div class="card-shadow"></div>
+<div class="benefit-card">
+    <p class="content">
+        <span class="info-char">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.61303 10.557V4.947H8.55103V10.557H6.61303ZM7.59903 4.42C7.3157 4.42 7.07203 4.35767 6.86803 4.233C6.67536 4.10833 6.57903 3.88733 6.57903 3.57C6.57903 3.21867 6.67536 2.98633 6.86803 2.873C7.07203 2.75967 7.3157 2.703 7.59903 2.703C7.87103 2.703 8.10903 2.75967 8.31303 2.873C8.51703 2.98633 8.61903 3.21867 8.61903 3.57C8.61903 3.88733 8.51703 4.10833 8.31303 4.233C8.10903 4.35767 7.87103 4.42 7.59903 4.42ZM7.58203 15.164C6.52803 15.164 5.54203 14.9657 4.62403 14.569C3.71736 14.1837 2.9127 13.6453 2.21003 12.954C1.5187 12.2513 0.974698 11.4467 0.578031 10.54C0.192698 9.622 3.12738e-05 8.636 3.12738e-05 7.582C3.12738e-05 6.528 0.192698 5.54767 0.578031 4.641C0.974698 3.723 1.5187 2.91833 2.21003 2.227C2.9127 1.52433 3.71736 0.980334 4.62403 0.595001C5.54203 0.198334 6.52803 4.17233e-07 7.58203 4.17233e-07C8.63603 4.17233e-07 9.61637 0.198334 10.523 0.595001C11.441 0.980334 12.2457 1.52433 12.937 2.227C13.6397 2.91833 14.1837 3.723 14.569 4.641C14.9657 5.54767 15.164 6.528 15.164 7.582C15.164 8.636 14.9657 9.622 14.569 10.54C14.1837 11.4467 13.6397 12.2513 12.937 12.954C12.2457 13.6453 11.441 14.1837 10.523 14.569C9.61637 14.9657 8.63603 15.164 7.58203 15.164ZM7.58203 13.294C8.37537 13.294 9.1177 13.1467 9.80903 12.852C10.5004 12.5573 11.1067 12.1493 11.628 11.628C12.1494 11.1067 12.5574 10.5003 12.852 9.809C13.1467 9.11767 13.294 8.37533 13.294 7.582C13.294 6.78867 13.1467 6.04633 12.852 5.355C12.5574 4.66367 12.1494 4.05733 11.628 3.536C11.1067 3.01467 10.5004 2.60667 9.80903 2.312C9.1177 2.01733 8.37537 1.87 7.58203 1.87C6.7887 1.87 6.04636 2.01733 5.35503 2.312C4.6637 2.60667 4.05737 3.01467 3.53603 3.536C3.0147 4.05733 2.6067 4.66367 2.31203 5.355C2.01736 6.04633 1.87003 6.78867 1.87003 7.582C1.87003 8.37533 2.01736 9.11767 2.31203 9.809C2.6067 10.5003 3.0147 11.1067 3.53603 11.628C4.05737 12.1493 4.6637 12.5573 5.35503 12.852C6.04636 13.1467 6.7887 13.294 7.58203 13.294Z" fill="#0B4166" fill-opacity="0.8"/>
+          </svg>
+        </span>
+        <span>{{ description }}</span>
+    </p>
+</div>

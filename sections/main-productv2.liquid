@@ -204,6 +204,144 @@
 
   /*AB test design starts*/
   
+  /*AB test design starts*/
+  .artist-ab-test .variant-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 9px;
+      column-gap: 15px;
+      position: relative;
+  }
+
+  .artist-ab-test .variant-card-wrapper {
+      position: relative;
+  }
+
+  .artist-ab-test .variant-card-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 13px 14px;
+      border-radius: 6px;
+      border: 1px solid #0B4166;
+      background: #F6F5F0;
+      color: #0B4166;
+      transition: 0.2s;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 14px;
+      letter-spacing: 0.5px;
+  }
+
+  .artist-ab-test .variant-card-button.is-selected {
+      background: #DCE6F1;
+  }
+
+  .artist-ab-test .variant-card-badge {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      color: #fff;
+      padding: 3px 10px 1px;
+      border-radius: 4px;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px #0002;
+      font-weight: 700;
+      font-size: 9px;
+      line-height: 11px;
+      letter-spacing: 0.4px;
+      text-align: center;
+      text-transform: uppercase;
+  }
+
+  .artist-ab-test .variant-card-badge.popular {
+      background: #E6772A;
+  }
+
+  .artist-ab-test .variant-card-badge.value {
+      background: #0B4166;
+  }
+
+  .artist-ab-test .variant-card-info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 100%;
+      letter-spacing: normal;
+      text-align: center;   
+  }
+
+  .artist-ab-test .variant-selection-title {
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 20px;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+      color: #0B4166CC;
+  }
+
+  /* Same-to-Same Benefit Card */
+  /* Middle Centered Benefit Card */
+  .artist-ab-test .stacked-card-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 95%;
+      z-index: 10;
+      transform: translate(-50%, -50%);
+  }
+  .artist-ab-test .card-shadow {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 100%;
+      height: 100%;
+      background-color: #DCE6F1;
+      border: 2px solid #0B4166;
+      border-radius: 4px;
+      z-index: 1;
+  }
+  .artist-ab-test .benefit-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      background-color: #DCE6F1;
+      border: 2px solid #0B4166;
+      border-radius: 4px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      text-align: left;
+  }
+  .artist-ab-test .benefit-card .content {
+      font-family: 'Karla', sans-serif;
+      color: #0B4166CC;
+      margin: 0;
+      display: flex;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 17px;
+      line-height: 20px;
+      letter-spacing: -1px;
+  }
+  .artist-ab-test .benefit-card .info-char { 
+      line-height: 1;
+      flex-shrink: 0;
+      font-weight: 800;
+      font-size: 17px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      text-align: center;
+      color: #0B4166CC;
+  }
+  
   @media (max-width: 1023px) {
       .artist-ab-test .product-v2-gallery-slide {
           width: 80%;
@@ -654,7 +792,8 @@
             },
             increaseQty() {
               this.quantity++;
-            }
+            },
+            activeBenefit: null
           }"
           x-init="initFromProductData()"
           class="mt-6"
@@ -667,22 +806,76 @@
               <div class="space-y-4 mb-6">
                 {%- for option in product.options_with_values -%}
                   <div>
-                    <label for="select-v2-{{ section.id }}-{{ forloop.index }}" class="mb-2 block text-sm font-medium text-[var(--text-primary)]">
-                      {{ option.name }}
-                    </label>
-                    <select
-                      id="select-v2-{{ section.id }}-{{ forloop.index }}"
-                      name="options[{{ option.name | escape }}]"
-                      x-model="selectedOptions[{{ forloop.index0 }}]"
-                      @change="updateVariant()"
-                      class="block w-full rounded-[5px] border border-[var(--interactive-border)] bg-white py-3 pl-3 pr-10 text-base focus:border-[var(--interactive-default)] focus:ring-[var(--interactive-default)]"
-                    >
-                      {% for value in option.values %}
-                        <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
-                          {{ value }}
-                        </option>
-                      {% endfor %}
-                    </select>
+                    {% if section.settings.variant_selector_type == 'buttons' %}
+                      <h3 class="variant-selection-title">Select {{ option.name }}</h3>
+                      
+                      <div class="variant-card-grid">
+                        {% for value in option.values %}
+                          {% liquid
+                            assign is_most_popular = false
+                            if value == section.settings.most_popular_value
+                              assign is_most_popular = true
+                            endif
+                            
+                            assign is_best_value = false
+                            if value == section.settings.best_value_value
+                              assign is_best_value = true
+                            endif
+                          %}
+                          <div class="variant-card-wrapper">
+                            {% if is_most_popular %}
+                              <div class="variant-card-badge popular">Most Popular</div>
+                            {% elsif is_best_value %}
+                              <div class="variant-card-badge value">Best Value</div>
+                            {% endif %}
+                            
+                            <button
+                              type="button"
+                              @click="selectedOptions[{{ forloop.parentloop.index0 }}] = '{{ value | escape }}'; updateVariant()"
+                              class="variant-card-button"
+                              :class="selectedOptions[{{ forloop.parentloop.index0 }}] === '{{ value | escape }}' ? 'is-selected' : ''"
+                            >
+                              {{ value }}
+                              {% if value contains 'VIP' or value contains 'Access' %}
+                                <div class="variant-card-info-icon" @click.stop="activeBenefit = (activeBenefit === '{{ option.name | handleize }}-{{ value | handleize }}' ? null : '{{ option.name | handleize }}-{{ value | handleize }}')">ⓘ</div>
+                              {% endif %}
+                            </button>
+                          </div>
+                        {% endfor %}
+
+                        {% comment %} Benefit cards placed here to be relative to the grid container {% endcomment %}
+                        {% for value in option.values %}
+                          <div 
+                            x-show="activeBenefit === '{{ option.name | handleize }}-{{ value | handleize }}'" 
+                            x-cloak
+                            @click.away="activeBenefit = null"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            class="stacked-card-wrapper"
+                          >
+                             {% render 'variant-benefit-card', value: value %}
+                          </div>
+                        {% endfor %}
+                      </div>
+                    {% else %}
+                      <label for="select-v2-{{ section.id }}-{{ forloop.index }}" class="mb-2 block text-sm font-medium text-[var(--text-primary)]">
+                        {{ option.name }}
+                      </label>
+                      <select
+                        id="select-v2-{{ section.id }}-{{ forloop.index }}"
+                        name="options[{{ option.name | escape }}]"
+                        x-model="selectedOptions[{{ forloop.index0 }}]"
+                        @change="updateVariant()"
+                        class="block w-full rounded-[5px] border border-[var(--interactive-border)] bg-white py-3 pl-3 pr-10 text-base focus:border-[var(--interactive-default)] focus:ring-[var(--interactive-default)]"
+                      >
+                        {% for value in option.values %}
+                          <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                            {{ value }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                    {% endif %}
                   </div>
                 {%- endfor -%}
               </div>
@@ -743,6 +936,8 @@
               {% case block.type %}
                 {% when 'accordion' %}
                   {% render 'accordion-item', title: block.settings.title, content: block.settings.content %}
+                  {% when 'reviews' %}
+                      {% render 'product-reviews' %}
               {% endcase %}
             {% endfor %}
           </div>
@@ -934,6 +1129,28 @@
       "unit": "px"
     },
     {
+      "type": "select",
+      "id": "variant_selector_type",
+      "label": "Variant selector style",
+      "options": [
+        { "value": "select", "label": "Dropdown Select" },
+        { "value": "buttons", "label": "Custom Cards/Buttons" }
+      ],
+      "default": "buttons"
+    },
+    {
+      "type": "text",
+      "id": "most_popular_value",
+      "label": "Value to label as 'Most Popular'",
+      "default": "General Admission"
+    },
+    {
+      "type": "text",
+      "id": "best_value_value",
+      "label": "Value to label as 'Best Value'",
+      "default": "VIP"
+    },
+    {
       "type": "image_picker",
       "id": "gallery_image_1",
       "label": "Gallery image 1 / video thumbnail"
@@ -1115,7 +1332,11 @@
           "default": "<p>Accordion content goes here.</p>"
         }
       ]
-    }
+    },
+   {
+      "type": "reviews",
+      "name": "Product Reviews"
+   }
   ],
   "presets": [
     {
