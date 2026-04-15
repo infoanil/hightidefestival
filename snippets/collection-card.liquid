@@ -1,0 +1,57 @@
+{% comment %}
+  Renders a card for a single collection.
+  Requires: collection object (e.g., {% render 'collection-card', collection: collection %})
+{% endcomment %}
+
+{% if collection %}
+  <a href="{{ collection.url }}" class="group block h-full focus:outline-none focus:ring-2 focus:ring-[var(--interactive-focus)] rounded-lg transition">
+
+    <!-- Image Wrapper -->
+    <div class="collection-card__image-wrapper bg-[var(--surface-primary)] border border-[var(--interactive-border)] hover:border-[var(--stroke-color-hover)] transition">
+
+
+      {% comment %} Determine which image to use {% endcomment %}
+      {% if collection.image %}
+        {% assign collection_image = collection.image %}
+      {% elsif collection.featured_image %}
+        {% assign collection_image = collection.featured_image %}
+      {% elsif collection.products.first %}
+        {% assign collection_image = collection.products.first.featured_image %}
+      {% else %}
+        {% assign collection_image = nil %}
+      {% endif %}
+
+      {% if collection_image %}
+        {% render 'image-helper'
+          , image: collection_image
+          , class: ' object-cover transition-transform duration-300 ease-in-out group-hover:scale-105' %}
+      {% else %}
+        <div class="h-full w-full flex items-center justify-center text-[var(--text-disabled)]">
+          <svg
+            class="w-12 h-12"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16l4.25-4.25L12 15l4.25-4.25L20 16m-4-7V5a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2h4" />
+          </svg>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Title -->
+    <div class="mt-2 flex flex-col justify-between">
+      <h3 class="text-2xl font-extrabold text-[var(--text-primary)] hover:text-[var(--link-hover)] truncate transition">
+        {{ collection.title }}
+      </h3>
+    </div>
+  </a>
+
+{% else %}
+  <div class="p-4 border border-dashed text-center text-[var(--text-disabled)] border-[var(--interactive-border)] bg-[var(--surface-secondary)] rounded-lg">
+    Collection Card Placeholder
+  </div>
+{% endif %}

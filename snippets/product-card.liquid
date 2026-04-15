@@ -1,0 +1,166 @@
+{% assign show_rating = show_rating | default: false %}
+{% assign show_swatches = show_swatches | default: false %}
+{% assign show_quick_add = show_quick_add | default: false %}
+{% assign show_compare_price = show_compare_price | default: false %}
+
+{% if product %}
+
+  <div class="group flex flex-col w-full h-full border-2 lg:border-4 bg-bg-color border-secondary-navy lg:p-[13px] rounded-[10px] overflow-hidden">
+
+    <!-- IMAGE -->
+    <a href="{{ product.url }}" class="block relative md:rounded-[6px] overflow-hidden border-b-2 lg:border-2 border-secondary-navy bg-[var(--surface-primary)] hover:border-[var(--stroke-color-hover)] transition">
+
+      <div class="aspect-square w-full overflow-hidden relative">
+        {% render 'image-helper'
+          , image: product.featured_image
+          , class: 'absolute inset-0 w-full h-full object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-105'
+        %}
+      </div>
+
+      {% if product.images.size > 1 %}
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {% render 'image-helper'
+            , image: product.images[1]
+            , class: 'absolute inset-0 w-full h-full object-cover'
+          %}
+        </div>
+      {% endif %}
+
+      <!-- BADGES -->
+      <div class="absolute top-2 right-2 flex flex-col gap-2 z-10">
+        {% if product.compare_at_price > product.price %}
+          <span class="px-2 py-0.5 text-xs uppercase font-extrabold rounded bg-trietary-pink border border-secondary-navy">Sale</span>
+        {% endif %}
+
+        {% if product.tags contains 'new' %}
+          <span class="px-2 py-0.5 text-xs font-semibold rounded bg-[var(--surface-success)] text-[var(--text-on-success)]">New</span>
+        {% endif %}
+      </div>
+
+    </a>
+
+    <!-- PRODUCT INFO -->
+    <div class=" flex flex-col gap-2 py-2.5 px-2.5 flex-1">
+
+      <!-- TEXT AREA (title + price) -->
+      <div class="flex flex-col gap-2 h-full" >
+
+        <a href="{{ product.url }}">
+          <h3 class="text-base leading-[19px] md:text-xl md:tracking-[-1px] md:leading-[25px] font-extrabold text-secondary-navy uppercase
+          transition text-balance
+         line-clamp-2 ">
+            {{ product.title }}
+          </h3>
+      </a>
+
+        <!-- PRICE BLOCK -->
+        {% assign first_variant = product.selected_or_first_available_variant %}
+
+        <div class="flex items-baseline gap-2 flex-wrap ">
+
+          <span class="text-base md:text-[20px] md:leading-[25px] font-extrabold text-primary-deepblue ">
+            {{ first_variant.price | money }}
+          </span>
+
+          {% if show_compare_price and first_variant.compare_at_price > first_variant.price %}
+            <span class="text-xs line-through text-[var(--text-disabled)] leading-tight">
+              {{ first_variant.compare_at_price | money }}
+            </span>
+          {% endif %}
+
+        </div>
+      </div>
+
+      <!-- RATING -->
+      {% if show_rating and product.metafields.reviews.rating_value != blank %}
+        {% assign rating = product.metafields.reviews.rating_value | plus: 0 %}
+        {% assign reviews_count = product.metafields.reviews.rating_count | default: 0 %}
+        <div class="flex items-center gap-1 text-[var(--text-secondary)] text-xs">
+          {% for i in (1..5) %}
+            {% if i <= rating %}
+              ⭐
+            {% else %}
+              ☆
+            {% endif %}
+          {% endfor %}
+          <span>({{ reviews_count }})</span>
+        </div>
+      {% endif %}
+
+      <!-- SWATCHES -->
+      {% if show_swatches and product.variants.size > 1 %}
+        {% assign color_options = product.options_with_values | where: 'name', 'Color' | first %}
+
+        {% assign valid_swatch_values = '' %}
+        {% if color_options %}
+          {% for opt in color_options.values %}
+            {% assign css_color = opt | downcase %}
+            {% unless css_color contains ' ' %}
+              {% assign valid_swatch_values = valid_swatch_values | append: opt | append: ',' %}
+            {% endunless %}
+          {% endfor %}
+        {% endif %}
+
+        {% unless valid_swatch_values == '' %}
+          <div class="flex flex-wrap gap-2">
+            {% assign swatches = valid_swatch_values | split: ',' %}
+            {% for swatch in swatches %}
+              {% if swatch != '' %}
+                <button
+                  type="button"
+                  class="w-6 h-6 rounded-full border border-[var(--interactive-border)]
+                         hover:ring-2 hover:ring-[var(--interactive-hover)] transition"
+                  style="background-color: {{ swatch | downcase }};"></button>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endunless %}
+      {% endif %}
+
+
+      <!-- QUICK ADD -->
+      {% if show_quick_add %}
+        {% if product.available %}
+          <form
+            x-data="{
+                  variantId: {{ first_variant.id }}
+                }"
+            @submit.prevent="
+                  fetch('/cart/add.js', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      id: variantId,
+                      quantity: 1
+                    })
+                  })
+                  .then(r => r.json())
+                  .then(() => window.dispatchEvent(new CustomEvent('cart:add')));
+                "
+            class="mt-auto flex-1">
+            <button type="submit" class="w-full py-2 px-4 rounded-md md:text-lg 
+           bg-trietary-orange hover:bg-secondary-navy hover:scale-105 duration-200 text-white uppercase font-extrabold transition">
+              Add to Cart
+            </button>
+          </form>
+
+
+        {% else %}
+          <button disabled class="w-full py-2 px-4 rounded-md text-sm font-medium
+        bg-[var(--surface-disabled)] text-[var(--text-disabled)]
+        cursor-not-allowed mt-auto">
+            Sold Out
+          </button>
+        {% endif %}
+      {% endif %}
+
+    </div>
+
+
+  </div>
+
+{% else %}
+  <div class="p-4 border border-dashed border-[var(--interactive-border)] bg-[var(--surface-secondary)] rounded-lg text-center text-[var(--text-disabled)]">
+    Product Card Placeholder
+  </div>
+{% endif %}

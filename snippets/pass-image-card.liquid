@@ -1,0 +1,47 @@
+{% assign features = product.metafields.custom.ticket_details.value %}
+{% assign icon = product.metafields.custom.ticket_icon.value %}
+{% assign banner_image = product.metafields.custom.banner_image.value | default: product.featured_image %}
+ 
+ <div class="flex flex-col  h-full" >
+    <div class="pass-card group flex flex-col flex-1 h-auto  border shrink-0 border-secondary-navy rounded-md overflow-hidden">
+        {% comment %} Card header {% endcomment %}
+        <div class="card__header text-secondary-navy  px-[25px] pt-[22px] pb-5 relative over aspect-[427/296] flex flex-col justify-end overflow-hidden">
+            {% render 'image-helper'
+                    , image: banner_image
+                    , max_width: 100
+                    , sizes: '(min-width: 1024px) 50vw, 100vw'
+                    , class: ' absolute inset-0 w-full h-full object-cover object-bottom z-0 group-hover:scale-105 transition-transform duration-300 '
+            %}
+            <div class="gradient absolute inset-0 bg-gradient-to-tr from-[#011522] to-transparent"></div>
+            <div class="relative z-1 text-white">
+                <span class="mb-5.5 bg-white rounded-full w-[60px] h-[60px] flex items-center justify-center">
+                    {% render 'image-helper'
+                        , image: icon
+                        , max_width: 100
+                        , sizes: '(min-width: 1024px) 50vw, 100vw'
+                        , class: 'w-[35px] h-auto object-cover object-bottom block animate-rotate-palm'
+                    %}
+                </span>
+                <h3 class="max-w-[330px] text-[30px] leading-[29px] tracking-[-1px] font-extrabold uppercase text-balance mb-4">{{ product.metafields.custom.card_title }}</h3>
+                <p class="font-extrabold text-[1rem] text-shadow-primary-lightblue">Single Day Starting at {{ product.metafields.custom.single_day_price.value | money }}</p>
+                <p class="font-extrabold text-[1rem] text-shadow-primary-lightblue">2-Day Starting at {{ product.metafields.custom.two_day_price.value | money }}</p>
+            </div>
+         
+        </div>
+        <div class="card__body px-[23px] pb-[27px] pt-8   flex flex-col flex-1 ">
+        {% if features != blank %}
+            <ul class="flex flex-col gap-3 flex-1" role="list" >
+                {% for item in features %}
+                    <li class="flex items-center gap-2" role="listitem">
+                        <svg class="shrink-0" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.6 10.4L5.45 8.25C5.26667 8.06667 5.03333 7.975 4.75 7.975C4.46667 7.975 4.23333 8.06667 4.05 8.25C3.86667 8.43333 3.775 8.66667 3.775 8.95C3.775 9.23333 3.86667 9.46667 4.05 9.65L6.9 12.5C7.1 12.7 7.33333 12.8 7.6 12.8C7.86667 12.8 8.1 12.7 8.3 12.5L13.95 6.85C14.1333 6.66667 14.225 6.43333 14.225 6.15C14.225 5.86667 14.1333 5.63333 13.95 5.45C13.7667 5.26667 13.5333 5.175 13.25 5.175C12.9667 5.175 12.7333 5.26667 12.55 5.45L7.6 10.4ZM2 18C1.45 18 0.979333 17.8043 0.588 17.413C0.196667 17.0217 0.000666667 16.5507 0 16V2C0 1.45 0.196 0.979333 0.588 0.588C0.98 0.196667 1.45067 0.000666667 2 0H16C16.55 0 17.021 0.196 17.413 0.588C17.805 0.98 18.0007 1.45067 18 2V16C18 16.55 17.8043 17.021 17.413 17.413C17.0217 17.805 16.5507 18.0007 16 18H2Z" fill="#0B4166"/>
+                        </svg>
+                        <span class="text-[17px] leading-[20px] tracking-[-1px] font-semibold text-secondary-navy">{{ item | replace: '2-Day', '' | strip | capitalize | replace: 'high tide', 'High Tide' | replace: 'djs', 'DJs' }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+            <a href="{{ button_url }}" class="block text-center rounded-[10px] bg-trietary-orange hover:bg-secondary-navy hover:scale-105 transition duration-200 text-white uppercase font-extrabold text-lg mt-7 py-4 ">{{ button_text | default: 'Sign up' }}</a>
+        </div>
+    </div>
+</div>

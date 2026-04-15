@@ -1,0 +1,69 @@
+{% comment %}
+  Desktop search trigger + panel
+  JS will hook into:
+  - #search-trigger
+  - #search-panel
+  - #search-input
+  - #search-default
+  - #search-results
+{% endcomment %}
+
+<div id="search-trigger" class="relative group hidden lg:block">
+  <button class="flex items-center justify-center w-8 h-8">
+    <span class="sr-only">Search</span>
+    <div class="w-full h-full">
+      {%  render 'icon-search' %}
+    </div>
+  </button>
+
+  <!-- SEARCH PANEL -->
+  <div id="search-panel" class="absolute right-0 top-full w-[480px] bg-[var(--surface-primary)] shadow-lg rounded-lg border border-[var(--interactive-border)]
+           opacity-0 invisible transition-all duration-200 p-4 z-50">
+    <form
+      action="/search"
+      method="get"
+      class="flex items-center border border-[var(--interactive-border)] rounded-full px-3 py-2 mb-3 bg-[var(--surface-secondary)]">
+      <svg
+        class="w-5 h-5 text-[var(--text-secondary)]"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input
+        id="search-input"
+        name="q"
+        class="w-full border-none focus:outline-none ml-2 bg-transparent text-[var(--text-primary)]"
+        type="search"
+        placeholder="Search products..."
+        autocomplete="off" />
+    </form>
+
+    <!-- Default content -->
+    <div id="search-default">
+      <h4 class="text-sm font-semibold mb-2 text-[var(--text-primary)]">
+        {{ settings.search_popular_title | default: 'Popular Searches' }}
+      </h4>
+
+      {% if settings.search_popular_links.size > 0 %}
+        <ul class="space-y-1 text-sm text-[var(--text-secondary)]">
+          {% for term in settings.search_popular_links %}
+            <li>
+              <a href="/search?q={{ term | url_encode }}" class="hover:underline">
+                {{ term }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-sm text-[var(--text-disabled)]">No terms defined yet</p>
+      {% endif %}
+    </div>
+
+    <div id="search-results" class="hidden"></div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+
+{% assign item_url = link.url | default: '#' %}
+{% assign item_title = link.title | default: 'Menu Item #' %}
+{% assign is_dropdown_trigger = is_button | default: false %}
+
+{% comment %} --- START: Conditional Tag Render --- {% endcomment %}
+{% if is_dropdown_trigger %}
+  <div 
+    class="flex items-center w-full px-6 py-2 text-sm text-gray-900 border-t border-gray-200 hover:bg-gray-50 transition"
+    style="padding-top: 8px; padding-bottom: 8px;">
+{% else %}
+
+  <a 
+    href="{{ item_url }}"
+    class="flex items-center w-full px-6 py-2 text-sm text-gray-900 border-t border-gray-200 hover:bg-gray-50 transition"
+    style="padding-top: 8px; padding-bottom: 8px;">
+{% endif %}
+
+    <span class="font-medium">
+        {{ item_title }}
+    </span>
+    
+
+    {% if is_dropdown_trigger %}
+        <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" 
+             class="size-5 flex-none text-gray-500 ml-2"> 
+            <path d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd"></path>
+        </svg>
+    {% endif %}
+
+{% if is_dropdown_trigger %}
+  </div>
+{% else %}
+  </a>
+{% endif %}

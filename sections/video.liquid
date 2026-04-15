@@ -1,0 +1,158 @@
+<section id="section-video" class="pt-[55px] pb-[35px] lg:pb-20 lg:pt-[120px] relative overflow-hidden">
+    <img src="{{ 'palm-blue.png' | asset_url }}" class="w-[70px] md:w-[129px] lg:w-[196px] h-auto absolute left-0  top-0 md:top-[20px] lg:top-[130px] animate-rotate-palm origin-bottom-left">
+    
+    <div class="container mx-auto relative">
+      <img 
+        src="{{ 'music-note-blue.png' | asset_url }}"  class="hidden lg:block w-[128px] h-auto absolute right-10 -top-12 animate-rotate-palm origin-bottom-left">
+        <div class="headings max-w-[888px] mx-auto flext flex-col items-center text-center mb-[50px] text-secondary-navy [&_strong]:text-secondary-green [&_strong]:font-normal">
+            <p class="legend uppercase text-lg font-bold mb-4">{{ section.settings.legend }}</p>
+            <h2 class="font-amaya text-[35px] leading-[36px] md:text-[60px] md:leading-[60px] lg:text-[100px] lg:leading-[88px] uppercase letter-spacing-[-1px] mb-6">{{ section.settings.title }}</h2>
+            <p class="text-base leading-[19px] md:text-[25px] md:leading-[31px] uppercase font-extrabold ">
+                {{  section.settings.description }}
+            </p>    
+        </div>
+        <div x-data="{ open: false }" 
+          class="video-wrapper aspect-[353/244] md:aspect-[732/473] lg:aspect-[1320/554] bg-black/5 relative rounded-[20px]  cursor-pointer  border-2 md:border-[5px] border-secondary-navy">
+          <svg id="highlight" class="hightlight  w-[17px] h-auto  right-[-16px] top-[-16px]  md:w-[32px] absolute md:right-[-32px] md:top-[-32px]  lg:w-[41px] lg:right-[-41px] lg:top-[-41px]" width="42" height="52" viewBox="0 0 42 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="25.3809" y="4.92993" width="8.94029" height="37.0929" rx="4.47014" transform="rotate(27.5636 25.3809 4.92993)" fill="#366EB6"/>
+            <rect x="38.4033" y="32.8665" width="8.94029" height="25.6392" rx="4.47014" transform="rotate(67.0731 38.4033 32.8665)" fill="#366EB6"/>
+            <rect x="1.17676" width="8.94029" height="25.6392" rx="4.47014" transform="rotate(2.63012 1.17676 0)" fill="#366EB6"/>  
+          </svg>
+          <svg id="hightlight-2" class="hightlight w-[17px]  h-auto left-[-16px] bottom-[-16px]  md:w-[32px] absolute md:left-[-32px] md:bottom-[-32px] lg:w-[41px] lg:left-[-41px] lg:bottom-[-41px]" width="44" height="53" viewBox="0 0 44 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="18.162" y="47.045" width="8.94029" height="37.0929" rx="4.47014" transform="rotate(-154.506 18.162 47.045)" fill="#366EB6"/>
+            <rect x="4.13861" y="19.597" width="8.94029" height="25.6392" rx="4.47014" transform="rotate(-114.997 4.13861 19.597)" fill="#366EB6"/>
+            <rect x="42.5283" y="51.0977" width="8.94029" height="25.6392" rx="4.47014" transform="rotate(-179.439 42.5283 51.0977)" fill="#366EB6"/>
+          </svg>
+
+    
+      {% comment %} Thumbnail {% endcomment %}
+        <div 
+          x-show="!open" 
+          @click="open = true" 
+          x-cloak
+          x-transition:leave="transition-all duration-500"
+          x-transition:leave-start="opacity-100 scale-100"
+          x-transition:leave-end="opacity-0 scale-110"
+          class="w-full h-full thumbnail-wrapper after:content-[''] after:absolute after:inset-0"
+          aria-label="Play Video"
+        >
+
+
+          {% comment %} Placeholder Thumbnail {% endcomment %}
+          {% if section.settings.thumbnail != blank %}
+            {% render 'image-helper'
+                , image: section.settings.thumbnail
+                , max_width: 1440
+                , sizes: '(min-width: 1024px) 50vw, 100vw'
+                , class: 'w-full h-full object-cover rounded-[19px] lg:rounded-[14px]'
+            %}    
+          {% else %}
+            <div class="placeholder-thumbnail">
+              <p class="m-8">Upload your thumbnail image</p>
+            </div>
+          {% endif %}
+        </div>
+      {% comment %} Video Player {% endcomment %}
+       <template x-if="open" x-cloak>
+         <div class="video-wrapper w-full h-full flex justify-center items-center">
+          {% comment %} Video Tag with Settings {% endcomment %}
+           {% if section.settings.youtube_link == blank %}
+            {% if section.settings.video != blank %}
+              {{
+                section.settings.video
+                | video_tag:
+                  image_size: '1100x',
+                  autoplay: true,
+                  loop: section.settings.enable_video_looping,
+                  controls: true,
+                  muted: false,
+                  class: 'w-full h-full object-cover'
+              }}
+            {% else %}
+              <p>Upload your video</p>
+            {% endif %}
+        {% else %}
+          <iframe 
+            class="w-full h-full rounded-[19px] lg:rounded-[14px] overflow-hidden" 
+            width="560" 
+            height="315" 
+            src="https://www.youtube.com/embed/{{ section.settings.youtube_link }}?autoplay=1&mute=0&playlist={{ section.settings.youtube_link }}&loop=1" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+          </iframe>
+        {% endif %}
+        </div>
+      </template>
+      <div x-bind:class="open && 'hidden'" @click="open = true"
+        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-1" x-cloak>
+        <button class="cursor-pointer border-2 bg-primary-lightblue rounded-[10px] flex items-center gap-3 uppercase  px-[15px] py-[10px] lg:px-10 lg:py-5 text-xl font-extrabold shadow-[3.76px_3.76px_0_0_rgba(11,60,93,1)] hover:shadow-[7px_7px_0_0_rgba(11,60,93,1)] hover:translate-x-[-3px] hover:translate-y-[-3px] duration-200 transition">
+            <span class="whitespace-nowrap text-secondary-navy text-base md:text-lg tracking-[-1px] ">watch the recap</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.72417 3.96667C4.74667 3.77746 4.81301 3.5961 4.9179 3.43702C5.02279 3.27794 5.16335 3.14552 5.3284 3.05029C5.49345 2.95507 5.67844 2.89966 5.86866 2.88847C6.05888 2.87728 6.24909 2.91062 6.42417 2.98584C7.30917 3.36417 9.2925 4.26334 11.8092 5.71584C14.3267 7.16917 16.0975 8.43834 16.8667 9.01417C17.5233 9.50667 17.525 10.4833 16.8675 10.9775C16.1058 11.55 14.3567 12.8025 11.8092 14.2742C9.25916 15.7458 7.29917 16.6342 6.4225 17.0075C5.6675 17.33 4.8225 16.8408 4.72417 16.0267C4.60917 15.075 4.39417 12.9142 4.39417 9.99584C4.39417 7.07917 4.60833 4.91917 4.72417 3.96667Z" fill="#0B4166"/>
+            </svg>
+        </button>
+      </div>  
+    </div>
+    </div>
+</section>
+
+
+
+
+{% schema %}
+
+{
+  "name": "Video",
+  "settings": [
+  {
+      "type": "text",
+      "label": "legend",
+      "id": "legend"
+    },
+    {
+      "type": "richtext",
+      "label": "Title",
+      "id": "title"
+    },
+    {
+      "type": "textarea",
+      "label": "Description",
+      "id": "description"
+    },
+    {
+      "type": "video",
+      "label": "Video",
+      "id": "video"
+    },
+    {
+      "type": "text",
+      "label": "Youtube Link",
+      "id": "youtube_link"
+    },
+    {
+      "type": "image_picker",
+      "label": "Thumbnail",
+      "id": "thumbnail"
+    },
+    {
+      "type": "range",
+      "label": "Overlay",
+      "id": "overlay",
+      "min": 0,
+      "max": 50,
+      "step": 10,
+      "default": 20
+    },
+
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Video"
+    }
+  ]
+}
+{% endschema %}

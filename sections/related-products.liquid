@@ -1,0 +1,235 @@
+{% comment %}
+  Related Products Section (Organism)
+
+{% endcomment %}
+
+{% if recommendations.performed and recommendations.products_count > 0 %}
+  <section 
+    class="related-products pt-12"
+    role="region"
+    aria-labelledby="related-products-heading">
+  
+    <h2 
+      id="related-products-heading" 
+      class="text-lg font-bold text-[var(--text-primary)] mb-6">
+      You may also like
+    </h2>
+  
+    <div 
+      class=""
+      data-related-products-grid>
+  
+     <div
+  x-data='{
+    currentIndex: 0,
+    slidesPerView: 1,
+    autoplayEnabled: true,
+    autoplaySpeed: 3000,
+    loop: true,
+    interval: null,
+
+    // 🔹 drag state
+    isDragging: false,
+    startX: 0,
+    deltaX: 0,
+    dragThreshold: 50,
+
+    maxIndex() {
+      return $refs.track
+        ? Math.max($refs.track.children.length - this.slidesPerView, 0)
+        : 0;
+    },
+
+    updateSlides() {
+      const mobile = 2;
+      const tablet = 3;
+      const desktop = 4;
+
+      if (window.innerWidth < 768) {
+        this.slidesPerView = mobile;
+      } else if (window.innerWidth < 1024) {
+        this.slidesPerView = tablet;
+      } else {
+        this.slidesPerView = desktop;
+      }
+
+      const max = this.maxIndex();
+      if (this.currentIndex > max) this.currentIndex = max;
+    },
+
+    startAutoplay() {
+      if (!this.autoplayEnabled) return;
+      this.interval = setInterval(() => this.next(), this.autoplaySpeed);
+    },
+
+    stopAutoplay() {
+      if (!this.interval) return;
+      clearInterval(this.interval);
+      this.interval = null;
+    },
+
+    restartAutoplay() {
+      this.stopAutoplay();
+      this.startAutoplay();
+    },
+
+    next() {
+      const max = this.maxIndex();
+      if (this.currentIndex < max) {
+        this.currentIndex++;
+      } else if (this.loop && max > 0) {
+        this.currentIndex = 0;
+      }
+    },
+
+    prev() {
+      const max = this.maxIndex();
+      if (this.currentIndex > 0) {
+        this.currentIndex--;
+      } else if (this.loop && max > 0) {
+        this.currentIndex = max;
+      }
+    },
+
+    // 🔹 drag handlers
+    dragStart(e) {
+      this.isDragging = true;
+      this.startX = e.touches ? e.touches[0].clientX : e.clientX;
+      this.deltaX = 0;
+      this.stopAutoplay();
+    },
+
+    dragMove(e) {
+      if (!this.isDragging) return;
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      this.deltaX = x - this.startX;
+    },
+
+    dragEnd() {
+      if (!this.isDragging) return;
+
+      if (this.deltaX > this.dragThreshold) {
+        this.prev();
+      } else if (this.deltaX < -this.dragThreshold) {
+        this.next();
+      }
+
+      this.isDragging = false;
+      this.deltaX = 0;
+      this.restartAutoplay();
+    }
+  }'
+  x-init="
+    updateSlides();
+    window.addEventListener('resize', updateSlides);
+    startAutoplay();
+  "
+  class="relative mx-auto w-full overflow-hidden"
+>
+        <!-- TRACK -->
+        <div class="overflow-hidden">
+          <div
+            x-ref="track"
+            class="flex transition-transform duration-300 ease-in-out"
+            :style="`transform: translateX(-${currentIndex * (100 / slidesPerView)}%)`"
+            @mousedown.prevent="dragStart($event)"
+            @mousemove.prevent="dragMove($event)"
+            @mouseup="dragEnd"
+            @mouseleave="dragEnd"
+
+            @touchstart.passive="dragStart($event)"
+            @touchmove.passive="dragMove($event)"
+            @touchend="dragEnd">
+
+            {% for product in recommendations.products limit: 8 %}
+              <div class="flex-shrink-0 p-[var(--space-xs)]" :style="`width: ${100 / slidesPerView}%`">
+                {% render 'product-card'
+                  , product: product
+                  , show_quick_add: true
+                  , show_compare_price: section.settings.card_show_compare_price
+                %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        
+          <!-- LEFT ARROW -->
+          <div class="pagination flex md:flex-row-reverse lg:justify-center items-center mt-6.5 gap-4.5">
+            <div class="flex gap-[9px]">
+              <button
+                type="button"
+                aria-label="Previous slide"
+                @click="prev(); restartAutoplay()"
+                class="bg-bg-color hover:bg-primary-deepblue hover:text-white w-8 h-8 border-2 border-secondary-navy rounded-[5px] flex justify-center items-center cursor-pointer">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.99967 12.6673L3.33301 8.00065L7.99967 3.33398" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12.6663 8H3.33301" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              </button>
+
+              <!-- RIGHT ARROW -->
+              <button
+                type="button"
+                aria-label="Next slide"
+                @click="next(); restartAutoplay()"
+                class="bg-bg-color hover:bg-primary-deepblue hover:text-white w-8 h-8 border-2 border-secondary-navy rounded-[5px] flex justify-center items-center cursor-pointer">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.00033 12.6673L12.667 8.00065L8.00033 3.33398" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3.33366 8H12.667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              </button>  
+            </div>
+            <span class="lg:hidden flex-1 w-full h-[1px] bg-secondary-navy"></span>
+          </div>
+          
+        
+
+        
+   
+
+      </div>
+
+
+      {% comment %} {% for product in recommendations.products limit: section.settings.limit %}
+        {% render 'product-card',
+          product: product,
+          show_rating: false,
+          show_swatches: false,
+          show_quick_add: false,
+          show_compare_price: false %}
+      {% endfor %} {% endcomment %}
+    </div>
+  </section>
+  {% else %}
+    
+    <section 
+      class="related-products pt-12"
+      role="region"
+      aria-labelledby="related-products-heading">
+      <h2 
+        id="related-products-heading" 
+        class="text-lg font-bold text-[var(--text-primary)] mb-6">
+        You may also like
+      </h2>
+      <p class="text-sm text-[var(--text-secondary)]">No related products available.</p>
+    </section>
+  {% endif %}
+  
+  {% schema %}
+  {
+    "name": "Related Products",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "range",
+        "id": "limit",
+        "label": "Number of products to show",
+        "min": 2,
+        "max": 6,
+        "default": 4
+      }
+    ]
+  }
+  {% endschema %}
+  

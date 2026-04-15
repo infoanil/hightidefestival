@@ -1,0 +1,378 @@
+{% assign show_on_mobile = section.settings.show_on_mobile %}
+{% assign show_on_desktop = section.settings.show_on_desktop %}
+{% assign visibility_classes = '' %}
+{% assign current_product_id = product.id %}
+
+{% if show_on_mobile == false and show_on_desktop == true %}
+  {% assign visibility_classes = 'hidden md:block' %}
+{% elsif show_on_mobile == true and show_on_desktop == false %}
+  {% assign visibility_classes = 'md:hidden' %}
+{% elsif show_on_mobile == false and show_on_desktop == false %}
+  {% assign visibility_classes = 'hidden' %}
+{% endif %}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .pdp-pass-slider {
+    background-color: #f6f5f0;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__title {
+    color: #0b4166;
+    font-size: 22px;
+    line-height: 24px;
+    letter-spacing: -1px;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__scroller {
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-left: 15px;
+    padding-right: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__track {
+    display: flex;
+    gap: 10px;
+    width: max-content;
+    padding-right: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__card {
+    flex: 0 0 110px;
+    width: 110px;
+    scroll-snap-align: start;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__link {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 5px;
+    aspect-ratio: 1 / 1;
+    background: #d9d9d9;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__card.is-active .pdp-pass-slider__link {
+    border: 3px solid #0b4166;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__image,
+  #shopify-section-{{ section.id }} .pdp-pass-slider__placeholder {
+    width: 100%;
+    height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__placeholder {
+    border: 1px dashed rgba(11, 65, 102, 0.3);
+    background: rgba(11, 65, 102, 0.08);
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__gradient {
+    position: absolute;
+    inset: auto 0 0;
+    height: 55%;
+    background: linear-gradient(180deg, rgba(1, 21, 34, 0) 0%, rgba(1, 21, 34, 0.88) 100%);
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__name {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    z-index: 1;
+    width: calc(100% - 20px);
+    color: #ffffff;
+    font-size: var(--pdp-pass-slider-title-size, 12px);
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 0 2px 4px rgba(1, 21, 34, 0.4);
+    transform: translate(-50%, -50%);
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__badge {
+    position: absolute;
+    left: 0;
+    bottom: 8px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    padding: 5px 8px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__badge--best {
+    min-width: 91px;
+    background: #0b4166;
+    color: #ffffff;
+  }
+
+  #shopify-section-{{ section.id }} .pdp-pass-slider__badge--index {
+    min-width: 28px;
+    background: #f6f5f0;
+    color: #0b4166;
+  }
+
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .pdp-pass-slider__title {
+      font-size: 40px;
+      line-height: 38px;
+    }
+
+    #shopify-section-{{ section.id }} .pdp-pass-slider__scroller {
+      overflow: visible;
+      padding-left: 0;
+    }
+
+    #shopify-section-{{ section.id }} .pdp-pass-slider__track {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      width: 100%;
+      padding-right: 0;
+    }
+
+    #shopify-section-{{ section.id }} .pdp-pass-slider__card {
+      width: auto;
+      flex: initial;
+    }
+
+    #shopify-section-{{ section.id }} .pdp-pass-slider__name {
+      width: calc(100% - 32px);
+      font-size: var(--pdp-pass-slider-title-size, 22px);
+    }
+  }
+{%- endstyle -%}
+
+{% assign selected_count = 0 %}
+{% for block in section.blocks %}
+  {% if block.type == 'product' and block.settings.product != blank %}
+    {% assign selected_count = selected_count | plus: 1 %}
+  {% endif %}
+{% endfor %}
+
+<section
+  class="pdp-pass-slider {{ visibility_classes }}"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="container">
+    {% if section.settings.title != blank %}
+      <h2 class="pdp-pass-slider__title font-amaya uppercase">
+        {{ section.settings.title | escape }}
+      </h2>
+    {% endif %}
+  </div>
+
+  {% if selected_count > 0 %}
+    <div class="pdp-pass-slider__scroller mt-5 md:mt-8" data-pdp-pass-slider-scroller>
+      <div class="pdp-pass-slider__track" role="list" aria-label="{{ section.settings.title | escape }}">
+        {% assign display_index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'product' and block.settings.product != blank %}
+            {% assign display_index = display_index | plus: 1 %}
+            {% assign product = block.settings.product %}
+            {% assign card_image = block.settings.image | default: product.metafields.custom.banner_image.value | default: product.featured_image %}
+            {% assign card_title = block.settings.title_override | default: product.metafields.custom.card_title | default: product.title %}
+            {% assign title_offset = block.settings.title_y_offset | default: 0 %}
+            {% assign hide_title = block.settings.hide_title %}
+            {% assign is_active_product = false %}
+            {% if product.id == current_product_id %}
+              {% assign is_active_product = true %}
+            {% endif %}
+
+            <article
+              class="pdp-pass-slider__card{% if is_active_product %} is-active{% endif %}"
+              role="listitem"
+              {% if is_active_product %}data-active-product="true"{% endif %}
+              {{ block.shopify_attributes }}
+            >
+              <a href="{{ product.url }}" class="pdp-pass-slider__link group"{% if is_active_product %} aria-current="page"{% endif %}>
+                {% if card_image != blank %}
+                  {% render 'image-helper',
+                    image: card_image,
+                    max_width: 400,
+                    sizes: '(min-width: 768px) 25vw, 110px',
+                    class: 'pdp-pass-slider__image object-cover object-center transition duration-300 group-hover:scale-105'
+                  %}
+                {% else %}
+                  <div class="pdp-pass-slider__placeholder"></div>
+                {% endif %}
+
+                <div class="pdp-pass-slider__gradient"></div>
+                {% unless hide_title %}
+                  <span
+                    class="pdp-pass-slider__name"
+                    style="transform: translate(-50%, calc(-50% + {{ title_offset }}px)); --pdp-pass-slider-title-size: clamp(9px, {{ card_title.size | times: -0.32 | plus: 25.84 }}px, 22px);"
+                  >
+                    {{ card_title }}
+                  </span>
+                {% endunless %}
+
+                {% if display_index == 1 %}
+                  <span class="pdp-pass-slider__badge pdp-pass-slider__badge--best">
+                    {{ section.settings.best_seller_label | escape }}
+                  </span>
+                {% else %}
+                  <span class="pdp-pass-slider__badge pdp-pass-slider__badge--index">#{{ display_index }}</span>
+                {% endif %}
+              </a>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="container mt-5 md:mt-8">
+      <div class="rounded-[10px] border border-dashed border-secondary-navy/30 bg-white/60 px-4 py-5 text-sm font-semibold text-secondary-navy/70">
+        Add up to 4 product blocks to build this PDP pass slider.
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.querySelector('#shopify-section-{{ section.id }} [data-pdp-pass-slider-scroller]');
+    const activeCard = document.querySelector('#shopify-section-{{ section.id }} [data-active-product="true"]');
+
+    if (!slider || !activeCard || window.innerWidth >= 768) return;
+
+    const sliderRect = slider.getBoundingClientRect();
+    const activeRect = activeCard.getBoundingClientRect();
+    const scrollTarget = slider.scrollLeft + (activeRect.left - sliderRect.left) - ((sliderRect.width - activeRect.width) / 2);
+
+    slider.scrollTo({
+      left: Math.max(scrollTarget, 0),
+      behavior: 'smooth'
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "PDP Pass Slider",
+  "tag": "section",
+  "class": "section-pdp-pass-slider",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "2-Day Pass"
+    },
+    {
+      "type": "text",
+      "id": "best_seller_label",
+      "label": "First badge label",
+      "default": "#1 Best Seller"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_desktop",
+      "label": "Show on desktop",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "title_override",
+          "label": "Title override"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image override"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_title",
+          "label": "Hide title",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "title_y_offset",
+          "label": "Title Y offset",
+          "min": -20,
+          "max": 20,
+          "step": 1,
+          "default": 0,
+          "unit": "px"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Pass Slider",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

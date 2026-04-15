@@ -1,0 +1,229 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "passes_password_enabled": false,
+    "passes_password_background": "shopify://shop_images/High_Tide_Hero.jpg",
+    "passes_password_logo": "shopify://shop_images/High_Tide_Logo_Big.png",
+    "facebook_url": "https://www.facebook.com/hightidemusicfestival/",
+    "instagram_url": "https://www.instagram.com/hightidemusicfestival/?hl=en",
+    "twitter_url": "https://x.com/HighFuckingTide",
+    "youtube_url": "https://www.youtube.com/@hightide7932",
+    "tiktok_url": "https://www.tiktok.com/@hightidefestival?lang=en",
+    "spotify_url": "https://open.spotify.com/playlist/0KtDMka9Hj7NbtESAnVww3?si=8ZvfSoSeQ_WRbJvbfR5HSA&pi=Sf2NBp37RViZJ",
+    "header_menu": "menu-2026",
+    "header_text_after_logo": "June  5 + 6, 2026 charleston, south carolina",
+    "header_button_url": "shopify://collections/ticket",
+    "logo_white": "shopify://shop_images/High_Tide_Logo_ebec1c3b-6e0e-478a-91a9-e572f7d5bcca.png",
+    "dark_logo": "shopify://shop_images/dark-logo_fac217e1-dbf8-40f5-805d-26b2324c2fc8.png",
+    "favicon": "shopify://shop_images/Hight_ide_2a6b5138-2621-4f25-9d6e-89b6ba0bfe02.png",
+    "sections": {
+      "hero": {
+        "type": "hero",
+        "settings": {}
+      },
+      "video": {
+        "type": "video",
+        "settings": {
+          "title": "",
+          "description": "",
+          "overlay": 20
+        }
+      },
+      "line-up": {
+        "type": "line-up",
+        "settings": {}
+      },
+      "choose-your-vibe": {
+        "type": "choose-your-vibe",
+        "settings": {}
+      },
+      "social-wall": {
+        "type": "social-wall",
+        "blocks": {
+          "slide_TxArM8": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify://shop_images/Rectangle_25_81adcee7-fca8-487b-ad6d-a4a26feb411e.jpg"
+            }
+          },
+          "slide_j3qQUA": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify://shop_images/Rectangle_26_5f9f38fd-06a3-4c53-a6b1-a85656289329.jpg"
+            }
+          },
+          "slide_WAJeET": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify://shop_images/Rectangle_27_7c4fb76e-fb00-48e3-8da6-96951cba4891.jpg"
+            }
+          },
+          "slide_dqcLkC": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify://shop_images/Rectangle_28_551a2d1f-52c4-425c-bcc5-1e23a02dfc9e.jpg"
+            }
+          },
+          "slide_Q7cbDN": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify://shop_images/Rectangle_29_ae74dd0e-97ba-4229-9b2b-b0104e022acd.jpg"
+            }
+          }
+        },
+        "block_order": [
+          "slide_TxArM8",
+          "slide_j3qQUA",
+          "slide_WAJeET",
+          "slide_dqcLkC",
+          "slide_Q7cbDN"
+        ],
+        "settings": {
+          "legend": "",
+          "heading": ""
+        }
+      },
+      "faq": {
+        "type": "faq",
+        "blocks": {
+          "faq_item_FJkE7k": {
+            "type": "faq_item",
+            "settings": {
+              "question": "",
+              "answer": ""
+            }
+          },
+          "faq_item_m36bDK": {
+            "type": "faq_item",
+            "settings": {
+              "question": "",
+              "answer": ""
+            }
+          },
+          "faq_item_Ech6PB": {
+            "type": "faq_item",
+            "settings": {
+              "question": "",
+              "answer": ""
+            }
+          },
+          "faq_item_CcLQGc": {
+            "type": "faq_item",
+            "settings": {
+              "question": "",
+              "answer": ""
+            }
+          },
+          "faq_item_PAcLm6": {
+            "type": "faq_item",
+            "settings": {
+              "question": "",
+              "answer": ""
+            }
+          },
+          "faq_item_UDeipU": {
+            "type": "faq_item",
+            "settings": {
+              "question": "",
+              "answer": ""
+            }
+          },
+          "faq_item_3Npaa4": {
+            "type": "faq_item",
+            "settings": {
+              "question": "",
+              "answer": ""
+            }
+          },
+          "faq_item_iikJ4j": {
+            "type": "faq_item",
+            "settings": {
+              "question": "",
+              "answer": ""
+            }
+          },
+          "faq_item_4FaFGX": {
+            "type": "faq_item",
+            "settings": {
+              "question": "",
+              "answer": ""
+            }
+          }
+        },
+        "block_order": [
+          "faq_item_FJkE7k",
+          "faq_item_m36bDK",
+          "faq_item_Ech6PB",
+          "faq_item_CcLQGc",
+          "faq_item_PAcLm6",
+          "faq_item_UDeipU",
+          "faq_item_3Npaa4",
+          "faq_item_iikJ4j",
+          "faq_item_4FaFGX"
+        ],
+        "settings": {
+          "legend": "",
+          "heading": ""
+        }
+      },
+      "newsletter": {
+        "type": "newsletter",
+        "settings": {
+          "image": "shopify://shop_images/dont-miss-the-drop.jpg",
+          "heading": "don’t miss  the drop.",
+          "copy": "Get lineup leaks, secret party invites, and ticket drops before anyone else."
+        }
+      },
+      "call-to-action": {
+        "type": "call-to-action",
+        "settings": {
+          "image": "shopify://shop_images/grab-your-tickets.jpg",
+          "heading": ""
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "17932116065945454919": {
+        "type": "shopify://apps/adt-facebook-pixels-ads/blocks/facebook-ads-pixels/4ad3004f-fa0b-4587-a4f1-4d8ce89e9fbb",
+        "disabled": false,
+        "settings": {}
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      },
+      "17676059084223943535": {
+        "type": "shopify://apps/triplewhale/blocks/triple_pixel_snippet/483d496b-3f1a-4609-aea7-8eee3b6b7a2a",
+        "disabled": false,
+        "settings": {}
+      },
+      "14429071373314833104": {
+        "type": "shopify://apps/candy-rack/blocks/head/cb9c657f-334f-4905-80c2-f69cca01460c",
+        "disabled": false,
+        "settings": {
+          "script_load_mode": "async"
+        }
+      },
+      "6176556142592085346": {
+        "type": "shopify://apps/justuno-email-sms-pop-ups/blocks/star_rating/ea1f1a23-7069-4266-a6e1-df04f87c7e94",
+        "disabled": false,
+        "settings": {}
+      },
+      "377650522495455440": {
+        "type": "shopify://apps/elevate-ab-testing/blocks/abtester/4ce51acb-a9f5-4e05-ae92-4c018aa51124",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  }
+}

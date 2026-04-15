@@ -1,0 +1,285 @@
+{% assign height = section.settings.hero_height %}
+{% assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100 %}
+
+{% case height %}
+  {% when 'small' %}
+    {% assign height_class = 'min-h-[40vh]' %}
+  {% when 'medium' %}
+    {% assign height_class = 'min-h-[60vh]' %}
+  {% when 'large' %}
+    {% assign height_class = 'min-h-[80vh]' %}
+  {% when 'fullscreen' %}
+    {% assign height_class = 'min-h-screen' %}
+{% endcase %}
+
+<section
+  class="relative w-full overflow-hidden bg-[var(--surface-primary)]"
+  x-data="heroSlider({ interval: {{ section.settings.autoplay_speed }}, autoplay: {{ section.settings.autoplay | json }} })"
+  x-init="init()"
+  aria-label="Hero Slider">
+
+  <!-- SLIDES WRAPPER -->
+  <div class="relative w-full h-full {{ height_class }}">
+    <template x-for="(slide, index) in slides" :key="index">
+      <div
+        class="absolute inset-0 transition-opacity duration-700 ease-in-out pointer-events-none"
+        :class="current === index ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'"
+        role="group"
+        :aria-label="'Slide ' + (index + 1)">
+        <!-- Background Image -->
+        <template x-if="slide.image">
+          {% raw %}
+            <img
+              :src="slide.image"
+              class="absolute inset-0 w-full h-full object-cover object-center"
+              alt="" />
+          {% endraw %}
+        </template>
+
+        <!-- Overlay -->
+        {% if section.settings.dark_overlay %}
+          <div class="absolute inset-0 bg-black pointer-events-none" style="opacity: {{ overlay_opacity }};"></div>
+
+        {% endif %}
+
+        <!-- CONTENT -->
+        <div class="relative z-10 flex items-center justify-center h-full">
+          <div class="w-full max-w-3xl mx-auto px-6 flex flex-col gap-[var(--space-sm)]" :class="slide.classes">
+            <template x-if="slide.eyebrow">
+              <p class="text-body-sm tracking-widest uppercase text-[var(--text-secondary)]" x-text="slide.eyebrow"></p>
+            </template>
+
+            <template x-if="slide.heading">
+              <h1 class="font-bold leading-tight text-display-h3 sm:text-display-h2 lg:text-display-h1 text-[var(--text-primary)]" x-text="slide.heading"></h1>
+            </template>
+
+            <template x-if="slide.subheading">
+              <p class="max-w-xl text-body-lg text-[var(--text-secondary)]" x-text="slide.subheading"></p>
+            </template>
+
+            <template x-if="slide.button_label">
+              <a
+                :href="slide.button_url"
+                class="inline-flex items-center justify-center rounded-md px-6 py-3 text-body-md font-medium transition
+                bg-[var(--interactive-default)] text-[var(--text-on-interactive)]
+                hover:bg-[var(--interactive-hover)] focus-visible:ring-2 focus-visible:ring-offset-2"
+                x-text="slide.button_label"></a>
+            </template>
+
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <!-- ARROWS -->
+  <button
+    x-show="slides.length > 1"
+    @click="prev()"
+    class="absolute left-4 top-1/2 -translate-y-1/2 z-30
+         bg-black/40 text-white px-3 py-2 rounded-md
+         hover:bg-black/60 focus-visible:ring-2 focus-visible:ring-white"
+    aria-label="Previous slide">
+    ‹
+  </button>
+
+  <button
+    x-show="slides.length > 1"
+    @click="next()"
+    class="absolute right-4 top-1/2 -translate-y-1/2 z-30
+         bg-black/40 text-white px-3 py-2 rounded-md
+         hover:bg-black/60 focus-visible:ring-2 focus-visible:ring-white"
+    aria-label="Next slide">
+    ›
+  </button>
+
+
+  <!-- DOT INDICATORS -->
+  <div class="absolute bottom-6 w-full flex justify-center gap-2">
+    <template x-for="(slide, i) in slides" :key="i">
+      <button
+        @click="goTo(i)"
+        class="w-3 h-3 rounded-full transition"
+        :class="current === i 
+          ? 'bg-[var(--interactive-default)]' 
+          : 'bg-[var(--interactive-border)]'"
+        :aria-current="current === i"></button>
+    </template>
+  </div>
+
+</section>
+
+<!-- ALPINE COMPONENT -->
+<script>
+  function heroSlider({ interval = 5000, autoplay = false }) {
+    return {
+      current: 0,
+      slides: [],
+      timer: null,
+
+      init() {
+      
+        this.slides = [
+          {% for block in section.blocks %}
+          {
+            image: "{{ block.settings.image | img_url: '2000x' }}",
+            eyebrow: "{{ block.settings.eyebrow }}",
+            heading: "{{ block.settings.heading }}",
+            subheading: "{{ block.settings.subheading }}",
+            button_label: "{{ block.settings.button_label }}",
+            button_url: "{{ block.settings.button_url }}",
+            classes: "{{ block.settings.alignment }}"
+          },
+          {% endfor %}
+        ];
+
+        if (autoplay) this.start();
+      },
+
+      start() {
+        this.timer = setInterval(() => {
+          this.next();
+        }, interval);
+      },
+
+      stop() {
+        clearInterval(this.timer);
+      },
+
+      next() {
+        this.current = (this.current + 1) % this.slides.length;
+      },
+
+      prev() {
+        this.current = (this.current - 1 + this.slides.length) % this.slides.length;
+      },
+
+      goTo(i) {
+        this.current = i;
+      }
+    }
+  }
+</script>
+
+
+{% schema %}
+  {
+    "name": "Hero Slider",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "dark_overlay",
+        "label": "Dark overlay",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "overlay_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "label": "Overlay opacity",
+        "default": 40
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Enable autoplay",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "autoplay_speed",
+        "label": "Autoplay speed (ms)",
+        "min": 2000,
+        "max": 9500,
+        "step": 500,
+        "default": 5000
+      }, {
+        "type": "select",
+        "id": "hero_height",
+        "label": "Height",
+        "default": "medium",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          }, {
+            "value": "medium",
+            "label": "Medium"
+          }, {
+            "value": "large",
+            "label": "Large"
+          }, {
+            "value": "fullscreen",
+            "label": "Full screen"
+          }
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Background image"
+          },
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "subheading",
+            "label": "Subheading"
+          }, {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button text"
+          }, {
+            "type": "url",
+            "id": "button_url",
+            "label": "Button URL"
+          }, {
+            "type": "select",
+            "id": "alignment",
+            "label": "Text alignment",
+            "default": "items-center text-center",
+            "options": [
+              {
+                "value": "items-start text-left",
+                "label": "Left"
+              }, {
+                "value": "items-center text-center",
+                "label": "Center"
+              }, {
+                "value": "items-end text-right",
+                "label": "Right"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero Slider",
+        "blocks": [
+          {
+            "type": "slide"
+          }
+        ]
+      }
+    ]
+  }
+
+{% endschema %}

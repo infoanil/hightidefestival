@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+
+    <script>/* >> Heatmap.com :: Snippet << */(function (h,e,a,t,m,ap) { (h._heatmap_paq = []).push([ 'setTrackerUrl', (h.heatUrl = e) + a]); h.hErrorLogs=h.hErrorLogs || []; ap=t.createElement('script');  ap.src=h.heatUrl+'preprocessor.min.js?sid='+m;  ap.defer=true; t.head.appendChild(ap); ['error', 'unhandledrejection'].forEach(function (ty) {     h.addEventListener(ty, function (et) { h.hErrorLogs.push({ type: ty, event: et }); }); });})(window,'https://dashboard.heatmap.com/','heatmap.php',document,5374);</script>
+
+    
+  {% render 'elevateab' %}
+    {% # Inlined CSS Variables %}
+  {% render 'css-variables' %}
+
+    {% # Load and preload the critical CSS %}
+    {% comment %} {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }} {% endcomment %}
+
+    {% # Social, title, etc. %}
+    {% render 'meta-tags' %}
+
+    {%- liquid
+      render 'vite-tag' with 'main.css'
+      render 'vite-tag' with 'main.js'
+    -%}
+    <script>
+      window.CandyRackSliderCart = window.CandyRackSliderCart || {};
+    </script>
+    {% if template.name == 'collection' and template.suffix == 'passes' %}
+      {{ 'magicpass.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {{ content_for_header }}
+  </head>
+
+  <body class="bg-bg-color">
+    {% sections 'header-group' %}
+
+    {% comment %} Password protection for passes page {% endcomment %}
+    {% if settings.passes_password_enabled and template.suffix == 'passes' %}
+      {% render 'passes-password-wall' %}
+      <div x-data="{ unlocked: sessionStorage.getItem('passes_unlocked') === 'true' }" x-show="unlocked" x-cloak @passes-unlocked.window="unlocked = true">
+        {{ content_for_layout }}
+      </div>
+    {% else %}
+      {{ content_for_layout }}
+    {% endif %}
+
+    {% sections 'footer-group' %}
+
+    <script>
+      window.addEventListener('cart:add', () => {
+        console.log('[High Tide Debug] cart:add event fired');
+      });
+
+      window.addEventListener('passes-unlocked', () => {
+        console.log('[High Tide Debug] passes-unlocked event fired');
+      });
+    </script>
+  </body>
+</html>

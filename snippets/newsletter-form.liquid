@@ -1,0 +1,27 @@
+<form
+  method="post"
+  action="/contact#newsletter"
+  class="lg:w-[430px] flex flex-col gap-[9px] lg:flex-row items-center lg:bg-white p-1 rounded-[10px]">
+  <input
+    type="hidden"
+    name="form_type"
+    value="customer" />
+  <input
+    type="hidden"
+    name="contact[tags]"
+    value="newsletter" />
+
+  <input
+    type="email"
+    name="contact[email]"
+    placeholder="{{ placeholder }}"
+    required
+    class="lg:w-[260px] w-full p-2 border border-[var(--color-border)] rounded-md text-sm text-center h-[53px] bg-white
+           focus:ring-[var(--color-secondary)] 
+            placeholder:text-[#555555] font-semibold text-[17px] text-[#555555]">
+
+  <button type="submit" class="h-[53px] bg-secondary-navy hover:bg-primary-deepblue cursor-pointer text-white p-2 rounded-md font-extrabold uppercase
+           transition w-full">
+    {{ button_label }}
+  </button>
+</form>

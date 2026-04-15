@@ -1,0 +1,171 @@
+{% comment %}
+  Collection List — minimal cleanup:
+  - DS tokens
+  - WCAG improvements
+  - Cleaner structure
+  - No logic changes
+{% endcomment %}
+
+<section
+  class="py-[var(--space-xl)] px-[var(--space-md)] bg-[var(--surface-primary)]"
+  role="region"
+  aria-labelledby="collection-list-heading">
+  <div class="max-w-7xl mx-auto">
+
+    {% if section.settings.heading_text != blank %}
+      <h2 id="collection-list-heading" class="mb-[var(--space-lg)] font-bold text-[var(--font-size-regular-h2)] text-[var(--text-primary)]">
+        {{ section.settings.heading_text | escape }}
+      </h2>
+    {% endif %}
+
+    {% assign col_gap = section.settings.grid_column_gap | default: 10 %}
+    {% assign row_gap = section.settings.grid_row_gap | default: 10 %}
+
+    <div class="collections {{ section.settings.grid_item_width }}" style="column-gap: {{ col_gap }}px; row-gap: {{ row_gap }}px;">
+
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% assign collection = collections[block.settings.collection] %}
+
+          {% if collection %}
+            <div class="collection-content" {{ block.shopify_attributes }}>
+              {% render 'collection-card'
+                , collection: collection %}
+            </div>
+          {% endif %}
+        {% endfor %}
+
+      {% else %}
+        <p class="text-center text-[var(--font-size-body-sm)] text-[var(--text-secondary)] col-span-full">
+          No collections selected yet. Add collection blocks in the theme editor.
+        </p>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .collections {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--collection-card-size), 100%), 1fr));
+  }
+
+  .collection-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+
+  .collection-content > a,
+  .collection-content > .group {
+    flex-grow: 1;
+  }
+
+  .collections--compact {
+    --collection-card-size: 160px;
+  }
+
+  .collections--full {
+    --collection-card-size: 280px;
+  }
+
+  .collection-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .collection-card__image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    /* forces a perfect square */
+    overflow: hidden;
+    border-radius: var(--radius-md);
+  }
+
+  .collection-card__image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "Collection list",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading_text",
+        "label": "Section heading",
+        "default": "Shop collections"
+      }, {
+        "type": "select",
+        "id": "grid_item_width",
+        "label": "Grid item width",
+        "options": [
+          {
+            "value": "collections--compact",
+            "label": "Small"
+          }, {
+            "value": "collections--full",
+            "label": "Large"
+          }
+        ],
+        "default": "collections--full"
+      }, {
+        "type": "range",
+        "id": "grid_column_gap",
+        "label": "Spacing between columns",
+        "min": 0,
+        "max": 50,
+        "step": 5,
+        "unit": "px",
+        "default": 10
+      }, {
+        "type": "range",
+        "id": "grid_row_gap",
+        "label": "Spacing between rows",
+        "min": 0,
+        "max": 50,
+        "step": 5,
+        "unit": "px",
+        "default": 10
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection list",
+        "blocks": [
+          {
+            "type": "collection"
+          }, {
+            "type": "collection"
+          }, {
+            "type": "collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

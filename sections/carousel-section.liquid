@@ -1,0 +1,321 @@
+{% assign collection = section.settings.featured_collection %}
+{% assign limit = section.settings.limit | default: 8 %}
+
+
+<div class="bg-primary-lightblue py-[60px] lg:py-[100px]">
+  <div class="w-full container ">
+
+    {% if section.settings.show_title and section.settings.title != blank %}
+          <div class="headings flex flex-col  gap-6.5 lg:flex-row lg:justify-between lg:items-end flex-0 text-secondary-navy md:pb-10 md:border-b md:border-secondary-navy mb-7.5 md:mb-10 lg:mb-6">
+            <div>
+              <h2 class="font-amaya text-[50px] leading-[46px] md:text-[60px] md:leading-[60px] lg:text-[100px] lg:leading-[88px]   uppercase tracking-[-1px]">{{  section.settings.title | default: 'Get your passes' }}</h2>
+              <p class="legend uppercase text-lg font-bold mt-2 tracking-[-1px]">{{section.settings.legend | default:"Example Legend" }}</p>
+            </div>
+
+            <a href="{{ section.settings.button_url }}" class="inline-flex md:hidden self-baseline lg:self-end lg:inline-flex text-lg font-bold uppercase bg-secondary-navy hover:bg-primary-deepblue text-white py-3.5 px-6 rounded-[5px] transition duration-200">{{ section.settings.button_title }}</a>
+          </div>
+    {% endif %}
+
+    {% if collection and collection.products.size > 0 %}
+
+      <div
+        x-data='{
+          currentIndex: 0,
+          slidesPerView: 1,
+          autoplayEnabled: {{ section.settings.autoplay }},
+          autoplaySpeed: {{ section.settings.autoplay_duration }},
+          loop: {{ section.settings.loop }},
+          interval: null,
+
+          maxIndex() {
+            return $refs.track
+              ? Math.max($refs.track.children.length - this.slidesPerView, 0)
+              : 0;
+          },
+
+          updateSlides() {
+            const mobile = parseInt({{ section.settings.mobile_slides_per_view | json }});
+            const tablet = {{ section.settings.tablet_slides_per_view }};
+            const desktop = {{ section.settings.slides_per_view }};
+
+            if (window.innerWidth < 768) {
+              this.slidesPerView = mobile;
+            } else if (window.innerWidth < 1024) {
+              this.slidesPerView = tablet;
+            } else {
+              this.slidesPerView = desktop;
+            }
+
+            const max = this.maxIndex();
+            if (this.currentIndex > max) this.currentIndex = max;
+          },
+
+          startAutoplay() {
+            if (!this.autoplayEnabled) return;
+            this.interval = setInterval(() => { this.next(); }, this.autoplaySpeed);
+          },
+
+          stopAutoplay() {
+            if (!this.interval) return;
+            clearInterval(this.interval);
+            this.interval = null;
+          },
+
+          restartAutoplay() {
+            this.stopAutoplay();
+            this.startAutoplay();
+          },
+
+          next() {
+            const max = this.maxIndex();
+            if (this.currentIndex < max) {
+              this.currentIndex++;
+            } else if (this.loop && max > 0) {
+              this.currentIndex = 0;
+            }
+          },
+
+          prev() {
+            const max = this.maxIndex();
+            if (this.currentIndex > 0) {
+              this.currentIndex--;
+            } else if (this.loop && max > 0) {
+              this.currentIndex = max;
+            }
+          }
+        }'
+        x-init="updateSlides(); window.addEventListener('resize', updateSlides); startAutoplay()"
+        class="relative mx-auto max-w-7xl ">
+
+        <!-- TRACK -->
+        <div class="overflow-hidden">
+          <div
+            x-ref="track"
+            class="flex transition-transform duration-300 ease-in-out"
+            :style="`transform: translateX(-${currentIndex * (100 / slidesPerView)}%)`">
+
+            {% for product in collection.products limit: limit %}
+              <div class="flex-shrink-0 p-[var(--space-xs)]" :style="`width: ${100 / slidesPerView}%`">
+                {% render 'product-card'
+                  , product: product
+                  , show_rating: section.settings.card_show_rating
+                  , show_swatches: section.settings.card_show_swatches
+                  , show_quick_add: section.settings.card_show_quick_add
+                  , show_compare_price: section.settings.card_show_compare_price
+                %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        {% if section.settings.arrows_navigation %}
+          <!-- LEFT ARROW -->
+          <div class="pagination flex md:flex-row-reverse lg:justify-center items-center mt-6.5 gap-4.5">
+            <div class="flex gap-[9px]">
+              <button
+                type="button"
+                aria-label="Previous slide"
+                @click="prev(); restartAutoplay()"
+                class="bg-bg-color hover:bg-primary-deepblue hover:text-white w-8 h-8 border-2 border-secondary-navy rounded-[5px] flex justify-center items-center cursor-pointer">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.99967 12.6673L3.33301 8.00065L7.99967 3.33398" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12.6663 8H3.33301" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              </button>
+
+              <!-- RIGHT ARROW -->
+              <button
+                type="button"
+                aria-label="Next slide"
+                @click="next(); restartAutoplay()"
+                class="bg-bg-color hover:bg-primary-deepblue hover:text-white w-8 h-8 border-2 border-secondary-navy rounded-[5px] flex justify-center items-center cursor-pointer">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.00033 12.6673L12.667 8.00065L8.00033 3.33398" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3.33366 8H12.667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+              </button>  
+            </div>
+            <span class="lg:hidden flex-1 w-full h-[1px] bg-secondary-navy"></span>
+          </div>
+          
+        {% endif %}
+
+        {% if section.settings.dots_navigation %}
+          <!-- DOTS -->
+          <div class="flex justify-center gap-[var(--space-xs)] mt-[var(--space-md)]">
+            <template x-for="i in maxIndex() + 1">
+              <button
+                type="button"
+                aria-label="Go to slide"
+                @click="currentIndex = i - 1; restartAutoplay()"
+                class="size-2.5 rounded-full transition"
+                :class="currentIndex === i - 1
+                  ? 'bg-[var(--text-primary)]'
+                  : 'bg-[var(--interactive-border)] hover:bg-[var(--text-secondary)]'">
+                </button>
+            </template>
+          </div>
+        {% endif %}
+
+      </div>
+
+    {% else %}
+      <div class="mx-auto max-w-7xl px-[var(--space-sm)] sm:px-[var(--space-md)]">
+        <div class="p-[var(--space-md)] text-center
+                    bg-[var(--surface-secondary)] text-[var(--text-secondary)]
+                    border border-[var(--interactive-border)] rounded-lg">
+          Please select a collection for this carousel section.
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Product Slider Carousel",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_title",
+        "label": "Show Section Title",
+        "default": true
+      },
+        {
+        "type": "text",
+        "id": "legend",
+        "label": "Section Legend Text",
+        "default": "Shop the collection"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title Text",
+        "default": "Featured Products"
+      },
+      {
+        "type": "text",
+        "id": "button_title",
+        "label": "Button Title",
+        "default": "Shop Now"
+      },
+      {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button URL",
+      },
+      {
+        "type": "collection",
+        "id": "featured_collection",
+        "label": "Collection to display"
+      }, {
+        "type": "range",
+        "id": "limit",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "Number of products",
+        "default": 8
+      }, {
+        "type": "header",
+        "content": "Layout"
+      }, {
+        "type": "range",
+        "id": "slides_per_view",
+        "min": 1,
+        "max": 5,
+        "step": 1,
+        "label": "Desktop slides per view",
+        "default": 4
+      }, {
+        "type": "range",
+        "id": "tablet_slides_per_view",
+        "min": 1,
+        "max": 5,
+        "step": 1,
+        "label": "Tablet slides per view",
+        "default": 2
+      }, {
+        "type": "select",
+        "id": "mobile_slides_per_view",
+        "label": "Mobile slides per view",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          }, {
+            "value": "2",
+            "label": "2"
+          }
+        ],
+        "default": "1"
+      }, {
+        "type": "header",
+        "content": "Carousel behavior"
+      }, {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Enable Autoplay",
+        "default": true
+      }, {
+        "type": "range",
+        "id": "autoplay_duration",
+        "min": 2000,
+        "max": 9500,
+        "step": 500,
+        "unit": "ms",
+        "label": "Autoplay Speed",
+        "default": 4000
+      }, {
+        "type": "checkbox",
+        "id": "loop",
+        "label": "Loop Carousel",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "arrows_navigation",
+        "label": "Show Arrows",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "dots_navigation",
+        "label": "Show Dots",
+        "default": true
+      }, {
+        "type": "header",
+        "content": "Product card options"
+      }, {
+        "type": "checkbox",
+        "id": "card_show_rating",
+        "label": "Show rating",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "card_show_swatches",
+        "label": "Show color swatches",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "card_show_quick_add",
+        "label": "Show Quick Add button",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "card_show_compare_price",
+        "label": "Show compare-at price",
+        "default": true
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Slider",
+        "category": "Products"
+      }
+    ]
+  }
+{% endschema %}

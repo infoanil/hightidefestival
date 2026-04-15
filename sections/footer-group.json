@@ -1,0 +1,153 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "t:general.footer",
+  "sections": {
+    "event_details_qx6qb6": {
+      "type": "event-details",
+      "name": "Event Details",
+      "settings": {
+        "when": "June 5 & 6 2026",
+        "where": "Riverfront Park Charleston, SC"
+      }
+    },
+    "logos_QGAcY9": {
+      "type": "logos",
+      "blocks": {
+        "logo_LengWk": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/beatbox.png",
+            "link": "https://beatboxbeverages.com/"
+          }
+        },
+        "logo_jw6VPB": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/delta.png",
+            "link": "https://drinkdelta.com/"
+          }
+        },
+        "logo_8yz7tj": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/la_croix.png",
+            "link": "https://www.lacroixwater.com/"
+          }
+        },
+        "logo_th8WwR": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/loose_lucys.png",
+            "link": "https://looselucys.net/"
+          }
+        },
+        "logo_fETMD4": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/moxy-logo.jpg",
+            "link": "https://www.marriott.com/event-reservations/reservation-link.mi?id=1767638255518&key=GRP&app=resvlink&_branch_match_id=1520522146781411901&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi3OyczLtgdK2ALZZSCOWmaKraG5mbmZsYWRqampoYVadmqlrXtQgFpdUWpaKlB3Xnp8UlF%2BeXFqka1zRlF%2BbioAJnY85WAAAAA%3D"
+          }
+        },
+        "logo_hVUjnw": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Untitled_design_f64b141d-dbbb-4044-9fcb-b49028d67b9d.png",
+            "link": "https://urldefense.proofpoint.com/v2/url?u=https-3A__www.tablebud.com_hightide&d=DwMGaQ&c=euGZstcaTDllvimEN8b7jXrwqOf-v5A_CdpgnVfiiMM&r=OkEBuiumWwGnw6JXbYplLiUtG7JtEqHANBFDvDr48wA&m=XG0d1813Vq8lcr3nEIbdf0eryyZobVGZw4AO4ELI0bxofXaKVt6b5zGtD6t_Nn80&s=uAdQdozap4LPcJwXJpH2JXaYVtbLrQkel1VPY-ZrCVo&e="
+          }
+        }
+      },
+      "block_order": [
+        "logo_LengWk",
+        "logo_jw6VPB",
+        "logo_8yz7tj",
+        "logo_th8WwR",
+        "logo_fETMD4",
+        "logo_hVUjnw"
+      ],
+      "name": "Logos",
+      "settings": {
+        "title": "Partners",
+        "title_color": "#0b4166",
+        "background_color": "#ffffff",
+        "animation_duration": 140,
+        "autoplay": "true",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "link_list_V6q8ac": {
+          "type": "link_list",
+          "settings": {
+            "column_title": "Menu",
+            "link_list": "menu"
+          }
+        },
+        "link_list_cRTzG7": {
+          "type": "link_list",
+          "settings": {
+            "column_title": "Contact",
+            "link_list": "contact"
+          }
+        },
+        "link_list_64fYaQ": {
+          "type": "link_list",
+          "settings": {
+            "column_title": "Explore",
+            "link_list": "explore"
+          }
+        },
+        "link_list_Qp4nmj": {
+          "type": "link_list",
+          "settings": {
+            "column_title": "Follow",
+            "link_list": "social"
+          }
+        },
+        "social_list_mNrdb4": {
+          "type": "social_list",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "link_list_V6q8ac",
+        "link_list_cRTzG7",
+        "link_list_64fYaQ",
+        "link_list_Qp4nmj",
+        "social_list_mNrdb4"
+      ],
+      "settings": {
+        "logo_width": 120,
+        "policies_menu": "policies",
+        "show_social_icons": true,
+        "facebook_url": "",
+        "instagram_url": "",
+        "youtube_url": "https://www.youtube.com/@hightide7932",
+        "x_url": ""
+      }
+    }
+  },
+  "order": [
+    "event_details_qx6qb6",
+    "logos_QGAcY9",
+    "footer"
+  ]
+}

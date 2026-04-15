@@ -1,0 +1,23 @@
+{% comment %}
+  Desktop navigation wrapper
+  - Accepts `menu` and `layout`
+  - Delegates each item to `menu-item` snippet
+{% endcomment %}
+
+{% assign menu = menu | default: section.settings.menu %}
+{% assign layout = layout | default: 'horizontal' %}
+
+{% if menu and menu.links.size > 0 %}
+  <nav class="hidden lg:flex
+      {% if layout == 'horizontal' %}
+        lg:flex-1 lg:justify-center lg:gap-x-8
+      {% else %}
+        lg:flex-none lg:order-3 lg:w-full lg:justify-center lg:gap-x-8
+      {% endif %}" aria-label="Primary">
+    {% for link in menu.links %}
+      {% render 'menu-item'
+        , item: link
+        , level: 1 %}
+    {% endfor %}
+  </nav>
+{% endif %}

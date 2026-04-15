@@ -1,0 +1,122 @@
+{% comment %}
+  Hero Small Section
+  - Compact hero with background image + gradient overlay
+  - Subtitle, title, description, and button
+  - No marquee, no logo
+{% endcomment %}
+
+<div class="hero-small relative min-h-[400px] md:min-h-[455px] overflow-hidden pt-[64px] flex flex-col justify-center">
+
+  {% comment %} Background image {% endcomment %}
+  <div class="absolute inset-0 z-0">
+    {% render 'image-helper'
+      , image: section.settings.img_desktop
+      , max_width: 2000
+      , sizes: '100vw'
+      , class: 'w-full h-full object-cover object-center'
+    %}
+    {% render 'image-helper'
+      , image: section.settings.gradients
+      , max_width: 1000
+      , sizes: '100vw'
+      , class: 'w-full h-full object-cover object-bottom absolute left-0 top-0 animate-fading'
+    %}
+  </div>
+
+  {% comment %} Content {% endcomment %}
+  <div class="container relative flex flex-col items-center text-center text-white py-16 md:py-24">
+
+    {% if section.settings.subtitle != blank %}
+      <p class="type-body uppercase mb-3 tracking-widest opacity-90">
+        {{ section.settings.subtitle | escape }}
+      </p>
+    {% endif %}
+
+    {% if section.settings.title != blank %}
+      <h1 class="type-heading-hero mb-5">
+        {{ section.settings.title | escape }}
+      </h1>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <p class="type-body max-w-xl opacity-90 mb-8">
+        {{ section.settings.description | escape }}
+      </p>
+    {% endif %}
+
+    {% if section.settings.button_label != blank %}
+      <a
+        href="{{ section.settings.button_link }}"
+        class="inline-flex items-center justify-center transition duration-200 uppercase font-extrabold text-[15px] bg-trietary-orange hover:scale-105 hover:bg-primary-deepblue text-white rounded-[5px] px-12 py-3"
+      >
+        {{ section.settings.button_label | escape }}
+      </a>
+    {% endif %}
+
+  </div>
+
+</div>
+
+
+{% schema %}
+{
+  "name": "Hero Small",
+  "tag": "section",
+  "class": "section-hero-small",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Sponsorship"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Partner With Us"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Reach thousands of music lovers and culture-driven audiences."
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Let's Collab"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_desktop",
+      "label": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "gradients",
+      "label": "Gradient Overlay"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Small",
+      "category": "Hero"
+    }
+  ]
+}
+{% endschema %}

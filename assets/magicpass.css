@@ -1,0 +1,27 @@
+html,
+body {
+  background-color: #f6f5f0 !important;
+}
+
+#password-protect-login-div {
+  margin: 0 auto !important;
+  padding: 150px 0px !important;
+}
+
+#password-protect-login-div #loginMessageContainer {
+  padding: 1rem !important;
+  color: black !important;
+  text-align: left !important;
+  background-color: #d1e1ef !important;
+}
+
+#password-protect-login-div #passwordForm {
+  color: black !important;
+  text-align: left !important;
+  background-color: #d1e1ef !important;
+  padding: 1rem !important;
+}
+
+#password-protect-login-div #entity_password {
+  border: 1px solid black !important;
+}

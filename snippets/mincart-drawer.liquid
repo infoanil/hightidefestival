@@ -1,0 +1,345 @@
+{%- liquid
+  assign drawer_show_payment_badges = false
+  assign drawer_recommendations_enabled = false
+  assign drawer_recommendations_heading = blank
+  assign drawer_recommendations_limit = 0
+  assign drawer_recommendations_product_id = blank
+
+  for item in cart.items
+    if item.properties['_side_cart_payment_badges'] == 'true'
+      assign drawer_show_payment_badges = true
+    endif
+
+    if item.properties['_side_cart_recommendations_enabled'] == 'true'
+      assign drawer_recommendations_enabled = true
+      assign drawer_recommendations_heading = item.properties['_side_cart_recommendations_heading'] | default: 'Add items often bought together'
+      assign drawer_recommendations_limit = item.properties['_side_cart_recommendations_limit'] | default: 2
+      assign drawer_recommendations_product_id = item.properties['_side_cart_product_id'] | default: item.product.id
+    endif
+  endfor
+-%}
+
+<style>
+  .mini-cart-payment-badges svg {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<div x-data="minicart('{{ section.id }}')" x-init="init()" class="relative">
+
+  <!-- CART BUTTON -->
+  <button @click.prevent="handleButtonClick($event)"
+    class="relative rounded-md 
+           cursor-pointer 
+           cart-bubble-target focus:outline-none 
+           focus:ring-2 focus:ring-[var(--interactive-focus)]">
+
+    {% if cart.item_count > 0 %}
+      <sup class="absolute -top-1 -right-4  border-2 border-inherit rounded-full 
+                 w-4 h-4 flex items-center justify-center 
+                 text-[10px] font-bold">
+        {{ cart.item_count }}
+      </sup>
+    {% endif %}
+
+    <div class="w-7 h-7 flex items-center justify-center">
+      {% render 'icon-cart' %}
+    </div>
+  </button>
+
+
+  <!-- ========================= -->
+  <!--        MINICART DRAWER    -->
+  <!-- ========================= -->
+  <div 
+    x-show="open"
+    x-cloak
+    @keydown.escape.window="close()"
+    class="fixed inset-0 z-[999]">
+
+    <!-- BACKDROP -->
+    <div class="absolute inset-0 bg-black/40 opacity-100 transition-opacity"
+         @click="close()"></div>
+
+    <!-- RIGHT PANEL -->
+    <div 
+      class="absolute right-0 top-0 h-full w-full max-w-md 
+             bg-bg-color shadow-xl transform
+             transition-all duration-300"
+      :class="open ? 'translate-x-0' : 'translate-x-full'">
+
+      <!-- HEADER -->
+      <div class="p-4  flex items-center justify-between 
+                  border-b bg-secondary-navy text-white">
+        <h2 class="text-lg font-bold flex items-center gap-2">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.33325 14V9.33333C9.33325 8.09566 9.82492 6.90867 10.7001 6.0335C11.5753 5.15833 12.7622 4.66667 13.9999 4.66667C15.2376 4.66667 16.4246 5.15833 17.2998 6.0335C18.1749 6.90867 18.6666 8.09566 18.6666 9.33333V14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4.30956 14.7793C4.47873 12.7482 4.56389 11.7332 5.23356 11.116C5.90323 10.4988 6.92289 10.5 8.96106 10.5H19.0399C21.0769 10.5 22.0966 10.5 22.7662 11.116C23.4359 11.732 23.5211 12.7482 23.6902 14.7793L24.2899 21.973C24.3879 23.1548 24.4369 23.7463 24.0916 24.1232C23.7439 24.5 23.1512 24.5 21.9636 24.5H6.03623C4.84973 24.5 4.25589 24.5 3.90939 24.1232C3.56289 23.7463 3.61189 23.1548 3.71106 21.973L4.30956 14.7793Z" stroke="white" stroke-width="2"/>
+          </svg>
+          <span id="cart-header-count">CART [ {{ cart.item_count }} ]</span>
+        </h2>
+
+        <button @click="close()" class="p-2 uppercase text-lg font-bold">
+          close [ x ]
+        </button>
+      </div>
+
+      <!-- CONTENT -->
+      <div  class="flex flex-col h-[calc(100%-4rem)]">
+
+        <!-- LINE ITEMS -->
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 relative">
+          <div 
+            x-show="loading" 
+            class="absolute inset-0 bg-[var(--surface-primary)]/70 
+                   backdrop-blur-sm flex items-center justify-center z-20">
+            <svg class="animate-spin h-6 w-6 text-[var(--text-primary)]" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4l-3 3 3 3H4z"/>
+            </path>
+          </svg>
+          </div>
+
+          <ul class="-my-6 divide-y divide-[var(--interactive-border)]" x-ref="items">
+            {% for item in cart.items %}
+              <li class="flex py-6">
+                <div class="max-w-[129px] shrink-0 rounded-md overflow-hidden 
+                            border border-[var(--interactive-border)] bg-[var(--surface-secondary)]">
+                  <img src="{{ item.image.src | image_url: width: 130 }}" 
+                       class="w-full max-w-[129px] object-cover" alt="">
+                </div>
+
+                <div class="ml-4 flex flex-1 flex-col">
+                  <div class=" font-medium">
+                    <a href="{{ item.url }}" class="text-secondary-navy text-xl uppercase font-extrabold tracking-[-1px]">{{ item.product.title }}</a>
+                    {% for opt in item.options_with_values %}
+                    {% unless opt.name contains 'Default' %}
+                        <p class="text-lg uppercase font-bold tracking-[-1px] text-secondary-navy/80">{{ opt.name }}: {{ opt.value }}</p>
+                      {% endunless %}
+                    {% endfor %}
+                    <p class="text-secondary-navy font-extrabold text-xl tracking-[-1px]">{{ item.final_line_price | money }}</p>
+                  </div>
+
+
+
+                  <!-- Quantity -->
+                  <div class="flex items-center justify-between mt-3 text-sm">
+                    <div class="h-8 flex items-center gap-2 bg-primary-lightblue border border-secondary-navy rounded-[5px] font-extrabold text-secondary-navy">
+                      <button @click="change({{ forloop.index }}, {{ item.quantity | minus: 1 }})"
+                              :disabled="{{ item.quantity }} <= 1"
+                              class="size-6 flex items-center justify-center rounded-full 
+                                     disabled:opacity-50 cursor-pointer">
+                                    <svg width="14" height="4" viewBox="0 0 14 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                     <path d="M11.6667 0H1.66667C1.22464 0 0.800716 0.175595 0.488155 0.488156C0.175595 0.800716 0 1.22464 0 1.66667C0 2.10869 0.175595 2.53262 0.488155 2.84518C0.800716 3.15774 1.22464 3.33333 1.66667 3.33333H11.6667C12.1087 3.33333 12.5326 3.15774 12.8452 2.84518C13.1577 2.53262 13.3333 2.10869 13.3333 1.66667C13.3333 1.22464 13.1577 0.800716 12.8452 0.488156C12.5326 0.175595 12.1087 0 11.6667 0Z" fill="currentColor"/>
+                                    </svg>
+
+                                    </button>
+
+                      <span class="w-8 text-center">{{ item.quantity }}</span>
+
+                      <button @click="change({{ forloop.index }}, {{ item.quantity | plus: 1 }})"
+                              class="size-6 flex items-center justify-center rounded-full 
+                                     disabled:opacity-50 cursor-pointer">
+                                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M6.04167 0C6.61667 0 7.08333 0.466667 7.08333 1.04167V5H11.0417C11.3179 5 11.5829 5.10975 11.7782 5.3051C11.9736 5.50045 12.0833 5.7654 12.0833 6.04167C12.0833 6.31793 11.9736 6.58289 11.7782 6.77824C11.5829 6.97359 11.3179 7.08333 11.0417 7.08333H7.08333V11.0417C7.08333 11.3179 6.97359 11.5829 6.77824 11.7782C6.58289 11.9736 6.31793 12.0833 6.04167 12.0833C5.7654 12.0833 5.50045 11.9736 5.3051 11.7782C5.10975 11.5829 5 11.3179 5 11.0417V7.08333H1.04167C0.765399 7.08333 0.500448 6.97359 0.305097 6.77824C0.109747 6.58289 0 6.31793 0 6.04167C0 5.7654 0.109747 5.50045 0.305097 5.3051C0.500448 5.10975 0.765399 5 1.04167 5H5V1.04167C5 0.466667 5.46667 0 6.04167 0Z" fill="currentColor"/>
+                                    </svg>
+
+                                    </button>
+                    </div>
+
+                    <button @click="remove({{ forloop.index }})"
+                            class="font-bold text-lg text-secondary-navy/80 uppercase tracking-[-1px]">
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- TOTALS -->
+        <div class="border-t border-[var(--interactive-border)] p-4 sm:p-6 flex-shrink-0 bg-[var(--surface-primary)]" x-ref="totals">
+          <div class="flex justify-between  text-secondary-navy
+            uppercase text-xl font-extrabold tracking-[-1px]">
+            <p>total:</p>
+            <p>{{ cart.total_price | money }}</p>
+          </div>
+
+          {% if drawer_show_payment_badges and shop.enabled_payment_types.size > 0 %}
+            <div class="mini-cart-payment-badges mt-4 border-y border-secondary-navy/5 py-[9px]">
+              <div class="flex flex-wrap items-center gap-2">
+                {% for type in shop.enabled_payment_types %}
+                  <span class="flex h-[24px] w-[35px] items-center justify-center overflow-hidden rounded-[4px] bg-white">
+                    {{ type | payment_type_svg_tag }}
+                  </span>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% comment %} <p class="mt-0.5 text-sm text-[var(--text-secondary)]">
+            Shipping and taxes calculated at checkout.
+          </p> {% endcomment %}
+
+          {% if drawer_recommendations_enabled and drawer_recommendations_product_id != blank %}
+            <div class="mt-5 border-t border-secondary-navy/10 pt-5">
+              <h3 class="text-lg uppercase font-extrabold tracking-[-1px] text-secondary-navy">
+                {{ drawer_recommendations_heading }}
+              </h3>
+
+              <div
+                class="mt-4"
+                data-cart-recommendations
+                data-product-id="{{ drawer_recommendations_product_id }}"
+                data-limit="{{ drawer_recommendations_limit }}"
+              >
+                <p class="text-sm font-semibold text-secondary-navy/60">Loading…</p>
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="mt-6">
+            <a href="/checkout" class="flex items-center justify-center bg-trietary-orange text-lg uppercase font-extrabold
+                                      text-[var(--text-on-interactive)] px-6 py-3 rounded-md 
+                                      hover:bg-secondary-navy transition duration-200">
+            
+              Checkout - {{ cart.total_price | money }}
+            </a>
+          </div>
+
+          <button @click="close()" class="mt-6 w-full text-center text-[17px] text-primary-black cursor-pointer hover:text-primary-black/60 font-semibold">
+            Continue Shopping 
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function minicart(sectionId) {
+    return {
+      open: false,
+      loading: false,
+
+      init() {
+      this.loadRecommendations();
+      window.addEventListener('cart:add', async () => {
+        if (window.HighTideHasSideCart) return;
+        this.loading = true;
+        await this.refresh();  // update line items + totals
+        this.loading = false;
+        this.open = true;       // open AFTER refresh
+      });
+      },
+
+      handleButtonClick(event) {
+        if (window.HighTideHasSideCart) {
+          return;
+        }
+
+        this.open = true;
+      },
+
+
+      close() { this.open = false },
+
+      async refresh() {
+      const res = await fetch(`/?sections=${sectionId}`).then(r => r.json());
+      const html = new DOMParser().parseFromString(res[sectionId], "text/html");
+
+      // ✔ Replace only the INSIDE of refs
+      const newItems = html.querySelector("[x-ref=items]");
+      const newTotals = html.querySelector("[x-ref=totals]");
+
+      if (newItems && this.$refs.items) {
+        this.$refs.items.innerHTML = newItems.innerHTML;
+      }
+      if (newTotals && this.$refs.totals) {
+        this.$refs.totals.innerHTML = newTotals.innerHTML;
+      }
+
+      // Update cart bubble
+      const cart = await fetch('/cart.js').then(r => r.json());
+      this.updateBubble(cart.item_count);
+      await this.loadRecommendations();
+      
+      },
+
+      async change(line, qty) {
+        if (qty < 0) return;
+        this.loading = true;
+
+        await fetch('/cart/change.js', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ line, quantity: qty })
+        });
+
+        await this.refresh();
+        this.loading = false;
+      },
+
+      async remove(line) {
+        this.loading = true;
+        await this.change(line, 0);
+        this.loading = false;
+      },
+
+      updateBubble(count) {
+        const btn = document.querySelector('.cart-bubble-target');
+        if (btn) {
+          let badge = btn.querySelector('sup');
+          if (!badge) {
+            badge = document.createElement('sup');
+            badge.className =
+              'absolute top-0 right-0 bg-[var(--interactive-default)] text-[var(--text-on-interactive)] rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold';
+            btn.appendChild(badge);
+          }
+          badge.textContent = count > 0 ? count : '';
+          badge.classList.toggle('hidden', count === 0);
+        }
+        // Update the cart header count as well
+        const headerCount = document.getElementById('cart-header-count');
+        if (headerCount) {
+          headerCount.textContent = `CART [ ${count} ]`;
+        }
+      },
+
+      async loadRecommendations() {
+        const container = this.$refs.totals?.querySelector('[data-cart-recommendations]');
+        if (!container) return;
+
+        const productId = container.dataset.productId;
+        const limit = container.dataset.limit || '2';
+
+        if (!productId) {
+          container.innerHTML = '';
+          return;
+        }
+
+        try {
+          const response = await fetch(`/recommendations/products?section_id=cart-recommendations&product_id=${encodeURIComponent(productId)}&limit=${encodeURIComponent(limit)}`);
+          const html = await response.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const grid = doc.querySelector('[data-cart-recommendations-grid]');
+
+          if (!grid || !grid.innerHTML.trim()) {
+            container.innerHTML = '';
+            return;
+          }
+
+          container.innerHTML = grid.innerHTML;
+        } catch (error) {
+          container.innerHTML = '';
+        }
+      }
+    }
+
+  }
+</script>

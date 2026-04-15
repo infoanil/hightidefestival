@@ -1,0 +1,137 @@
+<div class="get-your-passes py-20">
+    <div class="mx-auto container">
+        <div class="headings flex-0 md:flex md:justify-between md:items-end text-secondary-navy text-center md:text-left pb-7.5 border-b border-secondary-navy mb-12 lg:mb-9">
+            <div>
+                <p class="uppercase text-lg font-bold mb-4 tracking-[-1px]">{{section.settings.legend | default:"Example Legend" }}</p>
+                <h2 class="font-amaya text-[50px] leading-[46px] md:text-[60px] md:leading-[56px] lg:text-[100px] lg:leading-[88px] uppercase tracking-[-1px]">{{  section.settings.heading | default: 'Get your passes' }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+      {% comment %} --- Product Grid --- {% endcomment %}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        {% comment %} First 3 products - use pass-image-card {% endcomment %}
+        {% if section.settings.product_1 != blank %}
+          <div class="f">
+            {% render 'pass-image-card', product: section.settings.product_1, button_url: section.settings.button_url_1, button_text: section.settings.button_text_1 %}
+          </div>
+        {% endif %}
+
+        {% if section.settings.product_2 != blank %}
+          <div class="f">
+            {% render 'pass-image-card', product: section.settings.product_2, button_url: section.settings.button_url_2, button_text: section.settings.button_text_2 %}
+          </div>
+        {% endif %}
+
+        {% if section.settings.product_3 != blank %}
+          <div class="f">
+            {% render 'pass-image-card', product: section.settings.product_3, button_url: section.settings.button_url_3, button_text: section.settings.button_text_3 %}
+          </div>
+        {% endif %}
+
+        {% comment %} Fourth product - use pass-highlight-card (full width) {% endcomment %}
+        {% if section.settings.product_4 != blank %}
+          <div class="col-span-full">
+            {% render 'pass-highlight-card', product: section.settings.product_4, button_url: section.settings.button_url_4, button_text: section.settings.button_text_4 %}
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+</div>
+
+
+
+{% schema %}
+{
+    "name": "Get Your Passes",
+    "settings": [
+        {
+            "type": "text",
+            "id": "legend",
+            "label": "Legend",
+            "default": "Example legend"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Get your passes"
+        },
+        {
+            "type": "header",
+            "content": "Products"
+        },
+        {
+            "type": "product",
+            "id": "product_1",
+            "label": "Product 1"
+        },
+        {
+            "type": "url",
+            "id": "button_url_1",
+            "label": "Product 1 Button URL"
+        },
+        {
+            "type": "text",
+            "id": "button_text_1",
+            "label": "Product 1 Button Text",
+            "default": "Sign up"
+        },
+        {
+            "type": "product",
+            "id": "product_2",
+            "label": "Product 2"
+        },
+        {
+            "type": "url",
+            "id": "button_url_2",
+            "label": "Product 2 Button URL"
+        },
+        {
+            "type": "text",
+            "id": "button_text_2",
+            "label": "Product 2 Button Text",
+            "default": "Sign up"
+        },
+        {
+            "type": "product",
+            "id": "product_3",
+            "label": "Product 3"
+        },
+        {
+            "type": "url",
+            "id": "button_url_3",
+            "label": "Product 3 Button URL"
+        },
+        {
+            "type": "text",
+            "id": "button_text_3",
+            "label": "Product 3 Button Text",
+            "default": "Sign up"
+        },
+        {
+            "type": "product",
+            "id": "product_4",
+            "label": "Product 4 (Highlighted)"
+        },
+        {
+            "type": "url",
+            "id": "button_url_4",
+            "label": "Product 4 Button URL"
+        },
+        {
+            "type": "text",
+            "id": "button_text_4",
+            "label": "Product 4 Button Text",
+            "default": "Contact us"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Get Your Passes"
+        }
+    ]
+}
+{% endschema %}

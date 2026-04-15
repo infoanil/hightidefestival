@@ -1,0 +1,134 @@
+{% comment %}
+  Search Template
+  Enhanced for:
+  - DS Tokens
+  - WCAG
+  - Wireframe structural consistency
+  - Accessible result & empty states
+{% endcomment %}
+
+{% render 'breadcrumb' %}
+
+<!-- HEADER -->
+<header class="text-center py-[var(--space-lg)] lg:py-[var(--space-xxl)] bg-[var(--surface-secondary)]/60">
+  <h1 class="font-bold text-[var(--font-size-display-h4)] text-[var(--text-primary)]">
+    Search Results
+  </h1>
+</header>
+
+<!-- MOBILE SEARCH INPUT -->
+<div class="px-[var(--space-md)] mt-[var(--space-md)] mb-[var(--space-lg)] lg:hidden">
+  <form
+    action="{{ routes.search_url }}"
+    method="get"
+    role="search"
+    class="flex justify-center">
+    <input
+      type="search"
+      name="q"
+      value="{{ search.terms | escape }}"
+      placeholder="Search"
+      aria-label="Search"
+      class="w-full max-w-sm border border-[var(--interactive-border)]
+             rounded-full py-[var(--space-sm)] px-[var(--space-md)]
+             text-center text-[var(--text-primary)]
+             bg-[var(--surface-primary)]
+             placeholder-[var(--text-secondary)]
+             focus:outline-none focus:ring-2 focus:ring-[var(--interactive-default)]
+             transition">
+  </form>
+</div>
+
+<!-- RESULTS WRAPPER -->
+<div class="px-[var(--space-md)] max-w-7xl mx-auto">
+
+  {% if search.performed %}
+
+    <!-- No Results -->
+    {% if search.results_count == 0 %}
+      <div class="text-center py-[var(--space-xl)]">
+        <p class="text-[var(--text-secondary)] text-[var(--font-size-body-lg)]">
+          {{ 'search.no_results_html' | t: terms: search.terms }}
+        </p>
+      </div>
+
+    {% else %}
+
+      <!-- Result Summary -->
+      <p class="mb-[var(--space-md)] text-[var(--text-secondary)] text-[var(--font-size-body-md)]">
+        {{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}
+      </p>
+
+      <div class="search-results-block">
+        {% paginate search.results by 20 %}
+
+          <!-- Results Grid -->
+          <div class="grid grid-cols-2 gap-[var(--space-md)]
+                      sm:grid-cols-3 lg:grid-cols-4">
+
+            {% for result in search.results %}
+
+              {% case result.object_type %}
+
+                <!-- PRODUCT -->
+                {% when 'product' %}
+                  {% render 'product-card'
+                    , product: result %}
+
+                <!-- ARTICLE -->
+                {% when 'article' %}
+                  <article class="group border border-[var(--interactive-border)]
+                                  rounded-lg p-[var(--space-md)]
+                                  bg-[var(--surface-primary)]
+                                  hover:bg-[var(--surface-secondary)]
+                                  hover:shadow-sm transition">
+                    <a href="{{ result.url }}" class="block mb-[var(--space-sm)]">
+                      <h3 class="font-medium text-[var(--font-size-body-md)]
+                                text-[var(--text-primary)]
+                                group-hover:text-[var(--interactive-default)]
+                                transition">
+                        {{ result.title }}
+                      </h3>
+                    </a>
+
+                    <p class="text-[var(--font-size-body-sm)] text-[var(--text-secondary)] line-clamp-3">
+                      {{ result.excerpt | strip_html | truncate: 120 }}
+                    </p>
+                  </article>
+
+                <!-- PAGE -->
+                {% when 'page' %}
+                  <a href="{{ result.url }}" class="group block border border-[var(--interactive-border)]
+                            rounded-lg p-[var(--space-md)]
+                            bg-[var(--surface-primary)]
+                            hover:bg-[var(--surface-secondary)]
+                            hover:shadow-sm transition">
+                    <h3 class="font-medium text-[var(--font-size-body-md)]
+                              text-[var(--text-primary)]
+                              group-hover:text-[var(--interactive-default)]">
+                      {{ result.title }}
+                    </h3>
+                  </a>
+
+              {% endcase %}
+
+            {% endfor %}
+          </div>
+
+          <!-- Pagination -->
+          <div class="mt-[var(--space-lg)]">
+            {{ paginate | default_pagination }}
+          </div>
+
+        {% endpaginate %}
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Search Results",
+    "settings": []
+  }
+{% endschema %}

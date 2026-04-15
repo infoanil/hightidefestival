@@ -1,0 +1,130 @@
+<div id="faq" class="faq py-20">
+    <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2">
+        <div class="content lg:pr-[75px]">
+            <header class="headings max-w-[888px] mx-auto md:mb-10 lg:mb-[50px] text-secondary-navy ">
+                <p class="legend uppercase text-lg font-bold mb-4">got questions?</p>
+                <h2 class="font-amaya text-[50px] leading-[46px] md:text-[60px] leading-[60px] lg:text-[80px] lg:leading-[74px] uppercase tracking-[-1px] mb-6">we got answers.</h2>
+            </header>
+            <div class="faq-wrapper" x-data="{ openIndex: 0 }">
+              {% for block in section.blocks %}
+                  {% if block.type == 'faq_item' %}
+                    <div class="faq-item border-b border-gray-200">
+                      <button
+                        type="button"
+                        class="w-full py-4 flex justify-between items-center text-left focus:outline-none  cursor-pointer"
+                        @click="openIndex === {{ forloop.index0 }} ? openIndex = null : openIndex = {{ forloop.index0 }}"
+                        :aria-expanded="openIndex === {{ forloop.index0 }}"
+                        :aria-controls="'faq-content-{{ block.id }}'"
+                      >
+                        <span class="font-extrabold text-lg md:text-xl uppercase tracking-[-1px]"
+                          :class="openIndex === {{ forloop.index0 }} ? 'text-primary-deepblue' : 'text-secondary-navy'"
+                        >
+                          {{ block.settings.question | default: "Example Question" }}
+                        </span>
+                        <svg
+                          class="w-6 h-6 transition-transform duration-200 text-secondary-navy"
+                          :class="{ 'rotate-180': openIndex === {{ forloop.index0 }} }"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      <div
+                        :id="'faq-content-{{ block.id }}'"
+                        x-show="openIndex === {{ forloop.index0 }}"
+                        x-transition:enter="transition-all duration-300 ease-in-out"
+                        x-transition:enter-start="opacity-0 max-h-0"
+                        x-transition:enter-end="opacity-100 max-h-[500px]"
+                        x-transition:leave="transition-all duration-200 ease-in-out"
+                        x-transition:leave-start="opacity-100 max-h-[500px]"
+                        x-transition:leave-end="opacity-0 max-h-0"
+                        x-collapse
+                        role="region"
+                        :aria-hidden="openIndex !== {{ forloop.index0 }}"
+                        class="pb-4 overflow-hidden"
+                      >
+                        <div class="text-[17px] leading-[20px] tracking-[-1px] md:max-w-[560px] font-semibold">
+                          {{ block.settings.answer | default: "This is an example answer. Replace it with your own content." }}
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+              {% endfor %}
+            </div>
+            <footer class="ask-a-question mt-[57px]">
+              <p class="text-xl uppercase font-extrabold text-[#555555]">Didn’t find your answer?</p>
+              <a href="{{ section.settings.button_url }}" class="bg-secondary-navy hover:bg-primary-deepblue rounded-[5px] text-white uppercase text-lg font-extrabold py-[18px] px-[38px] inline-block mt-6 text-primary-lightblue transition duration-200">{{ section.settings.button_text}}</a>
+            </footer>
+        </div>
+        <div class="media rounded-[10px] border-4 border-secondary-navy overflow-hidden hidden lg:block">
+            {% render 'image-helper'
+                , image: section.settings.image
+                , max_width: 2000
+                , sizes: '(min-width: 1024px) 50vw, 100vw'
+                , class: 'w-full h-full object-cover object-bottom'
+            %}
+        </div>
+    </div>
+</div>
+
+
+
+
+{% schema %}
+  {
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "legend",
+      "label": "Legend"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+        {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text"
+    },
+        {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "FAQ Item",
+      "type": "faq_item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ"
+    }
+  ]
+}  
+{% endschema %}

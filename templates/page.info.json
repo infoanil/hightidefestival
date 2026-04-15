@@ -1,0 +1,373 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "faq_rRDDXa": {
+      "type": "faq",
+      "blocks": {
+        "faq_item_LHKJ6H": {
+          "type": "faq_item",
+          "settings": {
+            "question": "WHERE IS HIGH TIDE?",
+            "answer": "High Tide Festival is taking place at Riverfront Park in N. Charleston 1061 Everglades Ave, North Charleston, SC 29405"
+          }
+        },
+        "faq_item_j4nBwk": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the age limit?",
+            "answer": "21+ only. We scan IDs."
+          }
+        },
+        "faq_item_WbQbi9": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the refund policy?",
+            "answer": "Tickets are non-refundable. No exceptions."
+          }
+        },
+        "faq_item_Ngaxra": {
+          "type": "faq_item",
+          "settings": {
+            "question": "When should I arrive?",
+            "answer": "Gates open at 12PM. Come early!"
+          }
+        },
+        "faq_item_jeYLrN": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there re-entry?",
+            "answer": "No re-entry due to venue policy."
+          }
+        },
+        "faq_item_PzgDjU": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What forms of payment are accepted?",
+            "answer": "This is a cashless event. Bring debit/credit cards"
+          }
+        },
+        "faq_item_LRhLPQ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there a dress code?",
+            "answer": "No dress code - express yourself! Just remember this is a city-owned public park."
+          }
+        },
+        "faq_item_F6FKdq": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the bag policy?",
+            "answer": "No bags larger than a handheld purse. We are not responsible for lost items. Please don’t leave bags lying around."
+          }
+        },
+        "faq_item_8A3DPb": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I bring a CamelBak or water bottle?",
+            "answer": "Yes - but it must be empty. Water filling stations are available throughout the grounds."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_LHKJ6H",
+        "faq_item_j4nBwk",
+        "faq_item_WbQbi9",
+        "faq_item_Ngaxra",
+        "faq_item_jeYLrN",
+        "faq_item_PzgDjU",
+        "faq_item_LRhLPQ",
+        "faq_item_F6FKdq",
+        "faq_item_8A3DPb"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "image": "shopify://shop_images/Faq.png",
+        "legend": "got questions?",
+        "heading": "<p>we’ve got answers<br/></p>",
+        "button_text": "Ask us a question",
+        "button_url": "mailto:info@hightidefestival.com"
+      }
+    },
+    "item_restrictions_P3g9Qr": {
+      "type": "item-restrictions",
+      "blocks": {
+        "item_yGf9HA": {
+          "type": "item",
+          "settings": {
+            "text": "A good attitude!",
+            "extra": "Let’s have some fun!"
+          }
+        },
+        "item_tN6tUF": {
+          "type": "item",
+          "settings": {
+            "text": "Sunglasses",
+            "extra": ""
+          }
+        },
+        "item_pTpWWy": {
+          "type": "item",
+          "settings": {
+            "text": "Sunscreen",
+            "extra": ""
+          }
+        },
+        "item_DceTVU": {
+          "type": "item",
+          "settings": {
+            "text": "Reusable water bottles",
+            "extra": ""
+          }
+        },
+        "item_d6cXz8": {
+          "type": "item",
+          "settings": {
+            "text": "Cell phone",
+            "extra": ""
+          }
+        },
+        "item_RiMwML": {
+          "type": "item",
+          "settings": {
+            "text": "Debit / Credit cards",
+            "extra": ""
+          }
+        },
+        "item_jtHEfK": {
+          "type": "item",
+          "settings": {
+            "text": "Valid ID",
+            "extra": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_yGf9HA",
+        "item_tN6tUF",
+        "item_pTpWWy",
+        "item_DceTVU",
+        "item_d6cXz8",
+        "item_RiMwML",
+        "item_jtHEfK"
+      ],
+      "name": "Item Restrictions",
+      "settings": {
+        "legend": "Highly Encouraged",
+        "heading": "ALLOWED ITEMS",
+        "description": "This is a long day in the sun in a place where weather changes fast. Be prepared!",
+        "disclaimer": "",
+        "restriction": "allowed"
+      }
+    },
+    "item_restrictions_3dBc8L": {
+      "type": "item-restrictions",
+      "blocks": {
+        "item_gARcaR": {
+          "type": "item",
+          "settings": {
+            "text": "Anything unsealed",
+            "extra": ""
+          }
+        },
+        "item_Q93Kmx": {
+          "type": "item",
+          "settings": {
+            "text": "Drugs / drug paraphernalia",
+            "extra": ""
+          }
+        },
+        "item_QPHP63": {
+          "type": "item",
+          "settings": {
+            "text": "Cigarettes / E-cigs / Vapes",
+            "extra": ""
+          }
+        },
+        "item_d3qrEb": {
+          "type": "item",
+          "settings": {
+            "text": "Outside food & drink",
+            "extra": ""
+          }
+        },
+        "item_9cMbXD": {
+          "type": "item",
+          "settings": {
+            "text": "Laser pointers",
+            "extra": ""
+          }
+        },
+        "item_cxzTXi": {
+          "type": "item",
+          "settings": {
+            "text": "Lighters",
+            "extra": ""
+          }
+        },
+        "item_Xpf6aE": {
+          "type": "item",
+          "settings": {
+            "text": "Glass bottles or containers",
+            "extra": ""
+          }
+        },
+        "item_hYXUi4": {
+          "type": "item",
+          "settings": {
+            "text": "Weapons of any kind",
+            "extra": ""
+          }
+        },
+        "item_eaH6QB": {
+          "type": "item",
+          "settings": {
+            "text": "Selfie sticks",
+            "extra": ""
+          }
+        },
+        "item_6tLdFg": {
+          "type": "item",
+          "settings": {
+            "text": "Audio recording devices",
+            "extra": ""
+          }
+        },
+        "item_tTdVYd": {
+          "type": "item",
+          "settings": {
+            "text": "Professional photo/video cameras",
+            "extra": ""
+          }
+        },
+        "item_8zCc8z": {
+          "type": "item",
+          "settings": {
+            "text": "Drones",
+            "extra": ""
+          }
+        },
+        "item_kYc6nA": {
+          "type": "item",
+          "settings": {
+            "text": "Umbrellas",
+            "extra": "(Parasols are OK)"
+          }
+        },
+        "item_tRJKJe": {
+          "type": "item",
+          "settings": {
+            "text": "Open makeup",
+            "extra": ""
+          }
+        },
+        "item_YApATx": {
+          "type": "item",
+          "settings": {
+            "text": "Chalk, markers, sharpies",
+            "extra": ""
+          }
+        },
+        "item_RmKdez": {
+          "type": "item",
+          "settings": {
+            "text": "Chains or chain wallets",
+            "extra": ""
+          }
+        },
+        "item_CitzFt": {
+          "type": "item",
+          "settings": {
+            "text": "Stickers, flyers, or solicitations",
+            "extra": ""
+          }
+        },
+        "item_VrBcQd": {
+          "type": "item",
+          "settings": {
+            "text": "Pets",
+            "extra": "(Guide/Service dogs OK)"
+          }
+        },
+        "item_TaaqqC": {
+          "type": "item",
+          "settings": {
+            "text": "No glow sticks",
+            "extra": ""
+          }
+        },
+        "item_qpmkbP": {
+          "type": "item",
+          "settings": {
+            "text": "No confetti poppers",
+            "extra": ""
+          }
+        },
+        "item_jBzXwt": {
+          "type": "item",
+          "settings": {
+            "text": "No glitter bombs, mini inflatables, or disposable decor",
+            "extra": ""
+          }
+        },
+        "item_eHmGXK": {
+          "type": "item",
+          "settings": {
+            "text": "No confetti poppers",
+            "extra": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_gARcaR",
+        "item_Q93Kmx",
+        "item_QPHP63",
+        "item_d3qrEb",
+        "item_9cMbXD",
+        "item_cxzTXi",
+        "item_Xpf6aE",
+        "item_hYXUi4",
+        "item_eaH6QB",
+        "item_6tLdFg",
+        "item_tTdVYd",
+        "item_8zCc8z",
+        "item_kYc6nA",
+        "item_tRJKJe",
+        "item_YApATx",
+        "item_RmKdez",
+        "item_CitzFt",
+        "item_VrBcQd",
+        "item_TaaqqC",
+        "item_qpmkbP",
+        "item_jBzXwt",
+        "item_eHmGXK"
+      ],
+      "name": "Item Restrictions",
+      "settings": {
+        "legend": "do not bring",
+        "heading": " PROHIBITED ITEMS",
+        "description": "Use your head. This is a short list. Security has final say.",
+        "disclaimer": "If I ever find out who brought a confetti popper last year, you will be billed extensively for my chiropractor. I picked those things up for hours. I have security cameras this year. I will find you. I am in pain. I hate you.",
+        "restriction": "prohibited"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "faq_rRDDXa",
+    "item_restrictions_P3g9Qr",
+    "item_restrictions_3dBc8L"
+  ]
+}

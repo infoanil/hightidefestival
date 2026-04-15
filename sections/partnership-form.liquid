@@ -1,0 +1,464 @@
+{% comment %}
+  Partnership Form Section
+  - "Start a Partnership" sponsorship contact form
+  - Two-column layout on desktop (heading left, form right)
+  - Stacked on mobile
+  - Decorative abstract background shapes
+{% endcomment %}
+
+<style>
+  #section-partnership-form-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    #section-partnership-form-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+
+  /* Decorative background blobs */
+  #section-partnership-form-{{ section.id }} .pf-blob {
+    position: absolute;
+    fill: rgba(255, 255, 255, 0.55);
+    pointer-events: none;
+  }
+</style>
+
+<section
+  id="section-partnership-form-{{ section.id }}"
+>
+  <div class="media">
+    {% render 'image-helper'
+        , image: section.settings.bg_image
+        , max_width: 1500
+        , sizes: '(max-width: 1023px) 100vw, 50vw'
+        , class: 'w-full h-full object-cover object-bottom absolute left-0 top-0 ' 
+    %}
+  </div>
+
+  <div class="container max-w-2xl px-6 lg:px-8 relative">
+    <div class="flex flex-col  md:gap-8  md:items-start">
+
+      {%- comment -%} Left: Heading & intro {%- endcomment -%}
+      <div class=" mb-10 md:mb-0 md:pt-2">
+        <h2
+          class="type-heading-1 text-secondary-navy
+           mb-4"
+        >
+          {{ section.settings.heading | escape }}
+        </h2>
+        {% if section.settings.subtext != blank %}
+          <p class="type-body text-secondary-navy" ">
+            {{ section.settings.subtext | escape }}
+          </p>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Right: Form {%- endcomment -%}
+      <div class="w-full">
+        {%- assign form_id = 'partnership-form-' | append: section.id -%}
+        {% form 'contact', id: form_id %}
+
+          {% if form.posted_successfully? %}
+            <div class="flex flex-col items-start gap-4 py-10" role="alert">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0b4166" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 12l3 3 5-5"/>
+              </svg>
+              <h3 class="type-heading-5 text-secondary-navy">
+                {{ section.settings.success_heading | escape }}
+              </h3>
+              <p class="type-body text-secondary-navy">
+                {{ section.settings.success_message | escape }}
+              </p>
+            </div>
+          {% else %}
+
+          {% if form.errors %}
+            <div class="p-4 mb-6 rounded bg-white text-sm" style="color: #dc2626;" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+
+          {%- comment -%} Company / Organization Name {%- endcomment -%}
+          <div class="mb-4">
+            <label for="company_name" class="type-heading-5 text-secondary-navy mb-2 inline-flex">
+              {{ section.settings.label_company | escape }}*
+            </label>
+            <input
+              id="company_name"
+              type="text"
+              name="contact[company_name]"
+
+              placeholder="{{ section.settings.placeholder_company | escape }}"
+              required
+              autocomplete="organization"
+            >
+          </div>
+
+          {%- comment -%} Primary Contact Name & Title {%- endcomment -%}
+          <div class="mb-4">
+            <label for="name" class="type-heading-5 text-secondary-navy mb-2 inline-flex">
+              {{ section.settings.label_contact | escape }}*
+            </label>
+            <input
+              id="name"
+              type="text"
+              name="contact[name]"
+              placeholder="{{ section.settings.placeholder_contact | escape }}"
+              required
+              autocomplete="name"
+            >
+          </div>
+
+          {%- comment -%} Email + Phone (two columns) {%- endcomment -%}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="email" class="type-heading-5 text-secondary-navy mb-2 inline-flex">
+                {{ section.settings.label_email | escape }}*
+              </label>
+              <input
+                id="email"
+                type="email"
+                name="contact[email]"
+  
+                placeholder="{{ section.settings.placeholder_email | escape }}"
+                required
+                autocomplete="email"
+              >
+            </div>
+            <div>
+              <label for="phone" class="type-heading-5 text-secondary-navy mb-2 inline-flex">
+                {{ section.settings.label_phone | escape }}*
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                name="contact[phone]"
+  
+                placeholder="{{ section.settings.placeholder_phone | escape }}"
+                required
+                autocomplete="tel"
+              >
+            </div>
+          </div>
+
+          {%- comment -%} Company Website {%- endcomment -%}
+          <div class="mb-4" x-data>
+            <label for="company_website" class="type-heading-5 text-secondary-navy mb-2 inline-flex">
+              {{ section.settings.label_website | escape }}*
+            </label>
+            <input
+              id="company_website"
+              type="url"
+              name="contact[company_website]"
+              placeholder="{{ section.settings.placeholder_website | escape }}"
+              required
+              autocomplete="url"
+              @blur="if ($el.value && !/^https?:\/\//i.test($el.value)) $el.value = 'https://' + $el.value"
+            >
+          </div>
+
+          {%- comment -%} Budget {%- endcomment -%}
+          <div class="mb-4">
+            <label for="budget" class="type-heading-5 text-secondary-navy mb-2 inline-flex">
+              {{ section.settings.label_budget | escape }}*
+            </label>
+            <select
+              id="budget"
+              name="contact[budget]"
+
+              required
+            >
+              <option value="" disabled selected>{{ section.settings.budget_option_1 | escape }}</option>
+              <option value="{{ section.settings.budget_option_0 | escape }}">{{ section.settings.budget_option_0 | escape }}</option>
+              <option value="{{ section.settings.budget_option_2 | escape }}">{{ section.settings.budget_option_2 | escape }}</option>
+              <option value="{{ section.settings.budget_option_3 | escape }}">{{ section.settings.budget_option_3 | escape }}</option>
+              <option value="{{ section.settings.budget_option_4 | escape }}">{{ section.settings.budget_option_4 | escape }}</option>
+              <option value="{{ section.settings.budget_option_5 | escape }}">{{ section.settings.budget_option_5 | escape }}</option>
+            </select>
+          </div>
+
+          {%- comment -%} Message {%- endcomment -%}
+          <div class="mb-4">
+            <label for="body" class="type-heading-5 text-secondary-navy mb-2 inline-flex">
+              {{ section.settings.label_message | escape }}
+            </label>
+            <textarea
+              id="body"
+              name="contact[body]"
+
+              rows="5"
+              placeholder="{{ section.settings.placeholder_message | escape }}"
+            ></textarea>
+          </div>
+
+          {%- comment -%} Terms checkbox {%- endcomment -%}
+          <div class="flex items-start gap-1.5 mb-6">
+            <input
+              id="accepts_terms"
+              type="checkbox"
+              name="contact[accepts_terms]"
+              value="Yes"
+              required
+              class="mt-0.5 h-4 w-4 flex-shrink-0"
+              style="accent-color: {{ section.settings.button_color }};"
+            >
+            <label for="accepts_terms" class="type-body text-seconday-navy">
+              {{ section.settings.terms_label | escape }}
+            </label>
+          </div>
+
+          {%- comment -%} Submit {%- endcomment -%}
+          <input type="submit" value="{{ section.settings.button_label | escape }}">
+
+          {% endif %}
+
+        {% endform %}
+      </div>
+
+    </div>
+  </div>
+
+
+</section>
+
+
+{% schema %}
+{
+  "name": "Partnership Form",
+  "tag": "section",
+  "class": "section-partnership-form",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Start a Partnership"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Fill out the form below and our team will reach out to explore sponsorship opportunities."
+    },
+    {
+      "type": "text",
+      "id": "success_heading",
+      "label": "Success Heading",
+      "default": "Thank you for reaching out!"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "We've received your submission and our team will be in touch soon."
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+
+    {
+      "type": "header",
+      "content": "Form Labels"
+    },
+    {
+      "type": "text",
+      "id": "label_company",
+      "label": "Company Field Label",
+      "default": "Company / Organization Name"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_company",
+      "label": "Company Field Placeholder",
+      "default": "Company name"
+    },
+    {
+      "type": "text",
+      "id": "label_contact",
+      "label": "Contact Field Label",
+      "default": "Primary Contact Name & Title"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_contact",
+      "label": "Contact Field Placeholder",
+      "default": "Your name"
+    },
+    {
+      "type": "text",
+      "id": "label_email",
+      "label": "Email Field Label",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_email",
+      "label": "Email Field Placeholder",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "label_phone",
+      "label": "Phone Field Label",
+      "default": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_phone",
+      "label": "Phone Field Placeholder",
+      "default": "phone"
+    },
+    {
+      "type": "text",
+      "id": "label_website",
+      "label": "Website Field Label",
+      "default": "Company Website"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_website",
+      "label": "Website Field Placeholder",
+      "default": "URL"
+    },
+    {
+      "type": "text",
+      "id": "label_budget",
+      "label": "Budget Field Label",
+      "default": "Budget"
+    },
+    {
+      "type": "text",
+      "id": "budget_option_1",
+      "label": "Budget Placeholder / Default Option",
+      "default": "Select a budget range"
+    },
+    {
+      "type": "text",
+      "id": "budget_option_0",
+      "label": "Budget Option: Under $5k",
+      "default": "Under $5,000"
+    },
+    {
+      "type": "text",
+      "id": "budget_option_2",
+      "label": "Budget Option 2",
+      "default": "$5,000 - $10,000"
+    },
+    {
+      "type": "text",
+      "id": "budget_option_3",
+      "label": "Budget Option 3",
+      "default": "$10,000 - $25,000"
+    },
+    {
+      "type": "text",
+      "id": "budget_option_4",
+      "label": "Budget Option 4",
+      "default": "$25,000 - $50,000"
+    },
+    {
+      "type": "text",
+      "id": "budget_option_5",
+      "label": "Budget Option 5",
+      "default": "$50,000+"
+    },
+    {
+      "type": "text",
+      "id": "label_message",
+      "label": "Message Field Label",
+      "default": "More Info and Key Goals"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_message",
+      "label": "Message Field Placeholder",
+      "default": "Write your message here"
+    },
+    {
+      "type": "text",
+      "id": "terms_label",
+      "label": "Terms Checkbox Label",
+      "default": "Accepts terms & conditions"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Submit Button Label",
+      "default": "Submit"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Partnership Form",
+      "category": "Sponsorship"
+    }
+  ]
+}
+{% endschema %}

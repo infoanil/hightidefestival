@@ -1,0 +1,423 @@
+{% assign bg_color_mobile = section.settings.background_color_mobile | default: section.settings.background_color %}
+{% assign bg_color_desktop = section.settings.background_color_desktop | default: section.settings.background_color_mobile | default: section.settings.background_color %}
+{% assign bg_image = section.settings.background_image %}
+{% assign layout_mobile = section.settings.layout_mobile %}
+{% assign layout_desktop = section.settings.layout_desktop %}
+{% assign button_position = section.settings.button_position %}
+{% assign text_mobile_order = 'order-1' %}
+{% assign image_mobile_order = 'order-2' %}
+{% assign show_title_mobile = true %}
+{% assign show_title_desktop = true %}
+
+{% if layout_mobile == 'image_first' %}
+  {% assign text_mobile_order = 'order-2' %}
+  {% assign image_mobile_order = 'order-1' %}
+{% endif %}
+
+{% if section.settings.hide_title_mobile %}
+  {% assign show_title_mobile = false %}
+{% endif %}
+
+{% if section.settings.hide_title_desktop %}
+  {% assign show_title_desktop = false %}
+{% endif %}
+
+<style>
+  #section-banner-{{ section.id }} {
+    {% if bg_image != blank %}
+      background-image: url('{{ bg_image | image_url: width: 1920 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% else %}
+      background-color: {{ bg_color_mobile }};
+    {% endif %}
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    margin-top: {{ section.settings.margin_top_mobile }}px;
+    margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+  }
+
+  {% if section.settings.show_on_mobile == false %}
+    @media (max-width: 767px) {
+      #shopify-section-{{ section.id }} {
+        display: none;
+      }
+    }
+  {% endif %}
+
+  @media (min-width: 768px) {
+    {% if section.settings.show_on_desktop == false %}
+      #shopify-section-{{ section.id }} {
+        display: none;
+      }
+    {% endif %}
+
+    #section-banner-{{ section.id }} {
+      {% if bg_image == blank %}
+        background-color: {{ bg_color_desktop }};
+      {% endif %}
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+      margin-top: {{ section.settings.margin_top_desktop }}px;
+      margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+    }
+  }
+</style>
+
+<section
+  id="section-banner-{{ section.id }}"
+  aria-labelledby="banner-heading-{{ section.id }}"
+>
+  <div id="section-banner" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-center gap-8 md:gap-12 lg:gap-16 lg:w-fit lg:mx-auto">
+      <div class="flex-1 text-center md:text-left lg:flex lg:flex-col lg:justify-center lg:max-w-md {{ text_mobile_order }} {% if layout_desktop == 'image_first' %}md:order-2{% else %}md:order-1{% endif %}">
+        {% if section.settings.heading != blank or section.settings.heading_mobile != blank or section.settings.heading_desktop != blank %}
+          {% if show_title_mobile and show_title_desktop %}
+            <h2
+              id="banner-heading-{{ section.id }}"
+              class="font-amaya text-[50px] leading-[46px] uppercase tracking-[-1px] mb-4 md:hidden"
+              style="color: {{ section.settings.heading_color }};"
+            >
+              {{ section.settings.heading_mobile | default: section.settings.heading | escape }}
+            </h2>
+            <h2
+              class="hidden font-amaya md:block md:text-[60px] md:leading-[56px] lg:text-[100px] lg:leading-[88px] uppercase tracking-[-1px] md:mb-6"
+              style="color: {{ section.settings.heading_color }};"
+            >
+              {{ section.settings.heading_desktop | default: section.settings.heading_mobile | default: section.settings.heading | escape }}
+            </h2>
+          {% elsif show_title_mobile %}
+            <h2
+              id="banner-heading-{{ section.id }}"
+              class="font-amaya text-[50px] leading-[46px] uppercase tracking-[-1px] mb-4 md:hidden"
+              style="color: {{ section.settings.heading_color }};"
+            >
+              {{ section.settings.heading_mobile | default: section.settings.heading | escape }}
+            </h2>
+          {% elsif show_title_desktop %}
+            <h2
+              id="banner-heading-{{ section.id }}"
+              class="hidden font-amaya md:block md:text-[60px] md:leading-[56px] lg:text-[100px] lg:leading-[88px] uppercase tracking-[-1px] md:mb-6"
+              style="color: {{ section.settings.heading_color }};"
+            >
+              {{ section.settings.heading_desktop | default: section.settings.heading_mobile | default: section.settings.heading | escape }}
+            </h2>
+          {% endif %}
+        {% endif %}
+
+        {% capture banner_text_markup %}
+          {% if section.settings.text != blank %}
+            <div class="uppercase text-lg font-bold mb-4 tracking-[-1px]" style="color: {{ section.settings.text_color }};">
+              {{ section.settings.text }}
+            </div>
+          {% endif %}
+        {% endcapture %}
+
+        {% capture banner_button_markup %}
+          {% if section.settings.button_label != blank %}
+            <a
+              href="{{ section.settings.button_link }}"
+              class="w-fit inline-block transition duration-200 uppercase font-extrabold text-[15px] bg-trietary-orange hover:scale-105 hover:bg-primary-deepblue hover:border border-white text-white rounded-[5px] px-5 py-2.5"
+            >
+              {{ section.settings.button_label | escape }}
+            </a>
+          {% endif %}
+        {% endcapture %}
+
+        {% if button_position == 'second' %}
+          {{ banner_button_markup }}
+          {{ banner_text_markup }}
+        {% else %}
+          {{ banner_text_markup }}
+          <div class="hidden md:block">
+            {{ banner_button_markup }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="flex-1 lg:flex-none lg:w-fit flex justify-center md:justify-end {{ image_mobile_order }} {% if layout_desktop == 'image_first' %}md:order-1{% else %}md:order-2{% endif %}">
+        {% if section.settings.image != blank %}
+          <div class="w-full max-w-lg">
+            {{
+              section.settings.image
+              | image_url: width: 800
+              | image_tag: loading: 'lazy', alt: section.settings.image.alt, class: 'w-full h-auto rounded-md'
+            }}
+
+            {% if button_position == 'last' %}
+              <div class="mt-4 flex justify-center md:hidden">
+                {{ banner_button_markup }}
+              </div>
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="w-full max-w-lg">
+            <div class="aspect-video flex justify-center items-center bg-[var(--surface-secondary)] border border-dashed border-[var(--interactive-border)] rounded-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-16 h-16 text-[var(--text-secondary)]"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+              </svg>
+            </div>
+
+            {% if button_position == 'last' %}
+              <div class="mt-4 flex justify-center md:hidden">
+                {{ banner_button_markup }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner",
+  "tag": "section",
+  "class": "section-banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout_mobile",
+      "label": "Layout (Mobile)",
+      "options": [
+        {
+          "value": "text_first",
+          "label": "Text first"
+        },
+        {
+          "value": "image_first",
+          "label": "Image first"
+        }
+      ],
+      "default": "text_first"
+    },
+    {
+      "type": "select",
+      "id": "layout_desktop",
+      "label": "Layout (Desktop)",
+      "options": [
+        {
+          "value": "text_first",
+          "label": "Text first"
+        },
+        {
+          "value": "image_first",
+          "label": "Image first"
+        }
+      ],
+      "default": "text_first"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_desktop",
+      "label": "Show on desktop",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tickets On Sale Now!"
+    },
+    {
+      "type": "text",
+      "id": "heading_mobile",
+      "label": "Heading (mobile)",
+      "default": "Tickets On Sale Now!"
+    },
+    {
+      "type": "text",
+      "id": "heading_desktop",
+      "label": "Heading (desktop)",
+      "default": "Tickets On Sale Now!"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_title_mobile",
+      "label": "Hide title on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_title_desktop",
+      "label": "Hide title on desktop",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "button_position",
+      "label": "Button position",
+      "options": [
+        {
+          "value": "last",
+          "label": "Button last"
+        },
+        {
+          "value": "second",
+          "label": "Button second"
+        }
+      ],
+      "default": "last"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Buy now before prices increase.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Buy Tickets"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color",
+      "id": "background_color_mobile",
+      "label": "Background color (mobile)",
+      "default": "#d1e1ef"
+    },
+    {
+      "type": "color",
+      "id": "background_color_desktop",
+      "label": "Background color (desktop)",
+      "default": "#d1e1ef"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image (overrides color)"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#0b4166"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#0b4166"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Top (Desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Bottom (Desktop)",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner"
+    }
+  ]
+}
+{% endschema %}

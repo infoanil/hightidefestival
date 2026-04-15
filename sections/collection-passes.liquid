@@ -1,0 +1,320 @@
+{% comment %}
+  This section is used in the list-collections template to render a list of
+  products from the current collection.
+{% endcomment %}
+
+<section id="{{ section.settings.section_id }}" class="container py-6 md:pt-[68px]">
+  {% comment %} --- Main Content Layout: Filters and Products --- {% endcomment %}
+  <div class="flex flex-col lg:space-x-10">
+    <div class="w-full" id="ProductGridContainer">
+      <div class="flex items-center gap-5 mb-7.5">
+        <h2 class="text-secondary-navy whitespace-nowrap text-[30px] leading-[100%] font-extrabold uppercase tracking-[-1px]">{{ section.settings.section_title }}</h2>
+        <hr class="w-full border-secondary-navy">
+      </div>
+      {% comment %} --- Product Grid (Dynamic Columns) --- {% endcomment %}
+      <div class="space-y-4" x-data="{ openAccordion: 1 }">
+
+        {% comment %} First 3 products - use pass-image-card {% endcomment %}
+        {% if section.settings.product_1 != blank %}
+          <div class="border border-secondary-navy rounded-md overflow-hidden">
+            <button 
+              @click="openAccordion = openAccordion === 1 ? null : 1"
+              class="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition cursor-pointer"
+            >
+              <h3 class="text-left text-lg font-bold text-secondary-navy uppercase tracking-[-1px]">{{ section.settings.product_1.title }}</h3>
+              <div class="flex items-center gap-3">
+                <div class="flex flex-col items-end">
+                  <span class="text-xs text-secondary-navy/60 uppercase">{{ section.settings.starting_at_text }}</span>
+                  <span class="text-lg font-extrabold text-secondary-navy">
+                    {% if section.settings.pass_type == '2_day' %}
+                      {{ section.settings.product_1.price | money }}
+                    {% else %}
+                      {{ section.settings.product_1.price | money }}
+                    {% endif %}
+                  </span>
+                </div>
+                <svg 
+                  class="w-5 h-5 text-secondary-navy transition-transform duration-200"
+                  :class="openAccordion === 1 ? 'rotate-180' : ''"
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </button>
+            <div 
+              x-show="openAccordion === 1" 
+              x-collapse
+              class="border-t border-secondary-navy"
+            >
+              <div class="p-4">
+                {% render 'pass-image-card-collection', product: section.settings.product_1, button_url: section.settings.button_url_1, button_text: section.settings.button_text_1, pass_type: section.settings.pass_type, single_day_text: section.settings.single_day_text, two_day_text: section.settings.two_day_text %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.product_2 != blank %}
+          <div class="border border-secondary-navy rounded-md overflow-hidden">
+            <button 
+              @click="openAccordion = openAccordion === 2 ? null : 2"
+              class="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition cursor-pointer"
+            >
+              <h3 class="text-left text-lg font-bold text-secondary-navy uppercase tracking-[-1px]">{{ section.settings.product_2.title }}</h3>
+              <div class="flex items-center gap-3">
+                <div class="flex flex-col items-end">
+                  <span class="text-xs text-secondary-navy/60 uppercase">{{ section.settings.starting_at_text }}</span>
+                  <span class="text-lg font-extrabold text-secondary-navy">
+                    {% if section.settings.pass_type == '2_day' %}
+                      {{ section.settings.product_2.price | money }}
+                    {% else %}
+                      {{ section.settings.product_2.price | money }}
+                    {% endif %}
+                  </span>
+                </div>
+                <svg 
+                  class="w-5 h-5 text-secondary-navy transition-transform duration-200"
+                  :class="openAccordion === 2 ? 'rotate-180' : ''"
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </button>
+            <div 
+              x-show="openAccordion === 2" 
+              x-collapse
+              class="border-t border-secondary-navy"
+            >
+              <div class="p-4">
+                {% render 'pass-image-card-collection', product: section.settings.product_2, button_url: section.settings.button_url_2, button_text: section.settings.button_text_2, pass_type: section.settings.pass_type, single_day_text: section.settings.single_day_text, two_day_text: section.settings.two_day_text %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.product_3 != blank %}
+          <div class="border border-secondary-navy rounded-md overflow-hidden">
+            <button 
+              @click="openAccordion = openAccordion === 3 ? null : 3"
+              class="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition cursor-pointer"
+            >
+              <h3 class="text-left text-lg font-bold text-secondary-navy uppercase tracking-[-1px]">{{ section.settings.product_3.title }}</h3>
+              <div class="flex items-center gap-3">
+                <div class="flex flex-col items-end">
+                  <span class="text-xs text-secondary-navy/60 uppercase">{{ section.settings.starting_at_text }}</span>
+                  <span class="text-lg font-extrabold text-secondary-navy">
+                    {% if section.settings.pass_type == '2_day' %}
+                      {{ section.settings.product_3.price | money }}
+                    {% else %}
+                      {{ section.settings.product_3.price | money }}
+                    {% endif %}
+                  </span>
+                </div>
+                <svg 
+                  class="w-5 h-5 text-secondary-navy transition-transform duration-200"
+                  :class="openAccordion === 3 ? 'rotate-180' : ''"
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </button>
+            <div 
+              x-show="openAccordion === 3" 
+              x-collapse
+              class="border-t border-secondary-navy"
+            >
+              <div class="p-4">
+                {% render 'pass-image-card-collection', product: section.settings.product_3, button_url: section.settings.button_url_3, button_text: section.settings.button_text_3, pass_type: section.settings.pass_type, single_day_text: section.settings.single_day_text, two_day_text: section.settings.two_day_text %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% comment %} Fourth product - use pass-highlight-card (full width) {% endcomment %}
+        {% if section.settings.product_4 != blank %}
+          <div class="border border-secondary-navy rounded-md overflow-hidden">
+            <button 
+              @click="openAccordion = openAccordion === 4 ? null : 4"
+              class="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition cursor-pointer"
+            >
+              <h3 class="text-left text-lg font-bold text-secondary-navy uppercase tracking-[-1px]">{{ section.settings.product_4.title }}</h3>
+              <div class="flex items-center gap-3">
+                <div class="flex flex-col items-end">
+                  <span class="text-xs text-secondary-navy/60 uppercase">{{ section.settings.starting_at_text }}</span>
+                  <span class="text-lg font-extrabold text-secondary-navy">
+                    {% if section.settings.pass_type == '2_day' %}
+                      {{ section.settings.product_4.price | money }}
+                    {% else %}
+                      {{ section.settings.product_4.price | money }}
+                    {% endif %}
+                  </span>
+                </div>
+                <svg 
+                  class="w-5 h-5 text-secondary-navy transition-transform duration-200"
+                  :class="openAccordion === 4 ? 'rotate-180' : ''"
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </button>
+            <div 
+              x-show="openAccordion === 4" 
+              x-collapse
+              class="border-t border-secondary-navy"
+            >
+              <div class="p-4">
+                {% render 'pass-highlight-card-collection', product: section.settings.product_4, button_url: section.settings.button_url_4, button_text: section.settings.button_text_4, pass_type: section.settings.pass_type, single_day_text: section.settings.single_day_text, two_day_text: section.settings.two_day_text %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Collection Passes",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "featured_collection",
+        "label": "Collection to display"
+      },
+      {
+        "type": "text",
+        "id": "section_id",
+        "label": "Section ID",
+        "default": "collection-passes"
+      },
+      {
+        "type": "text",
+        "id": "section_title",
+        "label": "Section Title",
+        "default": "Choose your pass"
+      },
+      {
+        "type": "select",
+        "id": "pass_type",
+        "label": "Pass Type",
+        "options": [
+          {
+            "value": "single_day",
+            "label": "Single Day"
+          },
+          {
+            "value": "2_day",
+            "label": "2-Day"
+          }
+        ],
+        "default": "single_day"
+      },
+      {
+        "type": "text",
+        "id": "single_day_text",
+        "label": "Single Day Text",
+        "default": "Single Day Starting at"
+      },
+      {
+        "type": "text",
+        "id": "two_day_text",
+        "label": "2-Day Text",
+        "default": "2-Day Starting at"
+      },
+      {
+        "type": "text",
+        "id": "starting_at_text",
+        "label": "Starting At Text",
+        "default": "starting at"
+      },
+      {
+        "type": "header",
+        "content": "Products"
+      },
+      {
+        "type": "product",
+        "id": "product_1",
+        "label": "Product 1"
+      },
+      {
+        "type": "url",
+        "id": "button_url_1",
+        "label": "Product 1 Button URL"
+      },
+      {
+        "type": "text",
+        "id": "button_text_1",
+        "label": "Product 1 Button Text",
+        "default": "Sign up"
+      },
+      {
+        "type": "product",
+        "id": "product_2",
+        "label": "Product 2"
+      },
+      {
+        "type": "url",
+        "id": "button_url_2",
+        "label": "Product 2 Button URL"
+      },
+      {
+        "type": "text",
+        "id": "button_text_2",
+        "label": "Product 2 Button Text",
+        "default": "Sign up"
+      },
+      {
+        "type": "product",
+        "id": "product_3",
+        "label": "Product 3"
+      },
+      {
+        "type": "url",
+        "id": "button_url_3",
+        "label": "Product 3 Button URL"
+      },
+      {
+        "type": "text",
+        "id": "button_text_3",
+        "label": "Product 3 Button Text",
+        "default": "Sign up"
+      },
+      {
+        "type": "product",
+        "id": "product_4",
+        "label": "Product 4 (Highlighted)"
+      },
+      {
+        "type": "url",
+        "id": "button_url_4",
+        "label": "Product 4 Button URL"
+      },
+      {
+        "type": "text",
+        "id": "button_text_4",
+        "label": "Product 4 Button Text",
+        "default": "Contact us"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Passes"
+      }
+    ]
+  }
+{% endschema %}

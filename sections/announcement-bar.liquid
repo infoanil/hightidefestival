@@ -1,0 +1,60 @@
+{% if section.settings.enable_bar %}
+  <div class="w-full py-2 text-sm text-center bg-[var(--surface-secondary)] text-[var(--text-primary)]" style="
+      {% if section.settings.background_color != blank %}background-color:{{ section.settings.background_color }};{% endif %}
+      {% if section.settings.text_color != blank %}color:{{ section.settings.text_color }};{% endif %}
+    ">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {% if section.settings.announcement_link != blank %}
+        <a href="{{ section.settings.announcement_link }}" class="hover:underline hover:text-[var(--link-hover)] transition focus:outline-none focus:ring-2 focus:ring-[var(--interactive-focus)]">
+          {{ section.settings.announcement_text | escape }}
+        </a>
+      {% else %}
+        <span>{{ section.settings.announcement_text | escape }}</span>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Announcement Bar",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_bar",
+        "label": "Enable announcement bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement Text",
+        "default": "Free shipping on orders over $75!"
+      },
+      {
+        "type": "url",
+        "id": "announcement_link",
+        "label": "Optional Link"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#ffffff"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Announcement Bar",
+        "category": "Header"
+      }
+    ]
+  }
+{% endschema %}

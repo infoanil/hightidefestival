@@ -1,0 +1,87 @@
+{% assign top_tier = 
+  "Chris Lake|Disclosure" 
+  | split: "|" 
+%}
+
+{% assign second_tier = 
+  "Angry Baby|Laszewo|Maddi Reese|neil frances|sidepiece|snakehips" 
+  | split: "|" 
+%}
+
+{% assign third_tier = 
+  "Soto|Tre Burnett" 
+  | split: "|" 
+%}
+
+{% assign opening_acts = 
+  "anna lynn | dsad | bran saint rand | bri | bryner | chrisvincent dabaldo |freesurf garth cooks | anna lynn | dsad | bran saint rand | bri | bryner | chrisvincent dabaldo |freesurf garth cooks | anna lynn | dsad | bran saint rand | bri | bryner | chrisvincent dabaldo |freesurf garth cooks | anna lynn | dsad | bran saint rand | bri | bryner | chrisvincent dabaldo |freesurf garth cooks" 
+  | split: "|" 
+%}
+
+{% comment %} Poster  {% endcomment %}
+<div class="poster flex justify-center items-center lg:min-h-[812px] bg-primary-lightblue relative  overflow-hidden py-[70px] md:py-[90px] lg:py-[100px]">
+    <img src="{{ "poster-bg.png" | asset_url }}" alt="" class="w-full h-full object-cover object-center absolute top-0 bg-scale">
+    <img src="{{ "bg-pattern.png" | asset_url }}" alt="" class="w-full h-full object-cover object-center absolute top-0 bg-scale">
+    <div class="container flex justify-center">
+      <div class=" relative   lg:max-w-5xl border-[3px] bg-[#F8F6F2] border-secondary-navy rounded-[15px] px-[22px] py-[30px] md:px-[36px] md:py-[54px] lg:py-[76px] lg:px-[70px] text-center text-secondary-navy z-1">
+          <div class="media absolute inset-0 pointer-events-none">
+              <img src="{{ "texture.png" | asset_url }}" class="w-full h-full object-cover"alt="">            
+          </div>
+          <h2 class="sr-only">Poster Lineup</h2>
+          {% comment %} Top tier {% endcomment %}
+          <div class="flex flex-col items-center gap-5 lg:gap-11">
+            <img src="{{ 'palm-leaves.png' | asset_url }}" class="w-[74px] h-auto  md:hidden animate-rotate-palm origin-bottom-right">
+            <ul class="top-tier flex justify-center" role="list">
+                {% for artist in top_tier %}
+                    <li class=" text-[33px] md:text-[50px] lg:text-[80px]  leading-[100%]  font-amaya uppercase lg:leading-[74px] tracking-[-1px] flex items-center [&:last-child_span:last-child]:hidden hover:scale-105 transition duration-200" role="listitem">
+                        <span class="whitespace-nowrap">{{ artist }}</span>
+                        <span class="w-[6px] h-[6px] lg:w-[11px] lg:h-[11px] rounded-full bg-secondary-navy mx-2 lg:mx-8"></span>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% comment %} Second tier {% endcomment %}
+            <ul class="second-tier flex flex-wrap justify-center gap-[5px] lg:max-w-[550px]" role="list">
+                {% for artist in second_tier %}
+                    <li class=" leading-[100%] text-[22px] md:text-[40px] lg:text-[40px] tracking-[-1px] font-amaya flex items-center [&:last-child_span:last-child]:hidden hover:scale-105 transition duration-200" role="listitem">
+                        <span class="whitespace-nowrap">{{ artist }}</span>
+                        <span class="w-[6px] h-[6px] rounded-full bg-secondary-navy mx-[6px]"></span>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% comment %} Third tier {% endcomment %}
+            <ul class="third-tier flex justify-center flex-wrap" role="list">
+                {% for artist in third_tier %}
+                    <li class="tracking-[-0.3px] text-[21px] md:text-[30px] lg:text-[30px] leading-[100%] font-amaya flex items-center [&:last-child_span:last-child]:hidden hover:scale-105 transition duration-200" role="listitem">
+                        <span class="whitespace-nowrap">{{ artist }}</span>
+                        <span class="w-[4px] h-[4px] rounded-full bg-secondary-navy mx-[4px]"></span>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% comment %} Opening acts {% endcomment %}
+            <ul class="opening-acts flex justify-center flex-wrap gap-y-[5px]" role="list">
+                {% for artist in opening_acts %}
+                    <li class="tracking-[-0.3px] text-[17px] md:text-[24px] leading-[100%] lg:text-[24px] font-amaya flex items-center [&:last-child_span:last-child]:hidden hover:scale-105 transition duration-200" role="listitem">
+                        <span class="whitespace-nowrap">{{ artist }}</span>
+                        <span class="w-[3px] h-[3px] rounded-full bg-secondary-navy mx-2"></span>
+                    </li>
+                {% endfor %}
+            </ul>
+          </div>
+      </div>
+    </div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Poster",
+    "settings": [],
+    "blocks": [],
+    "presets": [
+      {
+        "name": "Poster"
+      }
+    ]
+  }
+{% endschema %}

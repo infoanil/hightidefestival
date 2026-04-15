@@ -1,0 +1,93 @@
+<div class="py-20 relative overflow-hidden">
+    <div class="relative container mx-auto max-w-[800px] z-1">
+        <div class="headings max-w-[888px] mx-auto flex flex-col items-center text-center mb-[30px] text-secondary-navy">
+            <p class="legend uppercase text-lg font-bold mb-4 tracking-[-1px]">{{ section.settings.legend | default: 'the high tide community' }}</p>
+            <h2 class="font-amaya text-[35px] leading-[36px] md:text-[80px] md:leading-[74px] uppercase tracking-[-1px] ">{{ section.settings.heading | default: 'join the dance community of high tide!' }}</h2>
+        </div>
+        <div class="social-buttons flex flex-wrap justify-center z-1 gap-5 pb-10 lg:max-w-[550px] lg:mx-auto">
+          {% render 'social-buttons' %}
+        </div>
+        <img src="{{ 'disco.png' | asset_url }}"  class="w-[46px] md:w-[128px] h-auto absolute top-0  right-[16px] lg:right-[-80px] lg:bottom-0 animate-rotate-palm origin-bottom-right">
+        <img src="{{ 'palm-leaves.png' | asset_url }}"  class="w-[50px] md:w-[128px] h-auto absolute top-8 md:left-0 md:top-0 animate-rotate-palm origin-bottom-right">
+    </div>
+    <div class="gallery-scroll relative flex gap-6">
+        <div class="w-full flex shrink-0 justify-start gap-[7px] md:gap-[11px] lg:gap-[15px] animate-marquee">
+            {% for block in section.blocks %}
+                <div class="w-[33%] md:w-[28%] lg:w-[22%] shrink-0 rounded-[10px] overflow-hidden">
+                         {% render 'image-helper'
+                            , image: block.settings.image
+                            , max_width: 500
+                            , sizes: '(min-width: 1024px) 50vw, 100vw'
+                            , class: 'w-full h-full object-cover object-bottom aspect-[313/428]'
+                        %}
+                </div>
+            {% endfor %}
+            {% if section.blocks.size < 10 %}
+              {% for block in section.blocks %}
+                  <div class="w-[33%] md:w-[28%] lg:w-[22%] shrink-0 rounded-[10px] overflow-hidden" aria-hidden="true" data-nosnippet >
+                          {% render 'image-helper'
+                              , image: block.settings.image
+                              , max_width: 500
+                              , sizes: '(min-width: 1024px) 50vw, 100vw'
+                              , class: 'w-full h-full object-cover object-bottom aspect-[313/428]'
+                          %}
+                  </div>
+              {% endfor %}
+            {% endif %}
+        </div>
+
+        
+
+        <svg class="w-full absolute top-[-15px] left-0 text-bg-color" width="1563" height="36" viewBox="0 0 1563 36" fill="none" xmlns="http://www.w3.org/2000/svg"
+          class="w-full absolute top-[-15px] left-0 text-bg-color">
+              <g clip-path="url(#clip0_37_932)">
+              <ellipse cx="781.5" cy="0.498047" rx="781.5" ry="35.5" fill="currentColor"/>
+              </g>
+              <defs>
+              <clipPath id="clip0_37_932">
+              <rect width="1563" height="36" fill="white"/>
+              </clipPath>
+              </defs>
+        </svg>
+
+
+    </div>
+</div>
+
+
+
+{% schema %}
+  {
+  "name": "Social Wall",
+  "settings": [
+    {
+      "type": "text",
+      "id": "legend",
+      "label": "Legend"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Slide",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Wall"
+    }
+  ]
+}  
+{% endschema %}

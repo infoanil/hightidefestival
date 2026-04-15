@@ -1,0 +1,161 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_product_section": {
+      "type": "main-product",
+      "blocks": {
+        "accordion_8kw7EL": {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipping Details",
+            "content": "<p><strong>Delivery Information</strong></p><p>Passes will be delivered to you digitally closer to the festival dates. You will receive a receipt upon purchase to confirm your order.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_8kw7EL"
+      ],
+      "settings": {
+        "show_thumbnails": true,
+        "enable_sticky_media": true,
+        "hide_on_mobile": true,
+        "hide_on_desktop": false,
+        "use_ab_cart_descriptions": false,
+        "show_side_cart_payment_badges": false,
+        "show_side_cart_often_bought": false,
+        "side_cart_often_bought_heading": "Add items often bought together",
+        "side_cart_often_bought_limit": 2,
+        "show_related_products": true,
+        "related_limit": 8
+      }
+    },
+    "main_productv2_iTCLK8": {
+      "type": "main-productv2",
+      "blocks": {
+        "accordion_GHhECf": {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipping Details",
+            "content": "<p>Passes will be delivered digitally closer to the festival dates.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_GHhECf"
+      ],
+      "name": "Main Product V2",
+      "settings": {
+        "hide_on_mobile": false,
+        "hide_on_desktop": true,
+        "enable_sticky_media": true,
+        "gallery_title": "2-Day Pass",
+        "manual_product_title": "GENERAL ADMISSION",
+        "gallery_image_1": "shopify://shop_images/2026-03-31_16-50.png",
+        "gallery_image_2": "shopify://shop_images/50e3ccb51f6c738abc4b2c51c9666c4a82c7087a_7f92a0da-42a1-45f3-97b1-e61a2e833468.png",
+        "show_vendor": false,
+        "review_rating": "4.1",
+        "review_count": 534,
+        "review_link": "https://www.google.com/search?q=high+tide+festival+south+carolina&oq=high+tide+festival+south+carolina&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTINCAEQABiGAxiABBiKBTINCAIQABiGAxiABBiKBTINCAMQABiGAxiABBiKBTIKCAQQABiiBBiJBTIHCAUQABjvBTIHCAYQABjvBdIBCTI5NTg1ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8#",
+        "manual_product_description": "<p>(21+) 2-Day entry to high tide 2026 </p><p></p><ul><li>25+ djs across 2 stages Food truck & cocktail garden</li><li>Live interactive art installations</li><li>World-class brand partner activations</li><li>Interactive lifestyle experiences</li><li>Multiple bars throughout the festival grounds& more!</li></ul>",
+        "manual_post_button_info": "<p>21+ only. Rain or shine. No refunds or exchanges. Lineup subject to change. Entry subject to posted Terms & Conditions.</p>",
+        "use_ab_cart_descriptions": false,
+        "show_related_products": true,
+        "related_limit": 4
+      }
+    },
+    "fun_gallery_V6tYkN": {
+      "type": "fun-gallery",
+      "blocks": {
+        "image_8WWbRW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433901_803cb943-927d-4308-9386-da28b4154b1b.jpg"
+          }
+        },
+        "image_yya7Mh": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433902_776539e7-9dbb-48d0-a346-b9373cdb24a3.jpg"
+          }
+        },
+        "image_KhYQzP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433903_a6fd7ca3-1eef-4b9b-b1f2-6af364f099fc.jpg"
+          }
+        },
+        "image_VQkWMw": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433904_5283e20c-24bf-4deb-a64d-f6010bdb8a4f.jpg"
+          }
+        },
+        "image_Uxc8NG": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433896_1eacfd07-6cfd-426d-9c5f-4bea514a317d.jpg"
+          }
+        },
+        "image_VJJipW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433905_5b5fa44b-4e78-497f-b153-f81c53550258.jpg"
+          }
+        },
+        "image_xGHHJV": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433897_ce9ce09a-68e9-4b79-b292-a24d988ff7d5.jpg"
+          }
+        },
+        "image_DX8Y8X": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433898_4df6aada-3773-4268-a8a3-d54a589875ff.jpg"
+          }
+        },
+        "image_NjRaBq": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433899_ea435c4d-1aa1-4c75-b777-291c3a39bceb.jpg"
+          }
+        },
+        "image_4LwByH": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433900_31860494-0f38-4d6b-a781-f47228398307.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_8WWbRW",
+        "image_yya7Mh",
+        "image_KhYQzP",
+        "image_VQkWMw",
+        "image_Uxc8NG",
+        "image_VJJipW",
+        "image_xGHHJV",
+        "image_DX8Y8X",
+        "image_NjRaBq",
+        "image_4LwByH"
+      ],
+      "name": "Fun Gallery",
+      "settings": {
+        "heading": "high tide, all the ways up"
+      }
+    }
+  },
+  "order": [
+    "main_product_section",
+    "main_productv2_iTCLK8",
+    "fun_gallery_V6tYkN"
+  ]
+}

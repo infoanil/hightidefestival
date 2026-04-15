@@ -1,0 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "where_to_stay_zabX9W": {
+      "type": "where-to-stay",
+      "name": "Where to stay?",
+      "settings": {
+        "image": "shopify://shop_images/palm.svg",
+        "heading": "Merchandise return policy",
+        "description": "<p>Please Note: This policy applies strictly to physical merchandise (apparel, posters, accessories). Festival Passes and Tickets are 100% Non-Refundable. For ticket-related inquiries, please refer to our Terms of Sale at checkout.</p>\n<br>\n<p>The 14-Day Window</p><p></p>\n<p>High Tide accepts returns on merch items within 14 days of delivery. To keep our inventory clean for the community, all merchandise becomes FINAL SALE 7 days prior to the festival gates opening, regardless of the original delivery date. No exceptions.</p>\n<br>\n<p>Condition of Items</p>\n<p>To be eligible for a return, the product must be:</p>\n<p>-Unused, unwashed, and in the same condition you received it.</p>\n<p>-Complete with all original labels, tags, and packaging intact.</p>\n<p>-Free of any odors (smoke, perfume, body odor) or visible wear.</p>\n<p>*Items that do not meet these criteria will be rejected and returned to the sender.</p>\n<br>\n<p>Exchanges</p>\n<p>Need a different size or color? We offer free shipping on all exchanges (subject to stock availability) to make sure you're geared up properly for the fest.</p>\n<br>\n<p>Returns & Fees (USA Only)</p>\n<p>-Exchanges: Free.</p>\n<p>-Returns (Partial or Full Order): A flat shipping and restocking fee of $20 USD will be deducted from your refund.</p>\n<br>\n<p>Shipping Costs: Original outbound shipping costs are non-refundable. If your order qualified for free shipping and you return the entire order, the original shipping cost will also be deducted from the refund.</p>\n<br>\n<p>Sale & Referral Items</p>\n<p>Items purchased during a sale or via a fan referral link are returnable within the 14-day window. You will be refunded the exact amount paid at the time of purchase.</p>\n<br>\n<p>Damaged Items & Claims</p>\n<p>If your merch arrives damaged, email info@hightidefestival.com immediately with photos. We’ll swap it out at no cost. For lost returns, you must provide a receipt or proof of return for us to investigate.</p>\n<br>\n<p>For support, please contact:</p> <p>info@hightidefestival.com</p>",
+        "price": "",
+        "price_info": "",
+        "button_title": "Shop Merch",
+        "button_url": "shopify://collections/merchandise"
+      }
+    },
+    "custom_section_rdTRBF": {
+      "type": "custom-section",
+      "name": "t:general.custom_section",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "where_to_stay_zabX9W",
+    "custom_section_rdTRBF"
+  ]
+}

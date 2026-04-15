@@ -1,0 +1,117 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "17754944711be23c6f": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_f1d95e1_FA9aXV": {
+          "type": "ai_gen_block_f1d95e1",
+          "disabled": true,
+          "settings": {
+            "button_text": "Buy Chainsmokers Tickets",
+            "button_link": "",
+            "button_color": "#e6772a",
+            "button_hover_color": "#d16624",
+            "button_text_color": "#FFFFFF",
+            "button_hover_text_color": "#FFFFFF",
+            "font_size": 16,
+            "font_weight": "500",
+            "button_padding": 14,
+            "border_radius": 40,
+            "desktop_width_percent": 40
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_a1853fa_ANa4fn": {
+          "type": "ai_gen_block_a1853fa",
+          "settings": {
+            "heading": "<p>THE CHAINSMOKERS IN CHARLESTON, SC</p>",
+            "heading_size": 36,
+            "text": "<p>Catch The Chainsmokers live in Charleston South Carolina on Friday, June 5 with support from: </p><p>Elderbrook (DJ Set)</p><p>Austin Millz</p><p>Dreya V & Nate Wyatt</p>",
+            "text_size": 16,
+            "button_text": "Buy Chainsmokers Tickets",
+            "button_link": "shopify://products/high-tide-2026-single-day-friday-ga-pass",
+            "button_text_size": 16,
+            "button_border_radius": 4,
+            "image": "shopify://shop_images/Enter_to_win_4x5_e1a5653f-7e6e-413e-9448-06aa92afcb4c.png",
+            "image_border_radius": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_f1d95e1_FA9aXV",
+        "ai_gen_block_a1853fa_ANa4fn"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "177549434207c9eb6a": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "collection_passes_D9q8E3": {
+      "type": "collection-passes",
+      "settings": {
+        "featured_collection": "",
+        "section_id": "collection-passes-friday",
+        "section_title": "Buy Passes",
+        "pass_type": "single_day",
+        "single_day_text": "Single Day Friday:",
+        "two_day_text": "2-Day Starting at",
+        "starting_at_text": "",
+        "product_1": "high-tide-2026-single-day-friday-ga-pass",
+        "button_url_1": "shopify://products/high-tide-2026-single-day-friday-ga-pass",
+        "button_text_1": "buy passes",
+        "product_2": "high-tide-2026-single-day-friday-vip-pass",
+        "button_url_2": "shopify://products/high-tide-2026-single-day-friday-vip-pass",
+        "button_text_2": "buy passes",
+        "product_3": "high-tide-2026-single-day-friday-super-vip-pass",
+        "button_url_3": "shopify://products/high-tide-2026-single-day-friday-super-vip-pass",
+        "button_text_3": "buy passes",
+        "product_4": "high-tide-2026-single-day-friday-stage-access",
+        "button_url_4": "shopify://products/high-tide-2026-single-day-friday-stage-access",
+        "button_text_4": "buy passes"
+      }
+    },
+    "image_text_XCNFNA": {
+      "type": "image-text",
+      "custom_css": [],
+      "name": "Image with Text",
+      "settings": {
+        "padding_y": 16,
+        "layout": "image_left",
+        "image_ratio": "aspect-h-3 aspect-w-4",
+        "image": "shopify://shop_images/Full_Lineup_3x4_68463f58-eca2-4948-8db6-8a2687895a8e.png",
+        "heading": "Wanna stay for the full weekend?",
+        "text": "<p>Buy 2-day passes for both days and start your summer off the right way (in a green grass field next to the river with your friends making core memories and such) </p><p>(p.s. its a better deal)</p>",
+        "button_label": "Buy A Weekend Pass",
+        "button_link": "shopify://collections/ticket"
+      }
+    },
+    "1774572409a4a551b7": {
+      "type": "_blocks",
+      "settings": {}
+    }
+  },
+  "order": [
+    "17754944711be23c6f",
+    "main",
+    "177549434207c9eb6a",
+    "collection_passes_D9q8E3",
+    "image_text_XCNFNA",
+    "1774572409a4a551b7"
+  ]
+}

@@ -1,0 +1,289 @@
+{% assign bg_color = section.settings.background_color %}
+{% assign bg_image = section.settings.background_image %}
+
+<style>
+  #section-two-image-poster-{{ section.id }} {
+    {% if bg_image != blank %}
+      background-image: url('{{ bg_image | image_url: width: 1920 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% else %}
+      background-color: {{ bg_color }};
+    {% endif %}
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    margin-top: {{ section.settings.margin_top_mobile }}px;
+    margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+  }
+
+  @media (min-width: 768px) {
+    #section-two-image-poster-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+      margin-top: {{ section.settings.margin_top_desktop }}px;
+      margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+    }
+    
+    #section-two-image-poster-{{ section.id }} h2 {
+      max-width: {{ section.settings.title_max_width_desktop }}px;
+    }
+  }
+</style>
+
+<section
+  id="section-two-image-poster-{{ section.id }}"
+  aria-labelledby="two-image-poster-heading-{{ section.id }}"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-8 md:gap-12 lg:gap-16">
+      <div class="text-center md:text-left md:flex md:flex-col md:gap-4">
+        {% if section.settings.heading != blank %}
+          <h2
+            id="two-image-poster-heading-{{ section.id }}"
+            class="font-amaya text-[50px] leading-[46px] md:text-[60px] md:leading-[56px] lg:text-[100px] lg:leading-[88px] uppercase tracking-[-1px] mb-4 md:mb-0"
+            style="color: {{ section.settings.heading_color }};"
+          >
+            {{ section.settings.heading | escape }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <div class="uppercase text-lg font-bold mb-4 md:mb-0 tracking-[-1px]" style="color: {{ section.settings.text_color }};">
+            {{ section.settings.text }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.button_label != blank %}
+          <a
+            href="{{ section.settings.button_link }}"
+            class="w-fit mx-auto md:mx-0 inline-block transition duration-200 uppercase font-extrabold text-[15px] bg-trietary-orange hover:scale-105 hover:bg-primary-deepblue hover:border border-white text-white rounded-[5px] px-5 py-2.5"
+          >
+            {{ section.settings.button_label | escape }}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 md:gap-8">
+        <div class="flex-1">
+          {% if section.settings.image != blank %}
+            <div class="w-full max-w-lg">
+              {{
+                section.settings.image
+                | image_url: width: 800
+                | image_tag: loading: 'lazy', alt: section.settings.image.alt, class: 'w-full h-auto rounded-md'
+              }}
+            </div>
+          {% else %}
+            <div class="w-full max-w-lg aspect-video flex justify-center items-center bg-[var(--surface-secondary)] border border-dashed border-[var(--interactive-border)] rounded-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-16 h-16 text-[var(--text-secondary)]"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+              </svg>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="flex-1">
+          {% if section.settings.image_2 != blank %}
+            <div class="w-full max-w-lg">
+              {{
+                section.settings.image_2
+                | image_url: width: 800
+                | image_tag: loading: 'lazy', alt: section.settings.image_2.alt, class: 'w-full h-auto rounded-md'
+              }}
+            </div>
+          {% else %}
+            <div class="w-full max-w-lg aspect-video flex justify-center items-center bg-[var(--surface-secondary)] border border-dashed border-[var(--interactive-border)] rounded-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-16 h-16 text-[var(--text-secondary)]"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+              </svg>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Two Image Poster",
+  "tag": "section",
+  "class": "section-two-image-poster",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tickets On Sale Now!"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Buy now before prices increase.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Buy Tickets"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "First Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Second Image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#d1e1ef"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image (overrides color)"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#0b4166"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#0b4166"
+    },
+    {
+      "type": "range",
+      "id": "title_max_width_desktop",
+      "min": 660,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Title Max Width Desktop",
+      "default": 660
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Top (Desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Bottom (Desktop)",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two Image Poster"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,67 @@
+{% if recommendations.performed and recommendations.products_count > 0 %}
+  <div class="grid gap-3" data-cart-recommendations-grid>
+    {% for product in recommendations.products %}
+      {% assign first_variant = product.selected_or_first_available_variant %}
+      <div class="grid grid-cols-[84px_minmax(0,1fr)] gap-3 rounded-[8px] border border-secondary-navy/10 bg-white p-2.5">
+        <a
+          href="{{ product.url }}"
+          class="block overflow-hidden rounded-[6px] border border-secondary-navy/10 bg-[var(--surface-primary)]"
+        >
+          {% render 'image-helper', image: product.featured_image, class: 'aspect-square w-full object-cover' %}
+        </a>
+
+        <div class="flex min-w-0 flex-col gap-2">
+          <a
+            href="{{ product.url }}"
+            class="text-[14px] leading-[16px] font-extrabold uppercase tracking-[-0.5px] text-secondary-navy"
+          >
+            {{ product.title }}
+          </a>
+
+          <p class="text-[17px] leading-[20px] font-extrabold tracking-[-0.5px] text-primary-deepblue">
+            {{ first_variant.price | money }}
+          </p>
+
+          {% if product.available %}
+            <form
+              @submit.prevent="
+                fetch('/cart/add.js', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    id: {{ first_variant.id }},
+                    quantity: 1
+                  })
+                })
+                .then(() => window.dispatchEvent(new CustomEvent('cart:add')));
+              "
+              class="mt-auto"
+            >
+              <button
+                type="submit"
+                class="w-full rounded-[5px] bg-trietary-orange px-4 py-2 text-sm uppercase font-extrabold text-white transition duration-200 hover:bg-secondary-navy"
+              >
+                Add to Cart
+              </button>
+            </form>
+          {% else %}
+            <button
+              type="button"
+              disabled
+              class="mt-auto w-full rounded-[5px] bg-secondary-navy/10 px-4 py-2 text-sm uppercase font-extrabold text-secondary-navy/40"
+            >
+              Sold Out
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Cart Recommendations",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,227 @@
+{%- comment -%}
+  Gallery slider / Hero
+  Expects:
+  - section (required)
+  - transition (string: "fade" | "blur-sm" | "slide" | "")
+  - autoplay (boolean)
+  - interval (number in ms)
+  - show_cta_button (boolean)
+  - cta_button_label (string)
+  - cta_button_link (url)
+  - cta_button_style ("primary" | "secondary" | "outline")
+{%- endcomment -%}
+
+{%- assign transition = transition | default: 'fade' -%}
+{%- assign autoplay = autoplay | default: false -%}
+{%- assign interval = interval | default: 4000 -%}
+{%- assign show_cta_button = show_cta_button | default: false -%}
+{%- assign cta_button_label = cta_button_label | default: 'Shop now' -%}
+{%- assign cta_button_style = cta_button_style | default: 'primary' -%}
+
+  <div
+  x-data="{
+    currentIndex: 0,
+    autoplay: {{ autoplay | json }},
+    autoplayDuration: {{ interval | json }},
+    loop: true,
+    arrowsNavigation: true,
+    dotsNavigation: true,
+    autoplayTimer: null,
+
+    next() {
+      if (this.totalSlides === 0) return;
+      this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+    },
+
+    previous() {
+      if (this.totalSlides === 0) return;
+      this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+    },
+
+    set(index) {
+      if (index < 0 || index >= this.totalSlides) return;
+      this.currentIndex = index;
+    },
+
+    startAutoplay() {
+      if (!this.autoplay || this.totalSlides <= 1) return;
+      this.stopAutoplay();
+      this.autoplayTimer = setInterval(() => { this.next(); }, this.autoplayDuration);
+    },
+
+    stopAutoplay() {
+      if (this.autoplayTimer) {
+        clearInterval(this.autoplayTimer);
+        this.autoplayTimer = null;
+      }
+    },
+
+    get totalSlides() {
+      return this.$refs.track ? this.$refs.track.children.length : 0;
+    }
+  }"
+  x-init="startAutoplay()"
+  x-on:mouseenter="stopAutoplay()"
+  x-on:mouseleave="startAutoplay()"
+  class="relative w-full overflow-hidden bg-[var(--surface-primary)] text-[var(--text-primary)]">
+
+  {%- comment -%} TRACK {%- endcomment -%}
+  <div class="relative h-[calc(100vh-80px)] w-full overflow-hidden" x-ref="track">
+    {%- assign i = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'slide' and block.settings.image == blank -%}
+        {%- continue -%}
+      {%- endif -%}
+
+      {%- assign has_image = false -%}
+
+      {%- if block.settings.image != blank -%}
+        {%- assign has_image = true -%}
+      {%- endif -%}
+
+      <div class="absolute inset-0 w-full h-full">
+        {%- comment -%}
+          Visible layer (image) – fade transition
+        {%- endcomment -%}
+        <div
+          x-show="currentIndex === {{ i }}"
+          x-transition.opacity.duration.600ms
+          class="w-full h-full relative">
+
+          {%- if has_image -%}
+            {% render 'image-helper', image: block.settings.image, class: 'w-full h-full object-cover object-center ' | append: transition %}
+          {%- endif -%}
+
+          {%- if block.settings.dark_overlay -%}
+            <div class="absolute inset-0 bg-black/40"></div>
+        {%- endif -%}
+
+          {%- comment -%} CONTENT OVERLAY {%- endcomment -%}
+          {% assign align = block.settings.content_alignment | default: 'left' %}
+          {% assign vertical = block.settings.content_vertical | default: 'center' %}
+
+          {% case align %}
+            {% when 'center' %}
+              {% assign align_classes = 'justify-center text-center mx-auto' %}
+            {% when 'right' %}
+              {% assign align_classes = 'justify-end text-right ml-auto' %}
+            {% else %}
+              {% assign align_classes = 'justify-start text-left mr-auto' %}
+          {% endcase %}
+
+          {% case vertical %}
+            {% when 'top' %}
+              {% assign vertical_classes = 'justify-start pt-16' %}
+            {% when 'bottom' %}
+              {% assign vertical_classes = 'justify-end pb-16' %}
+            {% else %}
+              {% assign vertical_classes = 'justify-center' %}
+          {% endcase %}
+
+
+          <div class="pointer-events-none absolute inset-0 flex {{ vertical_classes }}">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+              <div class="max-w-xl space-y-4 {{ align_classes }} text-[var(--text-on-surface, var(--text-primary))]">
+
+                {%- if block.settings.eyebrow != blank -%}
+                  <p class="text-xs tracking-[0.18em] uppercase text-[var(--text-secondary)]">
+                    {{ block.settings.eyebrow }}
+                  </p>
+                {%- endif -%}
+
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+                    {{ block.settings.heading }}
+                  </h2>
+                {%- endif -%}
+
+                {%- if block.settings.subheading != blank -%}
+                  <p class="text-sm sm:text-base text-[var(--text-secondary)] max-w-lg">
+                    {{ block.settings.subheading }}
+                  </p>
+                {%- endif -%}
+
+                {%- assign effective_show_cta = show_cta_button -%}
+                {%- if block.settings.use_custom_cta -%}
+                  {%- assign effective_show_cta = true -%}
+                {%- endif -%}
+
+                {%- if effective_show_cta -%}
+                  {%- assign btn_label = block.settings.cta_label | default: cta_button_label -%}
+                  {%- assign btn_link = block.settings.cta_link | default: cta_button_link -%}
+                  {%- assign btn_style = block.settings.cta_style | default: cta_button_style -%}
+
+                  {%- if btn_link != blank -%}
+                    {%- if effective_show_cta and btn_link != blank -%}
+                      {%- assign base_btn_class = 'inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--interactive-focus)]' -%}
+
+                      {%- case btn_style -%}
+                        {%- when 'secondary' -%}
+                          {%- assign style_class = 'bg-[var(--surface-secondary)] text-[var(--text-primary)] hover:bg-[var(--surface-primary)] border border-[var(--interactive-border)]' -%}
+                        {%- when 'outline' -%}
+                          {%- assign style_class = 'border border-[var(--interactive-border)] bg-transparent text-[var(--text-primary)] hover:bg-[var(--surface-primary)]' -%}
+                        {%- else -%}
+                          {%- assign style_class = 'bg-[var(--interactive-default)] text-[var(--text-on-interactive)] hover:bg-[var(--interactive-hover)]' -%}
+                      {%- endcase -%}
+
+                      <div class="pointer-events-auto absolute bottom-10 left-1/2 -translate-x-1/2 z-30">
+                        <a href="{{ btn_link }}" class="{{ base_btn_class }} {{ style_class }}">
+                          {{ btn_label }}
+                        </a>
+                      </div>
+                    {%- endif -%}
+
+                  {%- endif -%}
+                {%- endif -%}
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {%- assign i = i | plus: 1 -%}
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%} ARROWS {%- endcomment -%}
+  <button
+    x-show="arrowsNavigation && totalSlides > 1"
+    @click="previous()"
+    class="absolute left-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-[var(--interactive-default)]/60 px-3 py-2 text-[var(--text-on-interactive)] hover:bg-[var(--interactive-hover)]">
+    ‹
+  </button>
+
+  <button
+    x-show="arrowsNavigation && totalSlides > 1"
+    @click="next()"
+    class="absolute right-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-[var(--interactive-default)]/60 px-3 py-2 text-[var(--text-on-interactive)] hover:bg-[var(--interactive-hover)]">
+    ›
+  </button>
+
+  {%- comment -%} DOTS {%- endcomment -%}
+  <div x-show="dotsNavigation && totalSlides > 1" class="flex justify-center gap-2 py-4 z-20 relative">
+    {%- assign j = 0 -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'slide' -%}
+        {%- if block.settings.image != blank -%}
+
+          <button
+            @click="set({{ j }})"
+            class="size-3 rounded-full transition"
+            :class="currentIndex === {{ j }}
+              ? 'bg-[var(--interactive-default)]'
+              : 'bg-[var(--interactive-border)] hover:bg-[var(--interactive-hover)]'">
+</button>
+
+          {%- assign j = j | plus: 1 -%}
+
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+  </div>
+
+</div>

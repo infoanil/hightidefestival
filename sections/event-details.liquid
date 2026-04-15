@@ -1,0 +1,42 @@
+<div class="event-details bg-primary-lightblue">
+    <h2 class="sr-only">Event Details</h2>
+    <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class="date text-center  py-8 md:py-18">
+                <p class="text-lg font-bold text-primary-deepblue uppercase mb-1.5 md:mb-4 tracking-[-1px]">Where</p>
+                <p class="text-lg tracking-[-1px] md:text-[35px] md:leading-[38px] lg:text-[50px] lg:leading-[54px] md:tracking-[-4px] font-extrabold uppercase text-secondary-navy">{{ section.settings.where }}</p>
+            </div>
+            <div class="location py-8 md:py-18 text-center max-sm:border-t md:border-l lg:border-secondary-navy">
+                <p class="text-lg font-bold text-primary-deepblue uppercase mb-1.5 md:mb-4 tracking-[-1px]">When</p>
+                <p class="text-lg  leading-[21px] tracking-[-1px] md:text-[35px] md:leading-[38px] lg:text-[50px] lg:leading-[54px] md:tracking-[-4px] font-extrabold uppercase text-secondary-navy md:max-w-[160px] lg:max-w-[247px] mx-auto">{{ section.settings.when }}</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% schema %}
+{
+    "name": "Event Details",
+    "settings": [
+        {
+            "type": "text",
+            "id": "when",
+            "label": "Event Date and Time",
+            "default": "January 1, 2023 at 10:00 AM"
+        },
+        {
+            "type": "text",
+            "id": "where",
+            "label": "Event Location",
+            "default": "123 Main Street, Anytown, USA"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Event Details"
+        }
+    ]
+}
+{% endschema %}

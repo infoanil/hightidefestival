@@ -1,0 +1,120 @@
+<div class="relative py-10 md:py-20 border-y-2 border-secondary-navy
+  {% if section.settings.restriction == "allowed" %}
+  bg-green-100
+  {% else %}
+  bg-red-100
+  {% endif %}
+">
+
+
+  
+  <div class="container">
+    {% comment %} Headings {% endcomment %}
+    <div class="headings text-secondary-navy mb-8 text-center ">
+      
+        <p class="legend uppercase text-lg font-bold mb-4 tracking-[-1px]">{{ section.settings.legend | default:'the line ups' }}</p>
+          <h2 class="font-amaya text-[50px] leading-[46px] lg:text-[120px] lg:leading-[88px] uppercase tracking-[-1px] text-balance">
+              {{ section.settings.heading | default: "The Sound of High Tide" }}
+          </h2>
+        
+        <p class="max-w-[650px] tracking-[-1px] mx-auto mt-8 text-base leading-[19px] md:text-[25px] md:leading-[31px] uppercase font-extrabold ">
+                {{  section.settings.description }}
+          </p>    
+    </div>
+
+    {% comment %} List {% endcomment %}
+      <ul class="flex flex-wrap gap-4 justify-center mx-auto max-w-[1024px] 
+      ">
+            
+            {% for block in section.blocks %}
+                
+                <li class="group relative flex items-center gap-3 px-[10px] py-3 lg:p-5 outline  outline-secondary-navy bg-bg-color
+                    hover:-translate-2 hover:z-1 hover:shadow-[8px_8px_0px_0_rgba(0,0,0,1)] hover:rounded-tr-[5px] transition duration-200
+                    ">
+                    <span href="#" class="text-[20px] lg:text-[40px] tracking-[-1px] leading-[100%] uppercase font-amaya text-inherit">{{ block.settings.text }}</span>
+
+                </li>
+            
+            {% endfor %}
+        </ul>
+        {% if section.settings.disclaimer != blank %}
+          <p class="text-[17px] md:text-[20px] p-4 rounded-[10px] border-2 border-secondary-navy bg-white/20 tracking-[-1px] text-center w-full max-w-[850px]  mt-8 m-auto">
+            {{ section.settings.disclaimer }}
+
+          </p>
+        {% endif %}
+  </div>
+
+
+</div>
+
+
+{% schema %}
+  {
+  "name": "Item Restrictions",
+  "settings": [
+            {
+            "type": "text",
+            "id": "legend",
+            "label": "Legend",
+            "default": "the line ups"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "The Sound of High Tide"
+        },
+              {
+        "type": "textarea",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+            "type": "textarea",
+            "id": "disclaimer",
+            "label": "Disclaimer",
+        },
+      {
+      "type": "select",
+      "id": "restriction",
+      "label": "Restriction",
+      "options": [
+        {
+          "value": "allowed",
+          "label": "Allowed"
+        },
+        {
+          "value": "prohibited",
+          "label": "PROHIBITED"
+        }
+      ],
+      "default": "allowed"
+    }
+
+  ],
+  "blocks": [
+    {
+      "name": "Item",
+      "type": "item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "extra",
+          "label": "Extra"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Item Restrictions"
+    }
+  ]
+}  
+{% endschema %}

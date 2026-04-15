@@ -1,0 +1,222 @@
+{% comment %}
+  Cart section – split layout (items + summary)
+
+  Replaces the basic table markup with a responsive 2-column layout:
+  - Left: cart items list
+  - Right: order summary + checkout
+
+  Still uses:
+  - action="{{ routes.cart_url }}"
+  - method="post"
+  - inputs named "updates[]" and "checkout"
+{% endcomment %}
+
+<section class="bg-[var(--surface-primary)] text-[var(--text-primary)]">
+  <div class="max-w-6xl mx-auto px-4 py-[var(--space-lg)] lg:py-[var(--space-xl)]">
+    <header class="mb-[var(--space-md)] lg:mb-[var(--space-lg)]">
+      <h1 class="text-display-h4 sm:text-display-h3 font-bold">
+        {{ 'cart.title' | t }}
+      </h1>
+    </header>
+
+    {% if cart.item_count == 0 %}
+      <div class="border border-[var(--interactive-border)] rounded-[var(--radius-md)] px-[var(--space-md)] py-[var(--space-lg)] text-center">
+        <p class="text-body-md text-[var(--text-secondary)] mb-[var(--space-sm)]">
+          {{ 'cart.empty' | t | default: 'Your cart is currently empty.' }}
+        </p>
+        <a href="{{ routes.all_products_collection_url | default: routes.root_url }}" class="inline-flex items-center justify-center rounded-md px-6 py-3 text-body-md font-medium
+                 bg-[var(--interactive-default)] text-[var(--text-on-interactive)]
+                 hover:bg-[var(--interactive-hover)]
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+          {{ 'cart.continue_shopping' | t | default: 'Continue shopping' }}
+        </a>
+      </div>
+    {% else %}
+
+      <form
+        action="{{ routes.cart_url }}"
+        method="post"
+        novalidate
+        class="space-y-[var(--space-md)]">
+        <div class="grid gap-[var(--space-lg)] lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] items-start">
+
+          {%- comment -%}
+            LEFT COLUMN – CART ITEMS
+          {%- endcomment -%}
+          <div class="space-y-[var(--space-sm)]">
+            <h2 class="text-regular-h5 font-bold">
+              {{ 'cart.items' | t | default: 'Items in your cart' }}
+            </h2>
+
+            <ul class="space-y-[var(--space-sm)]" role="list">
+              {% for item in cart.items %}
+                <li class="border border-[var(--interactive-border)] rounded-[var(--radius-md)] p-[var(--space-sm)] flex gap-[var(--space-sm)]">
+                  {%- comment -%} Thumbnail {%- endcomment -%}
+                  <div class="flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 overflow-hidden rounded-[var(--radius-md)] bg-[var(--surface-secondary)]">
+                    {% if item.image %}
+                      {% render 'image-helper'
+                        , image: item.image
+                        , class: "w-full h-full object-cover object-center"
+                      %}
+                    {% endif %}
+                  </div>
+
+                  {%- comment -%} Item content {%- endcomment -%}
+                  <div class="flex-1 flex flex-col justify-between gap-2">
+                    <div class="space-y-1">
+                      <a href="{{ item.url }}" class="text-body-md font-medium text-[var(--text-primary)] hover:underline">
+                        {{ item.product.title }}
+                      </a>
+
+                      {% if item.variant.title != 'Default Title' %}
+                        <p class="text-body-sm text-[var(--text-secondary)]">
+                          {{ item.variant.title }}
+                        </p>
+                      {% endif %}
+
+                      {% if item.properties and item.properties != empty %}
+                        <dl class="text-body-xs text-[var(--text-secondary)] space-y-0.5">
+                          {% for property in item.properties %}
+                            {% assign property_name_prefix = property.first | slice: 0, 1 %}
+                            {% unless property.last == blank or property_name_prefix == '_' %}
+                              <div class="flex gap-1">
+                                <dt class="font-medium">{{ property.first }}:</dt>
+                                <dd>{{ property.last }}</dd>
+                              </div>
+                            {% endunless %}
+                          {% endfor %}
+                        </dl>
+                      {% endif %}
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                      {%- comment -%} Quantity control {%- endcomment -%}
+                      <div class="flex items-center gap-2">
+                        <label class="text-body-xs text-[var(--text-secondary)]" for="Cart-Quantity-{{ item.index | plus: 1 }}">
+                          {{ 'cart.quantity' | t | default: 'Qty' }}
+                        </label>
+                        <input
+                          id="Cart-Quantity-{{ item.index | plus: 1 }}"
+                          class="w-16 border border-[var(--interactive-border)] rounded-[var(--radius-sm)] px-2 py-1 text-body-sm
+                                 bg-[var(--surface-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                          type="number"
+                          name="updates[]"
+                          value="{{ item.quantity }}"
+                          min="0"
+                          inputmode="numeric"
+                          pattern="[0-9]*">
+                      </div>
+
+                      {%- comment -%} Price group {%- endcomment -%}
+                      <div class="text-right">
+                        {% if item.original_line_price > item.final_line_price %}
+                          <p class="text-body-sm line-through text-[var(--text-secondary)]">
+                            {{ item.original_line_price | money }}
+                          </p>
+                        {% endif %}
+                        <p class="text-body-md font-medium">
+                          {{ item.final_line_price | money }}
+                        </p>
+
+                        {% if item.discount_allocations.size > 0 %}
+                          <p class="text-body-xs text-[var(--semantic-success)]">
+                            {% for discount in item.discount_allocations %}
+                              {{ discount.discount_application.title }}{% unless forloop.last %},
+                              {% endunless %}
+                            {% endfor %}
+                          </p>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <div>
+                      {{ 'cart.remove' | t | link_to: item.url_to_remove | replace: 'href', 'class="text-body-xs text-[var(--text-secondary)] hover:underline" href' }}
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          {%- comment -%}
+            RIGHT COLUMN – SUMMARY
+          {%- endcomment -%}
+          <aside class="border border-[var(--interactive-border)] rounded-[var(--radius-md)] p-[var(--space-md)] space-y-[var(--space-sm)] bg-[var(--surface-secondary)]" aria-label="{{ 'cart.summary' | t | default: 'Order summary' }}">
+            <h2 class="text-regular-h5 font-bold">
+              {{ 'cart.summary' | t | default: 'Summary' }}
+            </h2>
+
+            <div class="flex items-center justify-between text-body-md">
+              <span class="text-[var(--text-secondary)]">
+                {{ 'cart.subtotal' | t | default: 'Subtotal' }}
+              </span>
+              <span class="font-semibold">
+                {{ cart.total_price | money }}
+              </span>
+            </div>
+
+            {% if cart.total_discounts > 0 %}
+              <div class="flex items-center justify-between text-body-sm text-[var(--semantic-success)]">
+                <span>
+                  {{ 'cart.discounts' | t | default: 'Discounts' }}
+                </span>
+                <span>-{{ cart.total_discounts | money }}</span>
+              </div>
+            {% endif %}
+
+            <p class="text-body-xs text-[var(--text-secondary)]">
+              {{ 'cart.taxes_and_shipping_at_checkout' | t | default: 'Taxes and shipping calculated at checkout.' }}
+            </p>
+
+            {%- comment -%} Optional: Cart note {%- endcomment -%}
+            <div class="space-y-1">
+              <label for="CartNote" class="text-body-sm font-medium">
+                {{ 'cart.note' | t | default: 'Order note (optional)' }}
+              </label>
+              <textarea
+                id="CartNote"
+                name="note"
+                class="w-full min-h-[96px] border border-[var(--interactive-border)] rounded-[var(--radius-md)] px-3 py-2 text-body-sm
+                       bg-[var(--surface-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+{{ cart.note }}</textarea>
+            </div>
+
+            <div class="space-y-2 pt-[var(--space-sm)]">
+              <button
+                type="submit"
+                name="checkout"
+                class="w-full inline-flex items-center justify-center rounded-md px-6 py-3 text-body-md font-medium
+                       bg-[var(--interactive-default)] text-[var(--text-on-interactive)]
+                       hover:bg-[var(--interactive-hover)]
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+                {{ 'cart.checkout' | t }}
+              </button>
+
+              <button
+                type="submit"
+                name="update"
+                class="w-full inline-flex items-center justify-center rounded-md px-6 py-2 text-body-sm font-medium
+                       border border-[var(--interactive-border)]
+                       bg-[var(--surface-primary)] text-[var(--text-primary)]
+                       hover:bg-[var(--surface-secondary)]
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2">
+                {{ 'cart.update' | t }}
+              </button>
+
+              <a href="{{ routes.all_products_collection_url | default: routes.root_url }}" class="inline-flex justify-center w-full text-body-sm text-[var(--text-secondary)] hover:underline">
+                {{ 'cart.continue_shopping' | t | default: 'Continue shopping' }}
+              </a>
+            </div>
+          </aside>
+        </div>
+      </form>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "t:general.cart",
+    "settings": []
+  }
+{% endschema %}

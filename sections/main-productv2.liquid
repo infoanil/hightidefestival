@@ -1,0 +1,1069 @@
+{% comment %}
+  Main Product V2
+{% endcomment %}
+
+{%- liquid
+  assign ab_cart_description = product.metafields.custom.ab_test_cart_desc
+  assign ab_cart_subdescription = product.metafields.custom.ab_test_cart_subdesc
+  assign use_ab_cart_descriptions = section.settings.use_ab_cart_descriptions
+  assign product_images = product.media | where: 'media_type', 'image'
+  assign fallback_gallery_image_1 = product_images[0]
+  assign fallback_gallery_image_2 = product_images[1]
+  assign fallback_gallery_image_3 = product_images[2]
+  assign fallback_gallery_image_4 = product_images[3]
+  assign fallback_gallery_image_5 = product_images[4]
+  assign fallback_gallery_image_6 = product_images[5]
+  assign fallback_gallery_image_7 = product_images[6]
+  assign gallery_video_1 = section.settings.gallery_video_1
+  assign gallery_image_1 = section.settings.gallery_image_1 | default: fallback_gallery_image_1
+  assign gallery_image_2 = section.settings.gallery_image_2 | default: fallback_gallery_image_2
+  assign gallery_image_3 = section.settings.gallery_image_3 | default: fallback_gallery_image_3
+  assign gallery_image_4 = section.settings.gallery_image_4 | default: fallback_gallery_image_4
+  assign gallery_image_5 = section.settings.gallery_image_5 | default: fallback_gallery_image_5
+  assign gallery_image_6 = section.settings.gallery_image_6 | default: fallback_gallery_image_6
+  assign gallery_image_7 = section.settings.gallery_image_7 | default: fallback_gallery_image_7
+  assign modal_video_muted = true
+  assign initial_inline_video_playing = false
+  if section.settings.play_video_audio_on_click
+    assign modal_video_muted = false
+  endif
+  if section.settings.play_video_inline and section.settings.autoplay_muted_inline and gallery_video_1 != blank
+    assign initial_inline_video_playing = true
+  endif
+  assign first_gallery_media_exists = false
+  if gallery_image_1 != blank or gallery_video_1 != blank
+    assign first_gallery_media_exists = true
+  endif
+  assign gallery_item_count = 0
+  if first_gallery_media_exists
+    assign gallery_item_count = gallery_item_count | plus: 1
+  endif
+  if gallery_image_2 != blank
+    assign gallery_item_count = gallery_item_count | plus: 1
+  endif
+  if gallery_image_3 != blank
+    assign gallery_item_count = gallery_item_count | plus: 1
+  endif
+  if gallery_image_4 != blank
+    assign gallery_item_count = gallery_item_count | plus: 1
+  endif
+  if gallery_image_5 != blank
+    assign gallery_item_count = gallery_item_count | plus: 1
+  endif
+  if gallery_image_6 != blank
+    assign gallery_item_count = gallery_item_count | plus: 1
+  endif
+  if gallery_image_7 != blank
+    assign gallery_item_count = gallery_item_count | plus: 1
+  endif
+  assign show_gallery_dots = false
+  if gallery_item_count > 1
+    assign show_gallery_dots = true
+  endif
+  assign pre_description_override = section.settings.manual_pre_description
+  assign description_override = section.settings.manual_product_description
+  assign after_cart_info = section.settings.manual_post_button_info
+  assign product_form_id = 'product-form-v2-' | append: section.id
+  assign display_product_title = section.settings.manual_product_title | default: product.title
+  assign review_rating_value = section.settings.review_rating | default: 0
+-%}
+
+<style>
+  .product-description ul,
+  .product-v2-description ul {
+    list-style: unset !important;
+    padding-left: 1.5rem;
+  }
+
+  .product-description p + p,
+  .product-subdescription p + p,
+  .product-v2-description p + p,
+  .product-v2-after-cart p + p {
+    margin-top: 0.5rem;
+  }
+
+  .product-v2-gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-v2-gallery {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .product-v2-description ul {
+    list-style: none !important;
+    padding-left: 0;
+  }
+
+  .product-v2-description li {
+    position: relative;
+    padding-left: 29px;
+  }
+
+  .product-v2-description li + li {
+    margin-top: 12px;
+  }
+
+  .product-v2-description li::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M18 9C18 11.3869 17.0518 13.6761 15.364 15.364C13.6761 17.0518 11.3869 18 9 18C6.61305 18 4.32387 17.0518 2.63604 15.364C0.948212 13.6761 0 11.3869 0 9C0 6.61305 0.948212 4.32387 2.63604 2.63604C4.32387 0.948212 6.61305 0 9 0C11.3869 0 13.6761 0.948212 15.364 2.63604C17.0518 4.32387 18 6.61305 18 9ZM13.5337 5.59125C13.4534 5.51117 13.3577 5.44812 13.2524 5.40587C13.1471 5.36361 13.0344 5.34303 12.921 5.34534C12.8076 5.34765 12.6958 5.37281 12.5923 5.41931C12.4888 5.46582 12.3958 5.53271 12.3187 5.616L8.41162 10.5941L6.057 8.23837C5.89705 8.08933 5.6855 8.0082 5.46691 8.01205C5.24832 8.01591 5.03976 8.10446 4.88518 8.25905C4.73059 8.41364 4.64204 8.6222 4.63818 8.84079C4.63432 9.05938 4.71546 9.27093 4.8645 9.43088L7.84125 12.4087C7.92144 12.4888 8.01693 12.5519 8.12203 12.5942C8.22713 12.6366 8.33968 12.6573 8.45296 12.6552C8.56625 12.6531 8.67795 12.6282 8.78141 12.582C8.88486 12.5358 8.97795 12.4692 9.05512 12.3863L13.5461 6.7725C13.6992 6.61331 13.7838 6.40043 13.7817 6.17958C13.7796 5.95872 13.691 5.74749 13.5349 5.59125H13.5337Z' fill='%230B4166'/%3E%3C/svg%3E");
+  }
+
+  @media (min-width: 768px) {
+    .product-v2-description li::before {
+      top: 1px;
+      transform: none;
+    }
+  }
+
+  .product-v2-review-star {
+    width: 16.74px;
+    height: 15.5px;
+  }
+
+  .product-v2-gallery-slide {
+    width: 85%;
+  }
+
+  .product-v2-gallery-dot {
+    width: 14px;
+    height: 14px;
+  }
+
+  .product-v2-video-trigger {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .product-v2-video-trigger::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(11, 65, 102, 0.05) 0%, rgba(11, 65, 102, 0.28) 100%);
+    pointer-events: none;
+  }
+
+  .product-v2-video-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    display: flex;
+    height: 64px;
+    width: 64px;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(246, 245, 240, 0.92);
+    color: #0b4166;
+    box-shadow: 0 10px 30px rgba(11, 65, 102, 0.18);
+  }
+
+  .product-v2-video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(11, 65, 102, 0.85);
+    padding: 20px;
+  }
+
+  .product-v2-video-panel {
+    position: relative;
+    width: min(960px, 100%);
+  }
+
+  .product-v2-video-panel video {
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - 80px);
+    border-radius: 8px;
+    background: #000;
+  }
+
+  @media (min-width: 768px) {
+    .product-v2-gallery-slide {
+      width: auto;
+    }
+  }
+</style>
+
+<div class="{% if section.settings.hide_on_mobile %}hidden md:block{% endif %}{% if section.settings.hide_on_desktop %} md:hidden{% endif %}">
+  <div class="bg-bg-color">
+    <div class="container py-5 md:py-12 lg:py-16">
+    <div class="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-5">
+      <div class="{% if section.settings.enable_sticky_media %}lg:sticky lg:top-8 self-start{% endif %}">
+        {% if section.settings.gallery_title != blank %}
+          <p
+            class="font-amaya text-[35px] leading-[36px] uppercase tracking-[-1px] text-secondary-navy md:mb-5 md:text-[50px] md:leading-[46px]"
+            style="margin-bottom: {{ section.settings.gallery_title_mobile_spacing }}px;"
+          >
+            {{ section.settings.gallery_title }}
+          </p>
+        {% endif %}
+
+        <div
+          x-data="{
+            currentIndex: 0,
+            isVideoOpen: false,
+            isInlineVideoPlaying: {{ initial_inline_video_playing | json }},
+            inlineVideoMuted: {{ section.settings.autoplay_muted_inline | json }},
+            playVideoInline: {{ section.settings.play_video_inline | json }},
+            playAudioOnClick: {{ section.settings.play_video_audio_on_click | json }},
+            showVideoControls: {{ section.settings.show_video_controls | json }},
+            autoplayMutedInline: {{ section.settings.autoplay_muted_inline | json }},
+            total: {{ gallery_item_count | json }},
+            init() {
+              if (this.playVideoInline && this.autoplayMutedInline && this.isInlineVideoPlaying) {
+                this.playInlineVideo({ muted: true });
+              }
+            },
+            goTo(index) {
+              this.currentIndex = index;
+              const slide = this.$refs.gallery?.children?.[index];
+              if (slide) {
+                slide.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+              }
+            },
+            playInlineVideo({ muted = this.autoplayMutedInline } = {}) {
+              this.$nextTick(() => {
+                const video = this.$root.querySelector('[data-inline-gallery-video] video');
+                if (!video) return;
+                video.currentTime = 0;
+                video.muted = muted;
+                this.inlineVideoMuted = muted;
+                const playback = video.play();
+                if (playback && typeof playback.catch === 'function') {
+                  playback.catch(() => {});
+                }
+              });
+            },
+            toggleInlineAudio() {
+              if (!this.playVideoInline || !this.isInlineVideoPlaying || !this.playAudioOnClick) return;
+
+              const video = this.$root.querySelector('[data-inline-gallery-video] video');
+              if (!video) return;
+
+              video.muted = !video.muted;
+              this.inlineVideoMuted = video.muted;
+
+              if (video.paused) {
+                const playback = video.play();
+                if (playback && typeof playback.catch === 'function') {
+                  playback.catch(() => {});
+                }
+              }
+            },
+            openVideo() {
+              if (this.playVideoInline) {
+                this.isInlineVideoPlaying = true;
+                this.playInlineVideo({ muted: !this.playAudioOnClick });
+                return;
+              }
+              this.isVideoOpen = true;
+              document.documentElement.classList.add('overflow-hidden');
+              this.$nextTick(() => {
+                const video = this.$root.querySelector('.product-v2-video-panel video');
+                if (!video) return;
+                video.muted = this.playAudioOnClick ? false : true;
+                const playback = video.play();
+                if (playback && typeof playback.catch === 'function') {
+                  playback.catch(() => {});
+                }
+              });
+            },
+            closeVideo() {
+              this.isVideoOpen = false;
+              const video = this.$root.querySelector('.product-v2-video-panel video');
+              if (video) {
+                video.pause();
+              }
+              document.documentElement.classList.remove('overflow-hidden');
+            },
+            syncIndex() {
+              if (window.innerWidth >= 768 || !this.$refs.gallery) return;
+              const slideWidth = this.$refs.gallery.children?.[0]?.getBoundingClientRect().width || 1;
+              this.currentIndex = Math.round(this.$refs.gallery.scrollLeft / slideWidth);
+            }
+          }"
+          class="flex flex-col gap-[15px]"
+        >
+          <div
+            x-ref="gallery"
+            @scroll.passive="syncIndex()"
+            class="product-v2-gallery flex snap-x snap-mandatory gap-[10px] overflow-x-auto md:grid md:grid-cols-2 md:overflow-visible"
+          >
+            {% if first_gallery_media_exists %}
+              <div class="product-v2-gallery-slide shrink-0 snap-start">
+                <div class="overflow-hidden rounded-[5px] border border-secondary-navy bg-surface-secondary aspect-square md:aspect-[353/366] lg:aspect-[568/683]">
+                  {% if gallery_video_1 != blank %}
+                    <template x-if="playVideoInline && isInlineVideoPlaying">
+                      <div
+                        class="h-full w-full"
+                        data-inline-gallery-video
+                        @click="toggleInlineAudio()"
+                      >
+                        {{
+                          gallery_video_1
+                          | video_tag:
+                            image_size: '1600x',
+                            autoplay: section.settings.autoplay_muted_inline,
+                            controls: section.settings.show_video_controls,
+                            loop: true,
+                            muted: section.settings.autoplay_muted_inline,
+                            playsinline: true,
+                            class: 'h-full w-full object-cover'
+                        }}
+                      </div>
+                    </template>
+
+                    <template x-if="!playVideoInline || !isInlineVideoPlaying">
+                      <button
+                        type="button"
+                        class="product-v2-video-trigger"
+                        @click="openVideo()"
+                        :aria-label="playVideoInline ? 'Play featured gallery video inline' : 'Play featured gallery video'"
+                      >
+                        {% render 'image-helper',
+                          image: gallery_image_1 | default: gallery_video_1.preview_image,
+                          max_width: 1600,
+                          sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                          class: 'h-full w-full object-cover'
+                        %}
+                        <span class="product-v2-video-play" aria-hidden="true">
+                          <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21.0674 11.8207C21.9199 12.3191 21.9199 13.5528 21.0674 14.0512L2.08008 25.1518C1.22051 25.6542 0.140625 25.0341 0.140625 24.0365V1.83537C0.140625 0.837792 1.22052 0.217696 2.08008 0.720115L21.0674 11.8207Z" fill="currentColor"/>
+                          </svg>
+                        </span>
+                      </button>
+                    </template>
+                  {% else %}
+                    {% render 'image-helper',
+                      image: gallery_image_1,
+                      max_width: 1600,
+                      sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                      class: 'h-full w-full object-cover'
+                    %}
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if gallery_image_2 != blank %}
+              <div class="product-v2-gallery-slide shrink-0 snap-start">
+                <div class="overflow-hidden rounded-[5px] border border-secondary-navy bg-surface-secondary aspect-square md:aspect-[353/366] lg:aspect-[568/683]">
+                  {% render 'image-helper',
+                    image: gallery_image_2,
+                    max_width: 1600,
+                    sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                    class: 'h-full w-full object-cover'
+                  %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if gallery_image_3 != blank %}
+              <div class="product-v2-gallery-slide shrink-0 snap-start">
+                <div class="overflow-hidden rounded-[5px] border border-secondary-navy bg-surface-secondary aspect-square md:aspect-[353/366] lg:aspect-[568/683]">
+                  {% render 'image-helper',
+                    image: gallery_image_3,
+                    max_width: 1600,
+                    sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                    class: 'h-full w-full object-cover'
+                  %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if gallery_image_4 != blank %}
+              <div class="product-v2-gallery-slide shrink-0 snap-start">
+                <div class="overflow-hidden rounded-[5px] border border-secondary-navy bg-surface-secondary aspect-square md:aspect-[353/366] lg:aspect-[568/683]">
+                  {% render 'image-helper',
+                    image: gallery_image_4,
+                    max_width: 1600,
+                    sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                    class: 'h-full w-full object-cover'
+                  %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if gallery_image_5 != blank %}
+              <div class="product-v2-gallery-slide shrink-0 snap-start">
+                <div class="overflow-hidden rounded-[5px] border border-secondary-navy bg-surface-secondary aspect-square md:aspect-[353/366] lg:aspect-[568/683]">
+                  {% render 'image-helper',
+                    image: gallery_image_5,
+                    max_width: 1600,
+                    sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                    class: 'h-full w-full object-cover'
+                  %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if gallery_image_6 != blank %}
+              <div class="product-v2-gallery-slide shrink-0 snap-start">
+                <div class="overflow-hidden rounded-[5px] border border-secondary-navy bg-surface-secondary aspect-square md:aspect-[353/366] lg:aspect-[568/683]">
+                  {% render 'image-helper',
+                    image: gallery_image_6,
+                    max_width: 1600,
+                    sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                    class: 'h-full w-full object-cover'
+                  %}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if gallery_image_7 != blank %}
+              <div class="product-v2-gallery-slide shrink-0 snap-start">
+                <div class="overflow-hidden rounded-[5px] border border-secondary-navy bg-surface-secondary aspect-square md:aspect-[353/366] lg:aspect-[568/683]">
+                  {% render 'image-helper',
+                    image: gallery_image_7,
+                    max_width: 1600,
+                    sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                    class: 'h-full w-full object-cover'
+                  %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+          {% if show_gallery_dots %}
+            <div class="flex items-center justify-center gap-[5px] md:hidden mb-5">
+              {% for i in (1..7) %}
+                {% if i <= gallery_item_count %}
+                  <button
+                    type="button"
+                    @click="goTo({{ forloop.index0 }})"
+                    class="product-v2-gallery-dot rounded-full border border-secondary-navy"
+                    :class="currentIndex === {{ forloop.index0 }} ? 'bg-secondary-navy' : 'bg-transparent'"
+                    aria-label="Show gallery item {{ i }}"
+                  ></button>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if gallery_video_1 != blank %}
+            <template x-if="isVideoOpen">
+              <div
+                class="product-v2-video-modal"
+                @click.self="closeVideo()"
+                @keydown.escape.window="closeVideo()"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Featured gallery video"
+              >
+                <div class="product-v2-video-panel">
+                  <button
+                    type="button"
+                    class="absolute right-3 top-3 z-1 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-secondary-navy"
+                    @click="closeVideo()"
+                    aria-label="Close video"
+                  >
+                    <span class="text-2xl leading-none">&times;</span>
+                  </button>
+                  {{
+                    gallery_video_1
+                    | video_tag:
+                      image_size: '1600x',
+                      autoplay: true,
+                      controls: section.settings.show_video_controls,
+                      loop: true,
+                      muted: modal_video_muted,
+                      playsinline: true,
+                      class: 'w-full'
+                  }}
+                </div>
+              </div>
+            </template>
+          {% endif %}
+        </div>
+      </div>
+
+      <div>
+        {% if section.settings.show_vendor %}
+          <p class="uppercase text-lg font-bold text-secondary-navy/60 mb-4">{{ product.vendor }}</p>
+        {% endif %}
+
+        <h1
+          class="font-amaya text-[50px] leading-[46px] md:text-[80px] md:leading-[74px] tracking-[-1px] text-secondary-navy uppercase"
+          style="padding-top: {{ section.settings.product_title_mobile_padding_top }}px;"
+        >
+          {{ display_product_title }}
+        </h1>
+
+        <div class="mt-5 flex items-start justify-between gap-4">
+          <div class="flex min-w-0 items-center gap-[5px]">
+            <div class="flex items-center gap-[2px] pb-[3px] text-trietary-orange" aria-label="{{ review_rating_value }}/5 stars">
+              {% for i in (1..5) %}
+                <svg class="product-v2-review-star shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none" aria-hidden="true">
+                  <path d="M16.4684 6.0101C16.4684 5.77812 16.2891 5.63051 15.9306 5.56724L11.0276 4.83969L8.84491 0.411119C8.71838 0.158057 8.56022 0.0315266 8.37042 0.0315266C8.18062 0.0315266 8.02246 0.158057 7.89593 0.411119L5.71328 4.83969L0.810216 5.56724C0.451713 5.63051 0.272461 5.77812 0.272461 6.0101C0.272461 6.15772 0.356815 6.31588 0.525522 6.48459L4.06838 9.93255L3.2143 14.804C3.2143 14.8883 3.2143 14.9516 3.2143 14.9938C3.2143 15.1203 3.24593 15.231 3.3092 15.3259C3.37246 15.4208 3.4779 15.4683 3.62552 15.4683C3.73096 15.4683 3.8575 15.4261 4.00511 15.3417L8.37042 13.0642L12.7357 15.3417C12.8833 15.4261 13.0099 15.4683 13.1153 15.4683C13.2629 15.4683 13.3684 15.4208 13.4316 15.3259C13.4949 15.231 13.5265 15.1203 13.5265 14.9938C13.5265 14.9094 13.5265 14.8462 13.5265 14.804L12.6725 9.93255L16.2153 6.48459C16.384 6.31588 16.4684 6.15772 16.4684 6.0101Z" fill="#E6772A"/>
+                </svg>
+              {% endfor %}
+            </div>
+
+            {% if section.settings.show_rating_number %}
+              {% capture rating_label %}
+                {% if section.settings.rating_prefix != blank %}{{ section.settings.rating_prefix }} {% endif %}{{ review_rating_value }}{% if section.settings.rating_suffix != blank %} {{ section.settings.rating_suffix }}{% endif %}
+              {% endcapture %}
+              <p class="text-[17px] leading-[20px] font-extrabold tracking-[-1px] text-secondary-navy/80">
+                {{ rating_label | strip }}
+              </p>
+            {% endif %}
+
+            {% if section.settings.hide_review_count != true and section.settings.review_link != blank and section.settings.review_count > 0 %}
+              <a href="{{ section.settings.review_link }}" class="text-[17px] leading-[20px] font-extrabold tracking-[-1px] text-secondary-navy/80 underline-offset-2 hover:underline">
+                {{ section.settings.review_count }} Reviews
+              </a>
+            {% elsif section.settings.hide_review_count != true and section.settings.review_count > 0 %}
+              <p class="text-[17px] leading-[20px] font-extrabold tracking-[-1px] text-secondary-navy/80">
+                {{ section.settings.review_count }} Reviews
+              </p>
+            {% endif %}
+          </div>
+
+          <p class="shrink-0 text-[20px] leading-[37.5px] text-primary-deepblue font-extrabold tracking-[-1px] md:text-[25px] md:leading-[25px]">
+            {{ product.price | money }}
+          </p>
+        </div>
+
+        {%- if pre_description_override != blank -%}
+          <div class="product-v2-description mt-4 mb-5 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
+            {{ pre_description_override }}
+          </div>
+        {%- endif -%}
+
+        {%- if description_override != blank -%}
+          <div class="product-v2-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
+            {{ description_override }}
+          </div>
+        {%- elsif use_ab_cart_descriptions and ab_cart_description != blank -%}
+          <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
+            {% if ab_cart_description.type == 'rich_text_field' %}
+              {{ ab_cart_description | metafield_tag }}
+            {% else %}
+              {{ ab_cart_description.value | default: ab_cart_description }}
+            {% endif %}
+          </div>
+        {%- elsif product.description != blank -%}
+          <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+
+        {%- if use_ab_cart_descriptions and ab_cart_subdescription != blank -%}
+          <div class="product-subdescription mt-2 text-[12px] font-semibold leading-[20px] text-secondary-navy/80">
+            {% if ab_cart_subdescription.type == 'rich_text_field' %}
+              {{ ab_cart_subdescription | metafield_tag }}
+            {% else %}
+              {{ ab_cart_subdescription.value | default: ab_cart_subdescription }}
+            {% endif %}
+          </div>
+        {%- endif -%}
+
+        <script id="product-data-v2-{{ section.id }}" type="application/json">
+          {
+            "variants": {{ product.variants | json }},
+            "selectedOptions": {{ product.selected_or_first_available_variant.options | json }},
+            "currentVariantId": {{ product.selected_or_first_available_variant.id | json }}
+          }
+        </script>
+
+        <div
+          x-data="{
+            ...variantSelectorV2('product-data-v2-{{ section.id }}'),
+            quantity: 1,
+            decreaseQty() {
+              if (this.quantity > 1) this.quantity--;
+            },
+            increaseQty() {
+              this.quantity++;
+            }
+          }"
+          x-init="initFromProductData()"
+          class="mt-6"
+        >
+          {%- form 'product', product, id: product_form_id, novalidate: 'novalidate' -%}
+            <input type="hidden" name="id" x-model="currentVariantId">
+            <input type="hidden" name="return_to" value="/products/{{ product.handle }}">
+
+            {%- unless product.has_only_default_variant -%}
+              <div class="space-y-4 mb-6">
+                {%- for option in product.options_with_values -%}
+                  <div>
+                    <label for="select-v2-{{ section.id }}-{{ forloop.index }}" class="mb-2 block text-sm font-medium text-[var(--text-primary)]">
+                      {{ option.name }}
+                    </label>
+                    <select
+                      id="select-v2-{{ section.id }}-{{ forloop.index }}"
+                      name="options[{{ option.name | escape }}]"
+                      x-model="selectedOptions[{{ forloop.index0 }}]"
+                      @change="updateVariant()"
+                      class="block w-full rounded-[5px] border border-[var(--interactive-border)] bg-white py-3 pl-3 pr-10 text-base focus:border-[var(--interactive-default)] focus:ring-[var(--interactive-default)]"
+                    >
+                      {% for value in option.values %}
+                        <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                          {{ value }}
+                        </option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endunless -%}
+
+            {% assign current_variant = product.selected_or_first_available_variant %}
+
+            <div class="flex items-stretch gap-[5px] rounded-[5px] bg-trietary-orange p-[5px]">
+              <div class="flex shrink-0 items-center overflow-hidden rounded-[4px] bg-white">
+                <button
+                  type="button"
+                  @click="decreaseQty()"
+                  class="flex items-center justify-center px-3 py-2 text-[20px] leading-[28px] font-bold text-secondary-navy transition hover:bg-gray-100"
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+                <label for="Quantity-v2-{{ section.id }}" class="sr-only">Quantity</label>
+                <input
+                  type="number"
+                  id="Quantity-v2-{{ section.id }}"
+                  name="quantity"
+                  x-model="quantity"
+                  min="1"
+                  class="min-h-[48px] w-16 py-[10px] text-center text-[18px] leading-[28px] font-bold tracking-[-1px] text-primary-black border-0 focus:outline-none focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                >
+                <button
+                  type="button"
+                  @click="increaseQty()"
+                  class="flex items-center justify-center px-3 py-2 text-[20px] leading-[28px] font-bold text-secondary-navy transition hover:bg-gray-100"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+
+              <button
+                type="submit"
+                name="add"
+                {% unless current_variant.available %}disabled{% endunless %}
+                class="flex min-h-[58px] flex-1 items-center justify-center px-6 py-3 text-center text-base font-extrabold uppercase text-white transition hover:bg-secondary-navy disabled:cursor-not-allowed disabled:bg-[var(--surface-disabled)] disabled:text-[var(--text-disabled)]"
+              >
+                {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
+              </button>
+            </div>
+          {%- endform -%}
+        </div>
+
+        {% if after_cart_info != blank %}
+          <div class="product-v2-after-cart mt-4 text-[14px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
+            {{ after_cart_info }}
+          </div>
+        {% endif %}
+
+        {% if section.blocks.size > 0 %}
+          <div class="mt-8 space-y-4">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'accordion' %}
+                  {% render 'accordion-item', title: block.settings.title, content: block.settings.content %}
+              {% endcase %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_related_products -%}
+    <div class="bg-primary-lightblue border-y-[3px] border-secondary-navy">
+      <div
+        id="related-products-v2-{{ section.id }}"
+        class="container py-[60px] lg:py-[100px]"
+        data-product-id="{{ product.id }}"
+      >
+        <div class="mb-7.5 flex justify-center lg:items-end md:mb-11">
+          <h2 class="font-amaya text-[50px] leading-[46px] uppercase tracking-[-1px] text-secondary-navy lg:text-[80px] lg:leading-[74px]">
+            you may also like
+          </h2>
+        </div>
+        <div data-related-grid>
+          <div class="col-span-full text-center text-sm text-[var(--text-secondary)]">Loading…</div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  function variantSelectorV2(dataElementId) {
+    return {
+      variants: [],
+      selectedOptions: [],
+      currentVariantId: null,
+
+      initFromProductData() {
+        const dataEl = document.getElementById(dataElementId);
+        if (!dataEl) return;
+
+        const data = JSON.parse(dataEl.textContent);
+        this.variants = data.variants;
+        this.selectedOptions = data.selectedOptions;
+        this.currentVariantId = data.currentVariantId;
+      },
+
+      updateVariant() {
+        const variant = this.variants.find((candidate) =>
+          candidate.options.every((opt, index) => opt === this.selectedOptions[index])
+        );
+
+        if (variant) {
+          this.currentVariantId = variant.id;
+        }
+      }
+    };
+  }
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('#{{ product_form_id }}');
+    if (!form) return;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const hiddenInput = form.querySelector('input[name="id"]');
+      const variantId = hiddenInput?.value;
+
+      console.log('[High Tide Debug] PDP submit intercepted', {
+        formId: '{{ product_form_id }}',
+        variantId
+      });
+
+      if (!variantId) return;
+
+      const formData = new FormData(form);
+
+      console.log('[High Tide Debug] Sending PDP add-to-cart request', {
+        endpoint: '/cart/add.js',
+        variantId,
+        quantity: formData.get('quantity')
+      });
+
+      await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: formData
+      });
+
+      console.log('[High Tide Debug] PDP add-to-cart request completed', {
+        variantId
+      });
+
+      window.dispatchEvent(new CustomEvent('cart:add'));
+
+      console.log('[High Tide Debug] cart:add dispatched from PDP', {
+        variantId
+      });
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const relatedSection = document.querySelector('#related-products-v2-{{ section.id }}');
+    if (!relatedSection) return;
+
+    const grid = relatedSection.querySelector('[data-related-grid]');
+    const productId = relatedSection.getAttribute('data-product-id');
+    const limit = {{ section.settings.related_limit | default: 8 }};
+
+    fetch(`/recommendations/products?section_id=related-products&product_id=${productId}&limit=${limit}`)
+      .then((response) => response.text())
+      .then((html) => {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+
+        const relatedHTML = temp.querySelector('[data-related-products-grid]');
+        if (!relatedHTML) {
+          relatedSection.style.display = 'none';
+          return;
+        }
+
+        if (relatedHTML.children.length) {
+          grid.innerHTML = relatedHTML.innerHTML;
+        } else {
+          relatedSection.style.display = 'none';
+        }
+      })
+      .catch(() => {
+        relatedSection.style.display = 'none';
+      });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Main Product V2",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_media",
+      "label": "Enable sticky media on scroll",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "gallery_title",
+      "label": "Manual gallery title",
+      "default": "2-Day Pass"
+    },
+    {
+      "type": "range",
+      "id": "gallery_title_mobile_spacing",
+      "label": "Gallery title bottom spacing on mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "manual_product_title",
+      "label": "Manual product title"
+    },
+    {
+      "type": "range",
+      "id": "product_title_mobile_padding_top",
+      "label": "Product title top padding on mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_1",
+      "label": "Gallery image 1 / video thumbnail"
+    },
+    {
+      "type": "video",
+      "id": "gallery_video_1",
+      "label": "Gallery video for item 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "play_video_inline",
+      "label": "Play gallery video inline instead of opening dialog",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "play_video_audio_on_click",
+      "label": "Play video audio when clicked",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_controls",
+      "label": "Show video controls",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_muted_inline",
+      "label": "Autoplay muted inline video",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_2",
+      "label": "Gallery image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_3",
+      "label": "Gallery image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_4",
+      "label": "Gallery image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_5",
+      "label": "Gallery image 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_6",
+      "label": "Gallery image 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_image_7",
+      "label": "Gallery image 7"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "review_rating",
+      "label": "Review rating",
+      "default": "5.0"
+    },
+    {
+      "type": "number",
+      "id": "review_count",
+      "label": "Review count",
+      "default": 534
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_review_count",
+      "label": "Hide review count",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_number",
+      "label": "Show rating number text",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "rating_prefix",
+      "label": "Rating prefix text"
+    },
+    {
+      "type": "text",
+      "id": "rating_suffix",
+      "label": "Rating suffix text"
+    },
+    {
+      "type": "url",
+      "id": "review_link",
+      "label": "Review link"
+    },
+    {
+      "type": "richtext",
+      "id": "manual_pre_description",
+      "label": "Manual pre description"
+    },
+    {
+      "type": "richtext",
+      "id": "manual_product_description",
+      "label": "Manual product description override"
+    },
+    {
+      "type": "paragraph",
+      "content": "Manual pre description renders above the manual product description override."
+    },
+    {
+      "type": "richtext",
+      "id": "manual_post_button_info",
+      "label": "Manual info below add to cart"
+    },
+    {
+      "type": "header",
+      "content": "WIP"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_ab_cart_descriptions",
+      "label": "Use AB cart descriptions",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Related Products"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Show 'Customers Also Bought'",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "related_limit",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Number of related products",
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Shipping Details"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Accordion content goes here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main Product V2",
+      "blocks": [
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipping Details",
+            "content": "<p>Passes will be delivered digitally closer to the festival dates.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  
+  <head>
+    {% # Inlined CSS Variables %}
+  {% render 'css-variables' %}
+
+    {% # Load and preload the critical CSS %}
+    {% comment %} {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }} {% endcomment %}
+
+    {% # Social, title, etc. %}
+    {% render 'meta-tags' %}
+
+    {%- liquid
+      render 'vite-tag' with 'main.css'
+      render 'vite-tag' with 'main.js'
+    -%}
+    <script>
+      window.CandyRackSliderCart = window.CandyRackSliderCart || {};
+    </script>
+    {{ content_for_header }}
+  </head>
+
+  <body class=" bg-bg-color">
+    {% sections 'header-home-group' %}
+
+    {% comment %} Password protection for passes page {% endcomment %}
+    {% if settings.passes_password_enabled and template.suffix == 'passes' %}
+      {% render 'passes-password-wall' %}
+      <div x-data="{ unlocked: sessionStorage.getItem('passes_unlocked') === 'true' }" x-show="unlocked" x-cloak @passes-unlocked.window="unlocked = true">
+        {{ content_for_layout }}
+      </div>
+    {% else %}
+      {{ content_for_layout }}
+    {% endif %}
+
+    {% sections 'footer-group' %}
+
+    <script>
+      window.addEventListener('cart:add', () => {
+        console.log('[High Tide Debug] cart:add event fired');
+      });
+
+      window.addEventListener('passes-unlocked', () => {
+        console.log('[High Tide Debug] passes-unlocked event fired');
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,108 @@
+{% comment %}
+  Renders the faceted filters for the collection in an accessible accordion structure.
+{% endcomment %}
+
+{% assign collection_to_filter = collection_to_filter | default: collection %}
+
+{% if collection_to_filter.filters.size > 0 %}
+  <form method="get" class="js-filter-form space-y-8">
+
+
+    {% comment %} Check if any filter has an active value {% endcomment %}
+    {% assign has_active_filters = false %}
+
+    {% for filter in collection_to_filter.filters %}
+      {% for v in filter.values %}
+        {% if v.active %}
+          {% assign has_active_filters = true %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+
+    {% if has_active_filters %}
+      <div class="flex justify-end mb-4">
+        <a href="{{ collection_to_filter.url }}" class="text-sm font-medium text-[var(--text-secondary)]
+             hover:text-[var(--text-primary)] underline">
+          Clear all filters
+        </a>
+      </div>
+    {% endif %}
+
+
+    {% for filter in collection_to_filter.filters %}
+      <div x-data="{ open: true }" class="pb-4 border-b border-[var(--interactive-border)]">
+
+        <!-- FILTER HEADER -->
+        <h3 class="text-lg ">
+          <button
+            type="button"
+            @click="open = !open"
+            :aria-expanded="open"
+            aria-controls="FilterGroup-{{ filter.label | handleize }}"
+            class="w-full flex justify-between items-center py-1 text-left font-bold !uppercase tracking-[-1px] my-3 text-secondary-navy
+                   focus:outline-none focus-visible:ring-2
+                   focus-visible:ring-[var(--interactive-focus)]">
+            <span>{{ filter.label }}</span>
+
+            <svg
+              class="h-5 w-5 transition-transform duration-300"
+              :class="{ 'rotate-180': open, 'rotate-0': !open }"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+        </h3>
+
+        <!-- FILTER OPTIONS -->
+        <div
+          id="FilterGroup-{{ filter.label | handleize }}"
+          x-show="open"
+          x-collapse.duration.300ms>
+          <div class="w-auto max-w-xs pt-2">
+            <ul class="flex flex-col space-y-4">
+              {% for value in filter.values %}
+                <li class="flex items-center">
+                  <input
+                    type="checkbox"
+                    name="{{ value.param_name }}"
+                    id="Filter-{{ filter.label | handleize }}-{{ forloop.index }}"
+                    value="{{ value.value }}"
+                    {% if value.active %}
+                    checked{% endif %}
+                    {% if value.count == 0 and value.active == false %}
+                    disabled{% endif %}
+                    class="w-5 h-5 rounded border-[var(--interactive-border)]
+           text-[var(--brand-primary)]
+           focus:ring-2 focus:ring-[var(--interactive-focus)]
+           disabled:border-[var(--interactive-border)]
+           disabled:bg-[var(--surface-disabled)]
+           disabled:cursor-not-allowed transition">
+
+                  <label for="Filter-{{ filter.label | handleize }}-{{ forloop.index }}" class="ml-3 text-sm font-medium select-none
+           {% if value.count == 0 and value.active == false %}
+             text-[var(--text-disabled)]
+           {% else %}
+             text-[var(--text-primary)]
+           {% endif %}">
+                    {{ value.label }}
+                    <span class="ml-1 text-xs text-[var(--text-secondary)]">
+                      ({{ value.count }})
+                    </span>
+                  </label>
+                </li>
+
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    {% endfor %}
+
+  </form>
+{% endif %}

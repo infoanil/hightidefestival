@@ -1,0 +1,35 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "where_to_stay_zabX9W": {
+      "type": "where-to-stay",
+      "name": "Where to stay?",
+      "settings": {
+        "image": "shopify://shop_images/Somewhere_to_stay_47e4f226-2311-4bac-a14f-b8f117d86749.jpg",
+        "heading": "Need somewhere to stay?",
+        "description": "We’ve got you covered with a special discounted rate at The Moxy Hotel in Downtown Charleston, just a 10 minute drive to the festival site.  Also they have a sick rooftop… who doesn’t love that for a lil pre-game or whatevah. This is our official hotel partner and the best home base for the full High Tide experience.",
+        "price": "$225 / night",
+        "price_info": "(while supplies last - limited inventory)",
+        "button_title": "book your stay",
+        "button_url": "https://app.marriott.com/reslink?id=1767638255518&key=GRP&app=resvlink"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "where_to_stay_zabX9W"
+  ]
+}

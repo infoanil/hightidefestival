@@ -1,0 +1,152 @@
+{% comment %}
+  Array de datos en Liquid (esto suele venir de tu esquema de Shopify o un archivo JSON)
+{% endcomment %}
+{% assign projects = "Main Stage,pool stage,silent disco,sunset stage,night stage" | split: ',' %}
+
+<div class="container mx-auto py-20">
+    <div class="headings flex flex-col lg:flex-row lg:justify-between lg:items-end lg:mb-[50px] text-secondary-navy">
+        <div class="">
+            <p class="legend uppercase text-lg font-bold mb-4">{{  section.settings.legend}}</p>
+            <h2 class="font-amaya text-[50px] leading-[46px] lg:text-[100px] lg:leading-[88px] uppercase letter-spacing-[-1px]">{{ section.settings.heading }}</h2>
+        </div>
+        <div class="tabs flex lg:max-w-[533px]  mt-5 mb-8 lg:my-0">
+           <p class="font-semibold">{{ section.settings.description }}</p>
+        </div>
+    </div>
+    <div class="flex flex-col lg:flex-row w-full  h-[853px] lg:h-[600px] gap-2"
+        x-data="{ active: 0 }">
+      
+      {% for block in section.blocks %}
+        {% assign index = forloop.index0 %}
+        
+        <div 
+          @mouseenter="active = {{ index }}"
+          @click="active = {{ index }}"
+          class="relative  overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] shadow-2xl rounded-xl flex items-end"
+          :class="active === {{ index }} ? 'flex-[3] md:flex-[5] lg:flex-[6]  bg-[#363636]' : 'flex-1 h-auto bg-[#2a2a2a]'"
+        >
+          
+          <img 
+            src="{{ block.settings.image | img_url: 'master' }}" 
+            alt="{{ project }}"
+            class="absolute inset-0 w-full h-full object-cover transition-all duration-700"
+            :class="active === {{ index }} ? 'opacity-100 scale-100' : 'opacity-100 scale-110'"
+          />
+
+          <div x-show="active !== {{ index }}" x-transition.opacity class="gradient absolute inset-0 bg-black/50"></div>
+          
+          <div x-show="active !== {{ index }}" x-transition.opacity class="bg-black/50 w-full h-full flex lg:flex-col-reverse items-center justify-between [&_*]:z-1  lg:pt-[33px] lg:pb-[42px] px-5" >
+            <h3 class="font-extrabold text-white uppercase text-[25px] md:text-[30px] leading-[24px] tracking-[-1px] lg:[writing-mode:vertical-rl] lg:rotate-180   z-1 pointer-events-none max-sm:w-[164px]">
+              {{ block.settings.title }}
+            </h3>
+            <img
+            src="{{ block.settings.icon | img_url: 'master' }}"
+            class="w-[50px] md:w-[58px]"
+            >
+          </div>
+
+          <div 
+            x-show="active === {{ index }}"
+            x-transition:enter="transition ease-out duration-500 delay-300"
+            x-transition:enter-start="opacity-0 translate-y-8"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            class="flex flex-col justify-between relative px-3 py-5 md:p-7 w-full h-full z-1 bg-gradient-to-b from-transparent to-black/40"
+          >
+            <img
+            src="{{ block.settings.icon | img_url: 'master' }}"
+            class="w-[50px] md:w-[58px]"
+            >
+              <div>
+                <h3 class="text-[25px] leading-[24px] tracking-[-2px] md:text-[40px] lg:text-[50px] lg:leading-[1em] md:tracking-[-4px] font-black mb-3 uppercase  text-white ">{{  block.settings.title }}</h3>
+                <p class="text-[15px] leading-[18px] md:text-xl md:leading-[22px] uppercase  text-white font-bold lg:font-extrabold tracking-[-1px]">
+                  {{ block.settings.description }}
+                </p>
+              </div>
+            
+            
+
+          </div>
+
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+
+
+
+  {% schema %}
+  {
+    "name": "Choose Your Vibe",
+    "tag": "section",
+    "class": "section-choose-your-vibe",
+    "settings": [
+      {
+        "type": "text",
+        "id": "legend",
+        "label": "Legend Text",
+        "default": "explore the grounds"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "choose your vibe"
+      },
+      {
+        "type": "textarea",
+        "id": "description",
+        "label": "Description",
+        "default": "Plan your flow through the waterpark. From the massive energy of the Main Stage to the intimate vibes of Sunset, there's a sound for every moment."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "stage",
+        "name": "Stage",
+        "settings": [
+                    {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Stage Title",
+            "default": "Main Stage"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Stage Image"
+          },
+          
+          {
+            "type": "textarea",
+            "id": "description",
+            "label": "Stage Description",
+            "default": "The heartbeat of High Tide. Massive sound, pyrotechnics, and the biggest acts."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Choose Your Vibe",
+        "blocks": [
+          {
+            "type": "stage"
+          },
+          {
+            "type": "stage"
+          },
+          {
+            "type": "stage"
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

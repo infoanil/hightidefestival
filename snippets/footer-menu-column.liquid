@@ -1,0 +1,21 @@
+{% assign menu_object = menu %}
+
+<div>
+  {% if title %}
+    <h4 class="text-lg font-bold text-center mb-[15px] md:mb-[35px] uppercase text-primary-deepblue lg:text-primary-black">{{ title }}</h4>
+  {% endif %}
+
+  {% if menu_object and menu_object.links and menu_object.links.size > 0 %}
+    <ul class="flex flex-col items-center space-y-2 md:space-y-4">
+      {% for link in menu_object.links %}
+        <li class="hover:scale-105 transform transition duration-200">
+          <a href="{{ link.url }}" class="text-[25px] md:text-[30px] leading-[100%] uppercase font-extrabold text-secondary-navy md:text-primary-black hover:text-primary-deepblue  transition duration-200 text-center">
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-sm text-[var(--text-secondary)]">Add menu items</p>
+  {% endif %}
+</div>

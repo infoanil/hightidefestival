@@ -1,0 +1,38 @@
+{% comment %}
+  Header logo molecule
+  - Uses passed-in `logo_image` if provided, otherwise falls back to section.settings.logo_image
+  - Accepts optional `compact: true` (used in mobile drawer)
+{% endcomment %}
+
+{% assign logo_image = logo_image | default: settings.dark_logo %}
+{% assign compact = compact | default: false %}
+
+{% if compact %}
+  {% assign wrapper_classes = "inline-flex items-center p-1.5" %}
+{% else %}
+  {% assign wrapper_classes = "-m-1.5 p-1.5 inline-flex items-center" %}
+{% endif %}
+
+<a href="{{ routes.root_url }}" class="{{ wrapper_classes }} {{ class | default: '' }}">
+  {% if logo_image != blank %}
+    <div class="w-32">
+      <img
+        src="{{ logo_image | image_url: width: 500 }}"
+        width="500"
+        height="100"
+        alt="{{ shop.name | escape }}"
+        class="w-full h-auto"
+      id="logo">
+    </div>
+    <span class="visually-hidden">{{ shop.name }}</span>
+  {% else %}
+    <span class="text-xl font-bold uppercase text-[var(--text-primary)] hover:text-[var(--link-hover)]">
+      {{ shop.name }}
+    </span>
+  {% endif %}
+</a>
+
+
+<style>
+
+</style>

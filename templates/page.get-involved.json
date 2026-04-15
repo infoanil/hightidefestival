@@ -1,0 +1,110 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "17739598612749b207": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_7cf5ca2_FCGkGN": {
+          "type": "ai_gen_block_7cf5ca2",
+          "settings": {
+            "heading_text": "GET INVOLVED",
+            "heading_size": 64,
+            "heading_color": "#0b4166",
+            "text_alignment": "center",
+            "desktop_width_percent": 100,
+            "padding_top": 40,
+            "padding_bottom": 40
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_7cf5ca2_FCGkGN"
+      ],
+      "settings": {}
+    },
+    "custom_section_rdTRBF": {
+      "type": "custom-section",
+      "name": "t:general.custom_section",
+      "settings": {}
+    },
+    "17739589867eefd8e7": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_d260265_twMywf": {
+          "type": "ai_gen_block_d260265",
+          "settings": {
+            "form_1_image": "shopify://shop_images/6.png",
+            "form_1_title": "Sponsor High Tide",
+            "form_1_description": "",
+            "form_1_button_text": "Apply",
+            "form_1_button_link": "https://hightidefestival.com/pages/sponsorships",
+            "form_2_image": "shopify://shop_images/9.png",
+            "form_2_title": "Join the Crew",
+            "form_2_description": "",
+            "form_2_button_text": "Apply",
+            "form_2_button_link": "https://forms.gle/yAHPH7LzqzryfAbz7",
+            "form_3_image": "shopify://shop_images/7.png",
+            "form_3_title": "High Tide City Market Vendor Application",
+            "form_3_description": "",
+            "form_3_button_text": "Apply",
+            "form_3_button_link": "https://forms.gle/gknSpeTMX6XXfXZs5",
+            "form_4_image": "shopify://shop_images/3.png",
+            "form_4_title": "Food Vendor Application",
+            "form_4_description": "",
+            "form_4_button_text": "Apply",
+            "form_4_button_link": "https://forms.gle/iDf3RgU9fpyD6G7L8",
+            "form_5_image": "shopify://shop_images/5.png",
+            "form_5_title": "Media Pass Application",
+            "form_5_description": "",
+            "form_5_button_text": "Apply",
+            "form_5_button_link": "https://forms.gle/dGMRiGrVLAbV59i49",
+            "form_6_image": "shopify://shop_images/10.png",
+            "form_6_title": "Silent Disco Application",
+            "form_6_description": "",
+            "form_6_button_text": "Apply",
+            "form_6_button_link": "https://forms.gle/CBoCUdnRVD9enXoN6",
+            "desktop_width_percent": 100,
+            "card_background_color": "#ffffff",
+            "card_border_color": "#e5e5e5",
+            "card_border_radius": 8,
+            "thumbnail_border_radius": 6,
+            "title_font_size": 18,
+            "title_color": "#0b4166",
+            "description_font_size": 14,
+            "description_color": "#366eb6",
+            "button_background_color": "#e6772a",
+            "button_hover_background_color": "#d06b24",
+            "button_text_color": "#ffffff",
+            "button_font_size": 14,
+            "button_border_radius": 4
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_d260265_twMywf"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "17739598612749b207",
+    "custom_section_rdTRBF",
+    "17739589867eefd8e7"
+  ]
+}

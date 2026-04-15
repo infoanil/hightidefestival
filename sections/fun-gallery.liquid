@@ -1,0 +1,90 @@
+<div class="fun-gallery py-[60px] md:py-[100px] lg:py-[120px]">
+
+    <div class="media relative flex shrink-0 w-full  justify-center gap-1 lg:gap-[14px] overflow-hidden">
+        {% for block in section.blocks limit:5  %}
+            <div class="w-[25%] shrink-0">
+            {% render 'image-helper'
+            , image: block.settings.image
+            , max_width: 500
+            , sizes: '500px'
+            , class: 'w-full  h-full object-cover aspect-[105/143] rounded-[10px] border-2 border-dashed border-secondary-navy'
+            %}
+            </div>
+        {% endfor %}
+        <svg width="1093" height="70" viewBox="0 0 1093 70" fill="none" xmlns="http://www.w3.org/2000/svg"
+        class="w-full h-auto absolute bottom-[-1px]">
+            <g clip-path="url(#clip0_137_680)">
+            <path d="M1093.49 69.8869C1093.49 88.2402 848.707 103.118 546.747 103.118C244.787 103.118 0 88.2402 0 69.8869C0 51.5336 265.791 0.275391 567.751 0.275391C869.711 0.275391 1093.49 51.5336 1093.49 69.8869Z" fill="#F6F5F0"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_137_680">
+            <rect width="1093" height="70" fill="white"/>
+            </clipPath>
+            </defs>
+        </svg>
+
+    </div>
+    <div class="content flex items-center justify-center h-[100px] md:h-[200px] lg:h-[240px]">
+        <h2 class="font-amaya text-[35px] md:text-[60px] lg:text-[130px] leading-[100%] tracking-[-1px] font-regular uppercase text-secondary-navy text-center">high tide, all the ways up</h2>
+    </div>
+    <div class="media relative flex shrink-0 w-full  justify-center gap-1 lg:gap-[14px] overflow-hidden">
+        {% for block in section.blocks offset:5 limit:5  %}
+            <div class="w-[25%] shrink-0">
+            {% render 'image-helper'
+            , image: block.settings.image
+            , max_width: 500
+            , sizes: '300px'
+            , class: 'w-full  h-full object-cover aspect-[105/143] rounded-[10px] border-2 border-dashed border-secondary-navy z-0 '
+            %}
+            </div>
+        {% endfor %}
+        <svg width="1093" height="70" viewBox="0 0 1093 70" fill="none" xmlns="http://www.w3.org/2000/svg"
+        class="w-full h-auto absolute top-[-1px] rotate-180 z-1">
+            <g clip-path="url(#clip0_137_680)">
+            <path d="M1093.49 69.8869C1093.49 88.2402 848.707 103.118 546.747 103.118C244.787 103.118 0 88.2402 0 69.8869C0 51.5336 265.791 0.275391 567.751 0.275391C869.711 0.275391 1093.49 51.5336 1093.49 69.8869Z" fill="#F6F5F0"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_137_680">
+            <rect width="1093" height="70" fill="white"/>
+            </clipPath>
+            </defs>
+        </svg>
+    </div>
+
+</div>
+
+
+
+
+
+
+{% schema %}
+  {
+  "name": "Fun Gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Select image",
+          "id": "image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fun Gallery"
+    }
+  ]
+}  
+{% endschema %}

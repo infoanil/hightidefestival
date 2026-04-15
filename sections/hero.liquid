@@ -1,0 +1,273 @@
+{% style %}
+  #shopify-section-{{ section.id }} #hero {
+    min-height: {{ section.settings.hero_height_mobile }}px;
+  }
+
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} #hero {
+      min-height: {{ section.settings.hero_height_desktop }}px;
+    }
+  }
+{% endstyle %}
+
+  <div id="hero" class="hero relative overflow-hidden pt-[64px] flex flex-col">
+      <div class="hero__media absolute inset-0 z-[-0]">
+          {% render 'image-helper'
+                  , image: section.settings.img_desktop
+                  , max_width: 2000
+                  , sizes: '(min-width: 1024px) 50vw, 100vw'
+                  , class: 'w-full h-full object-cover object-bottom'
+          %}
+          {% render 'image-helper'
+                  , image: section.settings.gradients
+                  , max_width: 1000
+                  , sizes: '(max-width: 1023px) 100vw, 50vw'
+                  , class: 'w-full h-full object-cover object-bottom absolute left-0 top-0 animate-fading' 
+          %}
+          
+          {% comment %} Ornament {% endcomment %}
+        <span class="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-auto">
+          <svg id="hero-svg" width="1440" height="515" viewBox="0 0 1440 515" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.795898" width="1859.16" height="1859.16" transform="matrix(0.795898 -0.605431 0.795898 0.605431 -760.838 -611.316)" stroke="white" stroke-opacity="0.3"/>
+            <rect x="0.795898" width="1859.16" height="1859.16" transform="matrix(0.795898 -0.605431 0.795898 0.605431 -760.838 -668.316)" stroke="white" stroke-opacity="0.3"/>
+            <rect x="0.795898" width="1859.16" height="1859.16" transform="matrix(0.795898 -0.605431 0.795898 0.605431 -760.838 -735.316)" stroke="white" stroke-opacity="0.3"/>
+            <rect x="0.795898" width="1859.16" height="1859.16" transform="matrix(0.795898 -0.605431 0.795898 0.605431 -760.838 -794.316)" stroke="white" stroke-opacity="0.3"/>
+            <rect x="0.795898" width="1859.16" height="1859.16" transform="matrix(0.795898 -0.605431 0.795898 0.605431 -760.838 -851.316)" stroke="white" stroke-opacity="0.3"/>
+            <rect x="0.795898" width="1859.16" height="1859.16" transform="matrix(0.795898 -0.605431 0.795898 0.605431 -760.838 -918.316)" stroke="white" stroke-opacity="0.3"/>
+          </svg>
+        </span>
+
+        <style>
+          #hero-svg rect:nth-child(6) {
+            animation: fade-out 3s linear infinite;  
+            animation-delay: 0s;
+          }
+          #hero-svg rect:nth-child(5) {
+            animation: fade-out 3s linear infinite;  
+            animation-delay: 0s;
+          }
+          #hero-svg rect:nth-child(4) {
+            animation: fade-out 3s linear infinite;
+            animation-delay: 0.5s;
+          }
+          #hero-svg rect:nth-child(3) {
+            animation: fade-out 3s linear infinite;  
+            animation-delay: 1s;
+          }
+          #hero-svg rect:nth-child(2) {
+            animation: fade-out 3s linear infinite;  
+            animation-delay: 1.5s;
+          }
+          #hero-svg rect:nth-child(1) {
+            animation: fade-out 3s linear infinite;  
+            animation-delay: 2s;
+          }
+
+          @keyframes fade-out{
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+          }
+        </style>
+      </div>
+
+      {% comment %} CONTENT {% endcomment %} 
+      <div class="hero__content container flex flex-col h-full z-1 relative">
+        <div class="flex-1 flex flex-col justify-center">
+          <div class="content__media  pt-6">
+              <span class="w-full">
+                  {% render 'image-helper'
+                          , image: section.settings.logo
+                          , max_width: 688
+                          , sizes: '(min-width: 1024px) 50vw, 100vw'
+                          , class: 'mx-auto h-auto w-[75%] md:w-[488px] object-contain'
+                  %}
+              </span>    
+          </div>
+          <div class="cta flex flex-col items-center text-white md:max-w-[632px] mx-auto  w-full">
+            <p class="max-sm:text-balance text-[35px] leading-[36px] md:text-[50px] md:leading-[54px] tracking-[-1px] uppercase font-amaya mb-5 md:mb-7.5 text-center">{{ section.settings.title }}</p>
+            <p class="text-[23px] leading-[25px]  font-amaya uppercase text-center">
+              <span class="block">{{ section.settings.date | default: "22 - 23 July 2024" }} </span>
+              <span class="block"> {{ section.settings.location | default: "Cornwall, UK" }}</span>
+            </p>
+            {% if section.settings.show_hero_button and section.settings.hero_button_text != blank %}
+              <a href="{{ section.settings.hero_button_url }}" class="mt-5 md:mt-7.5 inline-flex items-center justify-center transition duration-200 uppercase font-extrabold text-[15px] bg-trietary-orange hover:scale-105 hover:bg-primary-deepblue text-white rounded-[5px] px-5 py-2.5">
+                {{ section.settings.hero_button_text }}
+              </a>
+            {% endif %}
+            <p class="text-[17px] leading-[20px] tracking-[-1px] text-center font-semibold mt-5 md:mt-7.5">{{section.settings.disclaimer}}</p>
+
+            {% if section.settings.show_default_form %}
+            <div class=" lg:!max-w-[440px] mt-8 flex justify-center">
+              {% render 'newsletter-form', placeholder:'Enter your email address', button_label:'join the waitlist' %}
+            </div>
+          {% else %}
+            <div class="mt-4 w-full max-w-[440px] ![&_.needsclick]:min-h-auto">
+              {% content_for 'blocks' %}  
+            </div>
+          {% endif %}
+
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-end">
+              <div class="marquee py-7 border-t border-white/20 w-full flex gap-[15px]">
+                {% for i in (1..3) %}
+                  <ul class="animate-marquee flex gap-[15px] shrink-0">
+                    {% for block in section.blocks %}
+                      {% if block.type == 'marquee_item' %}
+                      <li class="flex items-center gap-2 bg-primary-lightblue p-[4px] pr-3 rounded-full shrink-0{% if block.settings.hide_on_mobile %} hidden md:flex{% endif %}{% if block.settings.hide_on_desktop %} md:hidden{% endif %}">
+                        <img src="{{ block.settings.icon | image_url }}" width="32" height="32" class="max-w-8">
+                        <span class="text-[15px] md:text-base lg:text-lg whitespace-nowrap font-bold inline-flex uppercase text-secondary-navy">{{ block.settings.text }}</span>
+                      </li>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                {% endfor %}
+              </div>
+          </div>
+  </div>
+
+  {% schema %}
+    {
+    "name": "Hero Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "date",
+        "label": "Date"
+      },
+      {
+        "type": "text",
+        "id": "location",
+        "label": "Location"
+      },
+      {
+        "type": "text",
+        "id": "disclaimer",
+        "label": "Disclaimer"
+      },
+      {
+        "type": "header",
+        "content": "Hero Button"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_hero_button",
+        "label": "Show hero button?",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "hero_button_text",
+        "label": "Button text",
+        "default": "Buy Passes"
+      },
+      {
+        "type": "url",
+        "id": "hero_button_url",
+        "label": "Button link"
+      },
+      {
+        "type": "header",
+        "content": "Background Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "img_desktop",
+        "label": "img_desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "img_mobile",
+        "label": "img_mobile"
+      },
+          {
+        "type": "image_picker",
+        "id": "gradients",
+        "label": "gradients"
+      },
+      {
+      "type": "checkbox",
+      "id": "show_default_form",
+      "label": "Show default form?",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Height"
+    },
+    {
+      "type": "range",
+      "id": "hero_height_mobile",
+      "label": "Minimum height (mobile)",
+      "min": 400,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "hero_height_desktop",
+      "label": "Minimum height (desktop)",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "unit": "px",
+      "default": 800
+    }
+    ],
+    "blocks": [
+      
+     {
+        "type": "@app"
+      },
+      {
+        "name": "Marquee item",
+        "type": "marquee_item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon",
+            "info": "SVG"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text",
+            "default": "Insert your text"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_on_mobile",
+            "label": "Hide on mobile",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_on_desktop",
+            "label": "Hide on desktop",
+            "default": false
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero Section"
+      }
+    ]
+  }  
+  {% endschema %}

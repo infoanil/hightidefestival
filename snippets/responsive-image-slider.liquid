@@ -1,0 +1,45 @@
+{% comment %}
+  Renders a responsive image tag with srcset and sizes attributes.
+
+  Usage:
+  {% render 'responsive-image',
+  image: product.featured_media,
+  alt: product.featured_media.alt,
+  widths: '200,400,600,800,1000,1200',
+  class: 'w-full h-full object-cover',
+  sizes: '100vw'
+  %}
+
+  Note: The 'image' parameter MUST be a Shopify media object (product.featured_media or a media loop variable).
+{% endcomment %}
+
+{% liquid
+  assign default_widths = '200,400,600,800,1000,1200'
+  assign final_widths = widths | default: default_widths | split: ','
+  assign image_alt = alt | default: image.alt
+  assign image_sizes = sizes | default: '100vw'
+  assign loading_strategy = loading | default: 'lazy'
+
+  # Set the smallest src as the required 'src' attribute
+  assign smallest_width = final_widths.first | plus: 0
+  assign src_url = image | image_url: width: smallest_width
+
+  # Build the srcset string
+  assign srcset_parts = ''
+  for width in final_widths
+    assign srcset_parts = srcset_parts | append: image | image_url: width: width | append: ' ' | append: width | append: 'w'
+    unless forloop.last
+      assign srcset_parts = srcset_parts | append: ', '
+    endunless
+  endfor
+%}
+
+<img
+  src="{{ src_url }}"
+  srcset="{{ srcset_parts }}"
+  sizes="{{ image_sizes }}"
+  alt="{{ image_alt | escape }}"
+  loading="{{ loading_strategy }}"
+  class="{{ class }}"
+  width="{{ image.width }}"
+  height="{{ image.height }}" />

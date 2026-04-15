@@ -1,0 +1,47 @@
+{% comment %}
+  Renders breadcrumbs with simple link styling.
+{% endcomment %}
+
+{% assign alignment = align | default:'center' %}
+
+
+
+<nav aria-label="Breadcrumb" class="text-sm {{ class }}">
+  <ol role="list" class="flex items-center text-[var(--color-text)]">
+
+    <li class="flex items-center">
+      <a href="{{ routes.root_url }}" class="text-lg font-bold  uppercase hover:underline transition">
+        Home
+      </a>
+    </li>
+
+    {% if collection %}
+      <li class="flex items-center">
+        <span class="mx-2  text-lg font-bold">></span>
+        <a href="{{ collection.url }}" class="text-lg font-bold   uppercase hover:underline transition">
+          {{ collection.title | default: 'First Level' }}
+        </a>
+      </li>
+    {% endif %}
+
+    {% if product %}
+      <li class="flex items-center">
+        <span class="mx-2 text-[var(--color-text-subtle)]">{% render 'breadcrumb-row' %}</span>
+        <a
+          href="{{ product.url }}"
+          aria-current="page"
+          class="text-[var(--color-text)] font-medium underline">
+          {{ product.title | default: 'Second Level' }}
+        </a>
+      </li>
+    {% endif %}
+
+    {% unless collection or product %}
+      <li class="flex items-center">
+        <span class="mx-2 text-[var(--color-text-subtle)]">{% render 'breadcrumb-row' %}</span>
+        <span class="text-[var(--color-text)] font-medium underline">Third Level</span>
+      </li>
+    {% endunless %}
+
+  </ol>
+</nav>

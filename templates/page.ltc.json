@@ -1,0 +1,104 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "1774572409a4a551b7": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_a1853fa_QUzVzY": {
+          "type": "ai_gen_block_a1853fa",
+          "settings": {
+            "heading": "<p>LOUIS THE CHILD IN CHARLESTON, SC</p>",
+            "heading_size": 36,
+            "text": "<p>Catch Louis The Child live in Charleston South Carolina on Saturday, June 6 with support from: </p><p>Bob moses (club set)</p><p>Bunt.</p><p>Jackie Hollander</p><p>Ranger Trucco</p><p>Wes Mills</p>",
+            "text_size": 16,
+            "button_text": "Buy Louis The Child Tickets",
+            "button_link": "shopify://products/high-tide-2026-single-day-saturday-ga-pass",
+            "button_text_size": 16,
+            "button_border_radius": 4,
+            "image": "shopify://shop_images/Enter_to_win_4x5_1.png",
+            "image_border_radius": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_a1853fa_QUzVzY"
+      ],
+      "settings": {}
+    },
+    "image_text_GMGqgL": {
+      "type": "image-text",
+      "disabled": true,
+      "name": "Image with Text",
+      "settings": {
+        "padding_y": 16,
+        "layout": "image_right",
+        "image_ratio": "aspect-h-1 aspect-w-1",
+        "image": "shopify://shop_images/Enter_to_win_4x5_1.png",
+        "heading": "Louis The Child in charleston, sc",
+        "text": "<p>Catch Louis The Child live in Charleston South Carolina on Saturday, June 6 with support from: </p><p>Bob moses (club set)</p><p>Bunt.</p><p>Jackie Hollander</p><p>Ranger Trucco</p><p>Wes Mills</p>",
+        "button_label": "Shop Now",
+        "button_link": ""
+      }
+    },
+    "collection_passes_aQYWHQ": {
+      "type": "collection-passes",
+      "settings": {
+        "featured_collection": "",
+        "section_id": "collection-passes-thursday",
+        "section_title": "Buy Passes",
+        "pass_type": "single_day",
+        "single_day_text": "Single Day Saturday:",
+        "two_day_text": "2-Day Starting at",
+        "starting_at_text": "",
+        "product_1": "high-tide-2026-single-day-saturday-ga-pass",
+        "button_url_1": "shopify://products/high-tide-2026-single-day-saturday-ga-pass",
+        "button_text_1": "buy passes",
+        "product_2": "high-tide-2026-single-day-saturday-vip-pass",
+        "button_url_2": "shopify://products/high-tide-2026-single-day-saturday-vip-pass",
+        "button_text_2": "buy passes",
+        "product_3": "high-tide-2026-single-day-saturday-super-vip-pass",
+        "button_url_3": "shopify://products/high-tide-2026-single-day-saturday-super-vip-pass",
+        "button_text_3": "buy passes",
+        "product_4": "high-tide-2026-single-day-saturday-stage-access",
+        "button_url_4": "shopify://products/high-tide-2026-single-day-saturday-stage-access",
+        "button_text_4": "buy passes"
+      }
+    },
+    "image_text_XCNFNA": {
+      "type": "image-text",
+      "custom_css": [],
+      "name": "Image with Text",
+      "settings": {
+        "padding_y": 16,
+        "layout": "image_left",
+        "image_ratio": "aspect-h-3 aspect-w-4",
+        "image": "shopify://shop_images/Full_Lineup_3x4_68463f58-eca2-4948-8db6-8a2687895a8e.png",
+        "heading": "Wanna stay for the full weekend?",
+        "text": "<p>Buy 2-day passes for both days and start your summer off the right way (in a green grass field next to the river with your friends making core memories and such) </p><p>(p.s. its a better deal)</p>",
+        "button_label": "Buy A Weekend Pass",
+        "button_link": "shopify://collections/ticket"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1774572409a4a551b7",
+    "image_text_GMGqgL",
+    "collection_passes_aQYWHQ",
+    "image_text_XCNFNA"
+  ]
+}

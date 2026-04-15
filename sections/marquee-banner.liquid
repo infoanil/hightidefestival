@@ -1,0 +1,180 @@
+{% comment %}
+  Marquee Banner (Alpine) — fully continuous scroll with repeat and duration
+  Enhanced for:
+  - WCAG (aria-hidden, reduced motion)
+  - DS tokens
+  - Layout consistency
+  - Wireframe structural fidelity
+{% endcomment %}
+
+<style>
+  @keyframes marquee-scroll {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .marquee-track {
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    will-change: transform;
+    animation: marquee-scroll linear infinite;
+  }
+
+  /* Respect “Reduce Motion” preference */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  .marquee-content {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  /* Hover pause */
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+</style>
+
+
+<div
+  x-data="{
+    duration: {{ section.settings.duration }},
+    repeatCount: {{ section.settings.repeat_count }},
+    pauseOnHover: {{ section.settings.pause_on_hover | json }},
+    init() {
+      const track = this.$refs.track;
+      const list = this.$refs.list;
+
+      // Repeat content N times for a continuous loop
+      for (let i = 1; i < this.repeatCount; i++) {
+        const clone = list.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      }
+
+      // Animation duration token
+      track.style.animationDuration = `${this.duration}s`;
+
+      // Disable hover pause if turned off
+      if (!this.pauseOnHover) {
+        track.style.animationPlayState = 'running';
+        track.classList.remove('hover:[animation-play-state:paused]');
+      }
+    }
+  }"
+  class="relative overflow-hidden bg-[var(--surface-primary)] py-[var(--space-lg)]"
+>
+
+  <div
+    x-ref="track"
+    class="marquee-track gap-[var(--space-lg)] px-[var(--space-md)]"
+    role="presentation"
+  >
+
+    <div
+      x-ref="list"
+      class="marquee-content gap-[var(--space-lg)]"
+      aria-hidden="false"
+    >
+      {% for block in section.blocks %}
+        <div class="flex-shrink-0" {{ block.shopify_attributes }}>
+          {% case block.type %}
+
+            {% when 'logo' %}
+              <div class="h-10 flex items-center justify-center" aria-hidden="true">
+                {{ block.settings.logo_svg }}
+              </div>
+
+            {% when 'text' %}
+              <p class="text-[var(--font-size-body-md)] font-medium text-[var(--text-primary)]">
+                {{ block.settings.text_content }}
+              </p>
+
+          {% endcase %}
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Marquee (Alpine)",
+  "tag": "section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content & Repetition"
+    },
+    {
+      "type": "range",
+      "id": "repeat_count",
+      "label": "Times to repeat content",
+      "min": 1,
+      "max": 6,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Animation Settings"
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "label": "Animation Duration",
+      "default": 25
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo / SVG",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "logo_svg",
+          "label": "SVG Code"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text_content",
+          "label": "Text",
+          "default": "Brand Value Statement"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee",
+      "category": "Structure"
+    }
+  ]
+}
+{% endschema %}

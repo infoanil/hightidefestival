@@ -1,0 +1,524 @@
+{% comment %}
+  Main Product Detail Section (PDP) - Refactored
+{% endcomment %}
+
+{%- liquid
+  assign ab_cart_description = product.metafields.custom.ab_test_cart_desc
+  assign ab_cart_subdescription = product.metafields.custom.ab_test_cart_subdesc
+  assign use_ab_cart_descriptions = section.settings.use_ab_cart_descriptions
+  assign display_product_title = section.settings.manual_product_title | default: product.title
+  assign mobile_top_padding_class = 'pt-12'
+  assign desktop_top_padding_class = 'lg:pt-16'
+
+  if section.settings.remove_top_padding_mobile
+    assign mobile_top_padding_class = 'pt-0'
+  endif
+
+  if section.settings.remove_top_padding_desktop
+    assign desktop_top_padding_class = 'lg:pt-0'
+  endif
+-%}
+
+<style>
+  .product-description ul {
+    list-style: unset !important;
+    padding-left: 1.5rem;
+  }
+
+  .product-description p + p,
+  .product-subdescription p + p {
+    margin-top: 0.5rem;
+  }
+</style>
+
+<div class="{% if section.settings.hide_on_mobile %}hidden md:block{% endif %}{% if section.settings.hide_on_desktop %} md:hidden{% endif %}">
+  <div class="container {{ mobile_top_padding_class }} pb-12 {{ desktop_top_padding_class }} lg:pb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-5">
+      {%- comment -%} LEFT: Media / Gallery {%- endcomment -%}
+      <div class="{% if section.settings.enable_sticky_media %}lg:sticky lg:top-8 self-start{% endif %}">
+        {% comment %} {% render 'breadcrumb' %} {% endcomment %}
+
+        {% render 'pdp-image-slider',
+          product: product,
+          show_thumbnails: section.settings.show_thumbnails,
+          enable_sticky_media: section.settings.enable_sticky_media
+        %}
+      </div>
+
+      {%- comment -%} RIGHT: Product details / Form {%- endcomment -%}
+      <div>
+        <p class="uppercase text-lg font-bold text-secondary-navy/60 mb-4">{{ product.vendor }}</p>
+        <h1 class="font-amaya text-[50px] leading-[46px] md:text-[80px] md:leading-[74px] tracking-[-1px] text-secondary-navy">
+          {{ display_product_title }}
+        </h1>
+
+        <p class="mt-2 text-[25px] text-primary-deepblue font-extrabold tracking-[-1px]">
+          {{ product.price | money }}
+        </p>
+
+      {%- if use_ab_cart_descriptions and ab_cart_description != blank -%}
+        <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
+          {% if ab_cart_description.type == 'rich_text_field' %}
+            {{ ab_cart_description | metafield_tag }}
+          {% else %}
+            {{ ab_cart_description.value | default: ab_cart_description }}
+          {% endif %}
+        </div>
+      {%- elsif product.description != blank -%}
+        <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
+          {{ product.description }}
+        </div>
+      {%- endif -%}
+
+      {%- if use_ab_cart_descriptions and ab_cart_subdescription != blank -%}
+        <div class="product-subdescription mt-2 text-[12px] font-semibold leading-[20px] text-secondary-navy/80">
+          {% if ab_cart_subdescription.type == 'rich_text_field' %}
+            {{ ab_cart_subdescription | metafield_tag }}
+          {% else %}
+            {{ ab_cart_subdescription.value | default: ab_cart_subdescription }}
+          {% endif %}
+        </div>
+      {%- endif -%}
+
+      <script id="product-data" type="application/json">
+        {
+          "variants": {{ product.variants | json }},
+          "selectedOptions": {{ product.selected_or_first_available_variant.options | json }},
+          "currentVariantId": {{ product.selected_or_first_available_variant.id | json }}
+        }
+      </script>
+
+      <div 
+        x-data="{
+          ...variantSelector(),
+          quantity: 1,
+          decreaseQty() {
+            if (this.quantity > 1) this.quantity--;
+          },
+          increaseQty() {
+            this.quantity++;
+          }
+        }"
+        x-init="initFromProductData()"
+      >
+        {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' -%}
+          <input
+            type="hidden"
+            name="id"
+            x-model="currentVariantId"
+          >
+          <input
+            type="hidden"
+            name="return_to"
+            value="/products/{{ product.handle }}"
+          >
+          <input
+            type="hidden"
+            name="properties[_side_cart_product_id]"
+            value="{{ product.id }}"
+          >
+          <input
+            type="hidden"
+            name="properties[_side_cart_payment_badges]"
+            value="{% if section.settings.show_side_cart_payment_badges %}true{% else %}false{% endif %}"
+          >
+          <input
+            type="hidden"
+            name="properties[_side_cart_recommendations_enabled]"
+            value="{% if section.settings.show_side_cart_often_bought %}true{% else %}false{% endif %}"
+          >
+          <input
+            type="hidden"
+            name="properties[_side_cart_recommendations_heading]"
+            value="{{ section.settings.side_cart_often_bought_heading | escape }}"
+          >
+          <input
+            type="hidden"
+            name="properties[_side_cart_recommendations_limit]"
+            value="{{ section.settings.side_cart_often_bought_limit }}"
+          >
+
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="mt-6">
+                <label for="select-{{ forloop.index }}" class="block text-sm font-medium text-[var(--text-primary)] mb-2">
+                  {{ option.name }}
+                </label>
+
+                <select
+                  id="select-{{ forloop.index }}"
+                  name="options[{{ option.name | escape }}]"
+                  x-model="selectedOptions[{{ forloop.index0 }}]"
+                  @change="updateVariant()"
+                  class="
+                    block w-full rounded-md border border-[var(--interactive-border)] py-2 pl-3 pr-10 text-base
+                    focus:border-[var(--interactive-default)] focus:ring-[var(--interactive-default)] sm:text-sm
+                  "
+                >
+                  {% for value in option.values %}
+                    <option
+                      value="{{ value | escape }}"
+                      {% if option.selected_value == value %}
+                        selected="selected"
+                      {% endif %}
+                    >
+                      {{ value }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <div class="group mt-6 bg-trietary-orange hover:bg-secondary-navy rounded-[5px] p-[5px] flex gap-[5px] transition duration-200">
+            <div class="flex items-center bg-white rounded-[4px] overflow-hidden">
+              <button 
+                type="button"
+                @click="decreaseQty()"
+                class="px-3 py-2 hover:bg-gray-100 transition text-secondary-navy font-bold text-xl cursor-pointer"
+              >
+                −
+              </button>
+              <label for="Quantity" class="sr-only"> Quantity </label>
+              <input
+                type="number"
+                id="Quantity"
+                name="quantity"
+                x-model="quantity"
+                min="1"
+                class="w-16 py-2 text-center text-lg font-bold tracking-[-1px] border-0 focus:outline-none focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              >
+              <button 
+                type="button"
+                @click="increaseQty()"
+                class="px-3 py-2 hover:bg-gray-100 transition text-secondary-navy font-bold text-xl cursor-pointer"
+              >
+                +
+              </button>
+            </div>
+            {% assign current_variant = product.selected_or_first_available_variant %}
+
+            <button
+              type="submit"
+              name="add"
+            {% unless current_variant.available %}
+              disabled
+            {% endunless %}
+            class="
+              flex-1 h-auto  cursor-pointer hover:bg-black/10 leading-[-1px] text-base font-extrabold transition text-white uppercase
+              {% if current_variant.available %}
+
+              {% else %}
+                bg-[var(--surface-disabled)] text-[var(--text-disabled)] cursor-not-allowed
+              {% endif %}
+            "
+          >
+            {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
+          </button>
+        </div>
+
+        {%- endform -%}
+      </div>
+
+      {% comment %}
+        <div class="mt-10 pt-6 border-t border-[var(--interactive-border)]">
+          <h3 class="text-lg font-medium text-[var(--text-primary)]">Features</h3>
+          <div class="mt-4 text-sm text-[var(--text-secondary)] [&_ul]:list-disc [&_ul]:ml-5">
+            {{ section.settings.features_text }}
+          </div>
+        </div>
+      {% endcomment %}
+
+        {% if section.blocks.size > 0 %}
+          <div class="mt-8 space-y-4">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'accordion' %}
+                  {% render 'accordion-item', title: block.settings.title, content: block.settings.content %}
+              {% endcase %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_related_products -%}
+    <div class="bg-primary-lightblue border-y-[3px] border-secondary-navy">
+      <div
+        id="related-products"
+        class="container py-[60px] lg:py-[100px]"
+        data-product-id="{{ product.id }}"
+      >
+        <div class="flex justify-center  lg:items-end  mb-7.5 md:mb-11">
+          <h2 class="text-[50px] leading-[46px] lg:text-[80px] lg:leading-[74p] tracking-[-1px] font-amaya uppercase text-secondary-navy text-cente">
+            you may also like
+          </h2>
+        </div>
+        <div data-related-grid>
+          <div class="col-span-full text-center text-[var(--text-secondary)] text-sm">Loading…</div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  function variantSelector() {
+    return {
+      variants: [],
+      selectedOptions: [],
+      currentVariantId: null,
+      
+      initFromProductData() {
+        const dataEl = document.getElementById('product-data');
+        if (dataEl) {
+          const data = JSON.parse(dataEl.textContent);
+          this.variants = data.variants;
+          this.selectedOptions = data.selectedOptions;
+          this.currentVariantId = data.currentVariantId;
+        }
+      },
+      
+      updateVariant() {
+        const variant = this.variants.find(v => 
+          v.options.every((opt, i) => opt === this.selectedOptions[i])
+        );
+        if (variant) {
+          this.currentVariantId = variant.id;
+        }
+      }
+    }
+  }
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('#product-form');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const hiddenInput = form.querySelector('input[name="id"]');
+      const variantId = hiddenInput?.value;
+
+      console.log('[High Tide Debug] PDP submit intercepted', {
+        formId: 'product-form',
+        variantId
+      });
+      
+      if (!variantId) return;
+
+      const formData = new FormData(form);
+
+      console.log('[High Tide Debug] Sending PDP add-to-cart request', {
+        endpoint: '/cart/add.js',
+        variantId,
+        quantity: formData.get('quantity')
+      });
+
+      await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: formData,
+      });
+
+      console.log('[High Tide Debug] PDP add-to-cart request completed', {
+        variantId
+      });
+
+      window.dispatchEvent(new CustomEvent('cart:add'));
+
+      console.log('[High Tide Debug] cart:add dispatched from PDP', {
+        variantId
+      });
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const relatedSection = document.querySelector('#related-products');
+    if (!relatedSection) return;
+
+    const grid = relatedSection.querySelector('[data-related-grid]');
+    const productId = relatedSection.getAttribute('data-product-id');
+    const limit = {{ section.settings.related_limit | default: 8 }};
+
+    fetch(`/recommendations/products?section_id=related-products&product_id=${productId}&limit=${limit}`)
+      .then(response => response.text())
+      .then(html => {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+
+        const relatedHTML = temp.querySelector('[data-related-products-grid]');
+        if (!relatedHTML) {
+          relatedSection.style.display = 'none';
+          return;
+        }
+
+        const fetchedGrid = relatedHTML;
+        if (fetchedGrid && fetchedGrid.children.length) {
+          grid.innerHTML = fetchedGrid.innerHTML;
+        } else {
+          relatedSection.style.display = 'none';
+        }
+      })
+      .catch(() => {
+        relatedSection.style.display = 'none';
+      });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Main Product Section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_thumbnails",
+      "label": "Show thumbnail gallery",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_media",
+      "label": "Enable sticky media on scroll",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_top_padding_mobile",
+      "label": "Remove top padding on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_top_padding_desktop",
+      "label": "Remove top padding on desktop",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "manual_product_title",
+      "label": "Manual product title"
+    },
+    {
+      "type": "header",
+      "content": "WIP"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_ab_cart_descriptions",
+      "label": "Use AB cart descriptions",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "WIP · Side cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_side_cart_payment_badges",
+      "label": "Show payment badges under subtotal",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_side_cart_often_bought",
+      "label": "Show often bought together in side cart",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "side_cart_often_bought_heading",
+      "label": "Often bought together heading",
+      "default": "Add items often bought together"
+    },
+    {
+      "type": "range",
+      "id": "side_cart_often_bought_limit",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Number of side cart recommendations",
+      "default": 2
+    },
+
+    {
+      "type": "header",
+      "content": "Related Products"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Show 'Customers Also Bought'",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "related_limit",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Number of related products",
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Accordion Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Accordion content goes here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Main Product Section",
+      "blocks": [
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipping Details",
+            "content": "<p>Free standard shipping on orders over $50.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Returns",
+            "content": "<p>30-day no-hassle returns.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

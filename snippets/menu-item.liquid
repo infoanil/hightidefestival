@@ -1,0 +1,73 @@
+{%- comment -%}
+  Desktop menu item
+  Supports:
+  - simple links
+  - links with children (hover/focus dropdown)
+  Recursive: renders its own children using `menu-item`
+{%- endcomment -%}
+
+{% assign item = item | default: false %}
+{% assign level = level | default: 1 %}
+
+{% if item == false %}
+  <span class="text-red-600 text-xs">Invalid menu item</span>
+  {% break %}
+{% endif %}
+
+{%- assign children_count = item.links.size -%}
+{%- assign has_children = children_count -%}
+
+{% capture id %}menu-{{ item.title | handle }}-{{ level }}{% endcapture %}
+{%- if has_children == 0 -%}
+  {% comment %} Simple link {% endcomment %}
+  <a
+    href="{{ item.url }}"
+    class="block uppercase px-2 py-2 font-extrabold rounded-md whitespace-nowrap"
+  >
+    {{ item.title | escape }}
+  </a>
+
+{%- else -%}
+  {% comment %} dropdown item  {% endcomment %}
+  <div class="relative group">
+    <button
+      type="button"
+      popovertarget="{{ id }}"
+      class="
+        flex items-center justify-between w-full px-3 py-2 text-sm font-medium
+        text-[var(--text-primary)]
+        hover:text-[var(--link-hover)]
+        hover:bg-[var(--surface-secondary)]
+        rounded-md transition
+      "
+    >
+      <span>{{ item.title | escape }}</span>
+
+      <svg
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        class="size-4 text-[var(--text-secondary)]"
+      >
+        <path d="M5.22 7.22a.75.75 0 011.06 0L10 10.94l3.72-3.72a.75.75 0 011.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 8.28a.75.75 0 010-1.06z" />
+      </svg>
+    </button>
+
+    <el-popover
+      id="{{ id }}"
+      popover
+      anchor="{% if level == 1 %}bottom-start{% else %}right-start{% endif %}"
+      trigger="hover"
+      open-delay="50"
+      close-delay="150"
+      class="
+        mt-1 min-w-[200px] rounded-lg bg-[var(--surface-primary)]
+        shadow-lg ring-1 ring-[var(--interactive-border)] p-2
+      "
+    >
+      {%- for child in item.links -%}
+        {% assign next_level = level | plus: 1 %}
+        {% render 'menu-item', item: child, level: next_level %}
+      {%- endfor -%}
+    </el-popover>
+  </div>
+{%- endif -%}

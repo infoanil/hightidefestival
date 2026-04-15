@@ -1,0 +1,204 @@
+{% comment %}
+  PDP Media Gallery
+  - Slider with swipe (touch + mouse)
+  - Thumbnails (optional)
+  - Lightbox (optional, click main image)
+{% endcomment %}
+
+{% assign images = product.media | where: 'media_type', 'image' %}
+{% assign total_images = images | size %}
+
+  <div
+  x-data="{
+    currentIndex: 0,
+    total: {{ total_images }},
+    isLightboxOpen: false,
+    startX: 0,
+    endX: 0,
+
+    hasSlides() { return this.total > 0 },
+
+    set(index) {
+      if (index >= 0 && index < this.total) this.currentIndex = index;
+    },
+    next() {
+      if (!this.hasSlides()) return;
+      this.currentIndex = (this.currentIndex + 1) % this.total;
+    },
+    prev() {
+      if (!this.hasSlides()) return;
+      this.currentIndex = (this.currentIndex - 1 + this.total) % this.total;
+    },
+
+    handlePointerDown(event) {
+      this.startX = event.touches?.[0]?.clientX ?? event.clientX;
+    },
+    handlePointerUp(event) {
+      this.endX = event.changedTouches?.[0]?.clientX ?? event.clientX;
+      const delta = this.endX - this.startX;
+      if (Math.abs(delta) > 40) {
+        if (delta < 0) { this.next(); } else { this.prev(); }
+      }
+    },
+
+    openLightbox(index) {
+      this.set(index);
+      this.isLightboxOpen = true;
+    },
+    closeLightbox() {
+      this.isLightboxOpen = false;
+    }
+  }"
+  x-init="if (!hasSlides()) currentIndex = 0"
+  :class="({{ show_thumbnails }} && total > 1) ? 'flex flex-col gap-2 lg:grid lg:grid-cols-[80px_1fr]' : 'flex flex-col gap-2'">
+
+  {%- comment -%} Main slider {%- endcomment -%}
+  <div
+    class="relative overflow-hidden  bg-[var(--surface-secondary)] aspect-[353/296] md:aspect-[734/415] lg:aspect-[568/683] lg:order-2"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Product images"
+    tabindex="0"
+    x-on:keyup.right.prevent="next()"
+    x-on:keyup.left.prevent="prev()"
+    x-on:mousedown="handlePointerDown($event)"
+    x-on:mouseup="handlePointerUp($event)"
+    x-on:touchstart.passive="handlePointerDown($event)"
+    x-on:touchend.passive="handlePointerUp($event)">
+    {% if total_images > 0 %}
+      {% for media in images %}
+        <button
+          type="button"
+          class="absolute rounded-[5px] overflow-hidden border border-secondary-navy inset-0 w-full h-full"
+          x-show="currentIndex === {{ forloop.index0 }}"
+          x-transition.opacity.duration.200ms
+          @click="openLightbox({{ forloop.index0 }})"
+          :aria-hidden="currentIndex !== {{ forloop.index0 }}"
+          :tabindex="currentIndex === {{ forloop.index0 }} ? 0 : -1">
+          <div class="w-full h-full aspect-[4/5]">
+            {% render 'image-helper'
+              , image: media
+              , max_width: 2000
+              , sizes: '(min-width: 1024px) 50vw, 100vw'
+              , class: 'w-full h-full object-cover'
+            %}
+          </div>
+        </button>
+      {% endfor %}
+    {% else %}
+      <div class="w-full aspect-[4/5] bg-[var(--surface-secondary)] flex items-center justify-center">
+        <span class="text-sm text-[var(--text-secondary)]">No images available</span>
+      </div>
+    {% endif %}
+
+    {% comment %} {%- if total_images > 1 -%}
+      {%- comment -%} Previous button {%- endcomment -%}
+      <button
+        type="button"
+        class="group absolute left-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full
+               bg-[var(--interactive-default)]/70 text-[var(--text-on-interactive)]
+               px-2 py-2 text-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--interactive-focus)]
+               hover:bg-[var(--interactive-hover)]/90"
+        @click.prevent="prev()"
+        aria-label="Previous image">
+        <span aria-hidden="true">
+          ‹
+        </span>
+      </button>
+
+      {%- comment -%} Next button {%- endcomment -%}
+      <button
+        type="button"
+        class="group absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full
+               bg-[var(--interactive-default)]/70 text-[var(--text-on-interactive)]
+               px-2 py-2 text-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--interactive-focus)]
+               hover:bg-[var(--interactive-hover)]/90"
+        @click.prevent="next()"
+        aria-label="Next image">
+        <span aria-hidden="true">
+          ›
+        </span>
+      </button>
+    {%- endif -%} {% endcomment %}
+  </div>
+
+  {%- comment -%} Thumbnails {%- endcomment -%}
+  {% if show_thumbnails and total_images > 1 %}
+    <div class="flex lg:flex-col gap-2 overflow-x-auto lg:order-1" aria-label="Product image thumbnails">
+      {% for media in images %}
+        <button
+          type="button"
+          class="relative flex-shrink-0 w-16 h-16 rounded-md border border-[var(--interactive-border)]
+                 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--interactive-focus)]
+                 hover:border-[var(--interactive-default)]"
+          @click="set({{ forloop.index0 }})"
+          :class="currentIndex === {{ forloop.index0 }} && 'border border-secondary-navy'">
+          {% render 'image-helper'
+            , image: media
+            , max_width: 300
+            , sizes: '80px'
+            , class: 'w-full h-full object-cover'
+          %}
+          <span class="visually-hidden">
+            Thumbnail {{ forloop.index }} of {{ total_images }}
+          </span>
+        </button>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {%- comment -%} Lightbox modal {%- endcomment -%}
+  <div
+    x-show="isLightboxOpen"
+    x-cloak
+    x-transition.opacity
+    class="fixed inset-0 z-50 flex items-center justify-center bg-[var(--interactive-default)]/90"
+    aria-modal="true"
+    role="dialog"
+    aria-label="Enlarged product image">
+    <button
+      type="button"
+      class="absolute top-4 right-4 text-3xl text-[var(--text-on-interactive)]
+             focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--interactive-focus)]"
+      @click="closeLightbox()"
+      aria-label="Close image viewer">
+      &times;
+    </button>
+
+    {% if total_images > 1 %}
+      <button
+        type="button"
+        class="absolute left-4 top-1/2 -translate-y-1/2 text-4xl text-[var(--text-on-interactive)]
+               focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--interactive-focus)]"
+        @click="prev()"
+        aria-label="Previous image">
+        &#10094;
+      </button>
+
+      <button
+        type="button"
+        class="absolute right-4 top-1/2 -translate-y-1/2 text-4xl text-[var(--text-on-interactive)]
+               focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--interactive-focus)]"
+        @click="next()"
+        aria-label="Next image">
+        &#10095;
+      </button>
+    {% endif %}
+
+    <div class="relative w-[90vw] h-[90vh] max-w-5xl">
+      {% for media in images %}
+        <div
+          x-show="currentIndex === {{ forloop.index0 }}"
+          x-transition.opacity.duration.150ms
+          class="absolute inset-0 flex items-center justify-center">
+          {% render 'image-helper'
+            , image: media
+            , max_width: 2000
+            , sizes: '100vw'
+            , class: 'max-h-[85vh] max-w-[85vw] object-contain'
+          %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,258 @@
+{% assign featured_collection = section.settings.featured_collection %}
+{% assign product_limit = section.settings.product_limit | default: 8 %}
+{% assign show_on_mobile = section.settings.show_on_mobile %}
+{% assign show_on_desktop = section.settings.show_on_desktop %}
+{% assign visibility_classes = '' %}
+
+{% if show_on_mobile == false and show_on_desktop == true %}
+  {% assign visibility_classes = 'hidden md:block' %}
+{% elsif show_on_mobile == true and show_on_desktop == false %}
+  {% assign visibility_classes = 'md:hidden' %}
+{% elsif show_on_mobile == false and show_on_desktop == false %}
+  {% assign visibility_classes = 'hidden' %}
+{% endif %}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .pass-collection-list {
+    background-color: #f6f5f0;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__title {
+    color: #0b4166;
+    font-size: 22px;
+    line-height: 24px;
+    letter-spacing: -1px;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__scroller {
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-left: 15px;
+    padding-right: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__track {
+    display: flex;
+    gap: 10px;
+    width: max-content;
+    padding-right: 15px;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__card {
+    flex: 0 0 110px;
+    width: 110px;
+    scroll-snap-align: start;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__link {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 5px;
+    aspect-ratio: 1 / 1;
+    background: #d9d9d9;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__card.is-best-seller .pass-collection-list__link {
+    border: 3px solid #0b4166;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__image,
+  #shopify-section-{{ section.id }} .pass-collection-list__placeholder {
+    width: 100%;
+    height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__placeholder {
+    border: 1px dashed rgba(11, 65, 102, 0.3);
+    background: rgba(11, 65, 102, 0.08);
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__gradient {
+    position: absolute;
+    inset: auto 0 0;
+    height: 55%;
+    background: linear-gradient(180deg, rgba(1, 21, 34, 0) 0%, rgba(1, 21, 34, 0.88) 100%);
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__name {
+    position: absolute;
+    inset: auto 10px 10px;
+    z-index: 1;
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(1, 21, 34, 0.4);
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__badge {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    padding: 5px 8px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__badge--best {
+    min-width: 91px;
+    background: #0b4166;
+    color: #ffffff;
+  }
+
+  #shopify-section-{{ section.id }} .pass-collection-list__badge--index {
+    min-width: 28px;
+    background: #f6f5f0;
+    color: #0b4166;
+  }
+
+  @media (min-width: 768px) {
+    #shopify-section-{{ section.id }} .pass-collection-list__title {
+      font-size: 40px;
+      line-height: 38px;
+    }
+
+    #shopify-section-{{ section.id }} .pass-collection-list__scroller {
+      overflow: visible;
+      padding-left: 0;
+    }
+
+    #shopify-section-{{ section.id }} .pass-collection-list__track {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      width: 100%;
+      padding-right: 0;
+    }
+
+    #shopify-section-{{ section.id }} .pass-collection-list__card {
+      width: auto;
+      flex: initial;
+    }
+
+    #shopify-section-{{ section.id }} .pass-collection-list__name {
+      inset: auto 16px 16px;
+      font-size: 22px;
+      line-height: 24px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="pass-collection-list py-10 md:py-16 {{ visibility_classes }}">
+  <div class="container">
+    {% if section.settings.title != blank %}
+      <h2 class="pass-collection-list__title font-amaya uppercase">
+        {{ section.settings.title | escape }}
+      </h2>
+    {% endif %}
+  </div>
+
+  {% if featured_collection != blank and featured_collection.products_count > 0 %}
+    <div class="pass-collection-list__scroller mt-5 md:mt-8">
+      <div class="pass-collection-list__track" role="list" aria-label="{{ section.settings.title | escape }}">
+        {% for product in featured_collection.products limit: product_limit %}
+          {% assign card_image = product.metafields.custom.banner_image.value | default: product.featured_image %}
+          {% assign card_title = product.metafields.custom.card_title | default: product.title %}
+
+          <article
+            class="pass-collection-list__card{% if forloop.first %} is-best-seller{% endif %}"
+            role="listitem"
+          >
+            <a href="{{ product.url }}" class="pass-collection-list__link group">
+              {% if card_image != blank %}
+                {% render 'image-helper',
+                  image: card_image,
+                  max_width: 400,
+                  sizes: '(min-width: 768px) 25vw, 110px',
+                  class: 'pass-collection-list__image object-cover object-center transition duration-300 group-hover:scale-105'
+                %}
+              {% else %}
+                <div class="pass-collection-list__placeholder"></div>
+              {% endif %}
+
+              <div class="pass-collection-list__gradient"></div>
+              <span class="pass-collection-list__name">{{ card_title }}</span>
+
+              {% if forloop.first %}
+                <span class="pass-collection-list__badge pass-collection-list__badge--best">#1 Best Seller</span>
+              {% else %}
+                <span class="pass-collection-list__badge pass-collection-list__badge--index">#{{ forloop.index }}</span>
+              {% endif %}
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="container mt-5 md:mt-8">
+      <div class="rounded-[10px] border border-dashed border-secondary-navy/30 bg-white/60 px-4 py-5 text-sm font-semibold text-secondary-navy/70">
+        Select a collection to display in this section.
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Pass Collection List",
+  "tag": "section",
+  "class": "section-pass-collection-list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "2-Day Pass"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Number of products",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_mobile",
+      "label": "Show on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_desktop",
+      "label": "Show on desktop",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pass Collection List"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,107 @@
+{% assign expected_password = collection.metafields.custom.password.value | default: collection.metafields.custom.password | append: '' | strip %}
+{% assign hero_background = images['High_Tide_Hero.jpg'] %}
+{% assign hero_logo = images['High_Tide_Logo_Big.png'] %}
+
+<section id="presale-gate" class="relative z-0 min-h-[800px] overflow-hidden pt-[64px] flex flex-col">
+  <div class="absolute inset-0 z-0">
+    {% render 'image-helper'
+      , image: hero_background
+      , max_width: 2000
+      , sizes: '100vw'
+      , class: 'w-full h-full object-cover object-bottom'
+    %}
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+
+  <div class="container relative z-10 flex-1 flex items-center justify-center py-10 md:py-16">
+    <div class="w-full max-w-[760px] flex flex-col items-center text-white text-center">
+      <span class="w-full mb-5 md:mb-7.5">
+        {% render 'image-helper'
+          , image: hero_logo
+          , max_width: 688
+          , sizes: '(min-width: 1024px) 50vw, 100vw'
+          , class: 'mx-auto h-auto w-full md:w-[488px] object-contain'
+        %}
+      </span>
+
+      <h2 class="max-sm:text-balance text-[35px] leading-[36px] md:text-[50px] md:leading-[54px] tracking-[-1px] uppercase font-amaya mb-5 md:mb-7.5 text-center">Pre Sale Access</h2>
+
+      <p class="text-[17px] leading-[20px] tracking-[-1px] font-semibold mb-2 text-center">Use your pre sale code here to enter our sale.</p>
+      <p class="text-[17px] leading-[20px] tracking-[-1px] font-semibold mb-2 text-center">If you have already signed up for the pre sale you should have received a code via email or text.</p>
+      <p class="text-[17px] leading-[20px] tracking-[-1px] font-semibold mb-6 text-center">If you have not signed up for pre sale access you can sign up at the top of our homepage.</p>
+
+      <form id="presale-code-form" class="w-full max-w-[440px] flex flex-col items-center gap-4" novalidate>
+        <input
+          id="presale-code-input"
+          type="text"
+          name="presale_code"
+          placeholder="Insert code"
+          class="w-full rounded-[10px] border border-white/70 px-4 py-3 bg-white text-secondary-navy font-semibold placeholder:text-secondary-navy/60"
+        >
+        <button
+          type="submit"
+          class="w-full rounded-[10px] bg-trietary-orange hover:bg-secondary-navy transition duration-200 text-white uppercase font-extrabold text-lg py-3 px-6"
+        >
+          Submit
+        </button>
+        <p id="presale-code-error" class="font-extrabold text-white text-center" hidden>Invalid code. Please try again.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div id="presale-content" hidden>
+  {{ gated_content }}
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById('presale-code-form');
+    var input = document.getElementById('presale-code-input');
+    var error = document.getElementById('presale-code-error');
+    var gate = document.getElementById('presale-gate');
+    var content = document.getElementById('presale-content');
+    var header = document.getElementById('presale-header');
+    var expectedCode = {{ expected_password | downcase | json }};
+    var storageKey = {{ 'presale_access_' | append: collection.id | json }};
+
+    if (!form || !input || !error || !gate || !content) return;
+
+    function unlockContent() {
+      error.hidden = true;
+      gate.hidden = true;
+      content.hidden = false;
+      if (header) {
+        header.hidden = false;
+      }
+    }
+
+    try {
+      if (window.localStorage && window.localStorage.getItem(storageKey) === expectedCode) {
+        unlockContent();
+        return;
+      }
+    } catch (e) {
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      var enteredCode = (input.value || '').trim().toLowerCase();
+
+      if (enteredCode === expectedCode) {
+        try {
+          if (window.localStorage) {
+            window.localStorage.setItem(storageKey, expectedCode);
+          }
+        } catch (e) {
+        }
+        unlockContent();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      error.hidden = false;
+    });
+  })();
+</script>

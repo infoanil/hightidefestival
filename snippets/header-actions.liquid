@@ -1,0 +1,39 @@
+{% comment %}
+  Header right-side actions (desktop)
+  - Search (desktop)
+  - Account
+  - Mini cart
+  - CTa Button
+{% endcomment %}
+
+{% assign layout = layout | default: 'horizontal' %}
+{% assign only_cart = only_cart | default: false %}
+
+{% if only_cart == false %}
+<div class="flex items-center gap-2
+    {% if layout == 'horizontal' %}
+      lg:flex-none
+    {% else %}
+      lg:absolute lg:right-4 lg:top-1/2 lg:-translate-y-1/2 lg:order-2
+    {% endif %}">
+  {% render 'search-dropdown' %}
+
+  {% if shop.customer_accounts_enabled %}
+    <a href="{{ routes.account_url }}" class="text-[var(--text-primary)] hover:text-[var(--link-hover)]
+             flex items-center justify-center w-8 h-8">
+      <span class="sr-only">Account</span>
+      <div class="w-full h-full">
+        {% render 'icon-account' %}
+      </div>
+    </a>
+  {% endif %}
+{% endif %}
+  <div data-minicart-drawer class="flex items-center justify-center">
+    {% render 'mincart-drawer' %}
+  </div>
+  
+  <a href="{{ settings.header_button_url }}" class="hidden lg:flex transition duration-200 uppercase font-extrabold text-[15px] bg-trietary-orange hover:scale-105 hover:bg-primary-deepblue hover:border border-white text-white rounded-[5px] px-5 py-2.5 ml-5" {% if settings.header_open_in_a_new_tab %} target="_blank" rel="noopener noreferrer" {% endif %}>
+    {{ settings.header_button_title}}
+  </a>
+
+</div>

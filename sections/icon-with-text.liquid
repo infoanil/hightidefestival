@@ -1,0 +1,174 @@
+{% comment %}
+  Icon With Text Section
+  - Uses token-based colors
+  - Predictable 4-col layout on desktop
+  - Accessible + clean structure
+{% endcomment %}
+
+{% assign variant = section.settings.variant %}
+
+{% case variant %}
+  {% when 'inverted' %}
+    {% assign bg_token = 'bg-[var(--interactive-default)]' %}
+    {% assign text_token = 'text-[var(--text-on-interactive)]' %}
+    {% assign icon_token = 'text-[var(--surface-primary)]' %}
+
+  {% when 'subtle' %}
+    {% assign bg_token = 'bg-[var(--surface-secondary)]' %}
+    {% assign text_token = 'text-[var(--text-primary)]' %}
+    {% assign icon_token = 'text-[var(--interactive-default)]' %}
+
+  {% else %}
+    {% assign bg_token = 'bg-[var(--surface-primary)]' %}
+    {% assign text_token = 'text-[var(--text-primary)]' %}
+    {% assign icon_token = 'text-[var(--interactive-default)]' %}
+{% endcase %}
+
+<section class="py-12 px-4 sm:px-6 lg:px-8 border-b border-[var(--interactive-border)] {{ bg_token }}" aria-labelledby="section-{{ section.id }}-heading">
+  <div class="max-w-7xl mx-auto">
+
+    {% if section.settings.heading != blank %}
+      <h2 id="section-{{ section.id }}-heading" class="text-center text-2xl sm:text-3xl font-bold {{ text_token }} mb-10">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10" role="list">
+
+      {% for block in section.blocks %}
+        {% assign icon_name = block.settings.icon_name | strip %}
+        {% assign icon_class = "h-12 w-12 " | append: icon_token %}
+
+        <div
+          class="flex flex-col items-center text-center space-y-3"
+          role="listitem"
+          {{ block.shopify_attributes }}>
+
+          <div class="flex items-center justify-center" aria-hidden="true">
+
+            {% case icon_name %}
+              {% when 'shatterproof' %}
+                {% render 'icon-shatterproof'
+                  , class: icon_class %}
+              {% when 'sustainable' %}
+                {% render 'icon-sustainable'
+                  , class: icon_class %}
+              {% when 'customizable' %}
+                {% render 'icon-customizable'
+                  , class: icon_class %}
+              {% when 'non_toxic' %}
+                {% render 'icon-non_toxic'
+                  , class: icon_class %}
+              {% else %}
+                {% render 'icon-default'
+                  , class: icon_class %}
+            {% endcase %}
+
+          </div>
+
+          <p class="text-lg font-medium {{ text_token }}">
+            {{ block.settings.icon_text }}
+          </p>
+
+          {% if block.settings.sub_text != blank %}
+            <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
+              {{ block.settings.sub_text }}
+            </p>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Icon With Text",
+    "tag": "section",
+    "class": "section-icon-with-text",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Why Choose Us?"
+      }, {
+        "type": "select",
+        "id": "variant",
+        "label": "Style Variant",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          }, {
+            "value": "subtle",
+            "label": "Subtle"
+          }, {
+            "value": "inverted",
+            "label": "Inverted"
+          }
+        ],
+        "default": "default"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "icon_item",
+        "name": "Icon Item",
+        "settings": [
+          {
+            "type": "select",
+            "id": "icon_name",
+            "label": "Select Icon",
+            "options": [
+              {
+                "value": "shatterproof",
+                "label": "Shatterproof"
+              }, {
+                "value": "sustainable",
+                "label": "Sustainable"
+              }, {
+                "value": "customizable",
+                "label": "Customizable"
+              }, {
+                "value": "non_toxic",
+                "label": "Non-Toxic"
+              }
+            ],
+            "default": "shatterproof"
+          }, {
+            "type": "text",
+            "id": "icon_text",
+            "label": "Main Text",
+            "default": "Shatterproof"
+          }, {
+            "type": "text",
+            "id": "sub_text",
+            "label": "Sub Text",
+            "default": "All glass, no glass"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Icon With Text",
+        "category": "Text",
+        "blocks": [
+          {
+            "type": "icon_item"
+          }, {
+            "type": "icon_item"
+          }, {
+            "type": "icon_item"
+          }, {
+            "type": "icon_item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

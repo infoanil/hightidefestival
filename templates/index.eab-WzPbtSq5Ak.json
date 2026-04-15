@@ -1,0 +1,1091 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.home",
+  "sections": {
+    "homepage_quick_links_CYEpEe": {
+      "type": "homepage-quick-links",
+      "blocks": {
+        "link_LaRbx4": {
+          "type": "link",
+          "settings": {
+            "label": "LINE UP",
+            "link": "https://hightidefestival.com/pages/daily-lineups"
+          }
+        },
+        "link_PjUK3F": {
+          "type": "link",
+          "settings": {
+            "label": "PASSES",
+            "link": "https://hightidefestival.com/collections/ticket"
+          }
+        },
+        "link_pFjb9g": {
+          "type": "link",
+          "settings": {
+            "label": "FAQS",
+            "link": "https://hightidefestival.com/pages/info"
+          }
+        },
+        "link_W64Kkq": {
+          "type": "link",
+          "settings": {
+            "label": "MERCH",
+            "link": "https://hightidefestival.com/collections/merchandise"
+          }
+        },
+        "link_nbVjaq": {
+          "type": "link",
+          "settings": {
+            "label": "HOTEL",
+            "link": "https://hightidefestival.com/pages/where-to-stay"
+          }
+        },
+        "link_TTpVmK": {
+          "type": "link",
+          "settings": {
+            "label": "SPONSORSHIPS",
+            "link": "https://hightidefestival.com/pages/sponsorships"
+          }
+        }
+      },
+      "block_order": [
+        "link_LaRbx4",
+        "link_PjUK3F",
+        "link_pFjb9g",
+        "link_W64Kkq",
+        "link_nbVjaq",
+        "link_TTpVmK"
+      ],
+      "custom_css": [
+        "header[role=\"banner\"] {background-color: #d1e1ef !important; color: #0b4166 !important; box-shadow: 0 10px 20px rgba(11, 65, 102, 0.08);}",
+        "header[role=\"banner\"] [x-show=\"!scrolled\"] {display: none !important;}",
+        "header[role=\"banner\"] [x-show=\"scrolled\"] {display: block !important;}"
+      ],
+      "name": "Homepage Quick Links",
+      "settings": {
+        "accessibility_label": "Quick links",
+        "background_color": "#f6f5f0",
+        "hide_on_desktop": true,
+        "hide_on_mobile": false,
+        "enable_mobile_infinite_scroll": false,
+        "link_side_padding_mobile": 16,
+        "link_font_size_mobile": 10.4,
+        "link_font_size_desktop": 10.4,
+        "link_font_weight": "900",
+        "padding_top": 84,
+        "padding_bottom": 12
+      }
+    },
+    "hero_B8rh4P": {
+      "type": "hero",
+      "blocks": {
+        "klaviyo_email_marketing_sms_form_embed_block_hzeNrA": {
+          "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/form-embed-block/2632fe16-c075-4321-a88b-50b567f42507",
+          "settings": {
+            "formId": "Vwsykw"
+          }
+        },
+        "marquee_item_VjatDi": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Food_trucks_331e3c0f-b0ea-4d80-a2c0-2c717e0e393d.png",
+            "text": "food trucks",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_iBRWWx": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Live_music.png",
+            "text": "live music",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_rAPjAb": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Beverage_bars_28da6ee9-e331-455d-afae-7c154a8580a3.png",
+            "text": "Beverages & Bars",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_x87B4j": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/City_market.png",
+            "text": "City Market",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_cE9tDz": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/DJ_Sets_c4afa39f-55f3-4a05-9ec9-2fb7209b95c9.png",
+            "text": "DJ Sets",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_hztDx3": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Sustainable.png",
+            "text": "sustainable",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_kMWFHc": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/All_day_experience.png",
+            "text": "All-Day Experience",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        }
+      },
+      "block_order": [
+        "klaviyo_email_marketing_sms_form_embed_block_hzeNrA",
+        "marquee_item_VjatDi",
+        "marquee_item_iBRWWx",
+        "marquee_item_rAPjAb",
+        "marquee_item_x87B4j",
+        "marquee_item_cE9tDz",
+        "marquee_item_hztDx3",
+        "marquee_item_kMWFHc"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".needsclick {min-width: 0; min-height: 0 !important;}",
+        ".klaviyo-form {margin: 0 !important; padding: 0 !important;}"
+      ],
+      "name": "Hero Section",
+      "settings": {
+        "title": "your favorite dance music festival",
+        "date": "JUNE 5 & 6, 2026",
+        "location": "CHARLESTON, SOUTH CAROLINA",
+        "disclaimer": "LINEUP COMING SOON - BE THE FIRST TO KNOW WHEN WE LAUNCH",
+        "show_hero_button": false,
+        "hero_button_text": "Buy Passes",
+        "hero_button_url": "",
+        "logo": "shopify://shop_images/High_Tide_Logo_Big.png",
+        "img_desktop": "shopify://shop_images/High_Tide_Hero.jpg",
+        "show_default_form": false,
+        "hero_height_mobile": 800,
+        "hero_height_desktop": 800
+      }
+    },
+    "hero_TQ7kgJ": {
+      "type": "hero",
+      "blocks": {
+        "klaviyo_email_marketing_sms_form_embed_block_xxAkgt": {
+          "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/form-embed-block/2632fe16-c075-4321-a88b-50b567f42507",
+          "disabled": true,
+          "settings": {
+            "formId": "S36Ev4"
+          }
+        },
+        "marquee_item_xBGwDV": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Food_trucks_331e3c0f-b0ea-4d80-a2c0-2c717e0e393d.png",
+            "text": "food trucks",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_Ja6qwe": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Live_music.png",
+            "text": "live music",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_cqhhY4": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Beverage_bars_28da6ee9-e331-455d-afae-7c154a8580a3.png",
+            "text": "Beverages & Bars",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_xNMJWy": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/City_market.png",
+            "text": "City Market",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_9qRhgW": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/DJ_Sets_c4afa39f-55f3-4a05-9ec9-2fb7209b95c9.png",
+            "text": "DJ Sets",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_G4z3GT": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Sustainable.png",
+            "text": "sustainable",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_zfLhhF": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/All_day_experience.png",
+            "text": "All-Day Experience",
+            "hide_on_mobile": false,
+            "hide_on_desktop": false
+          }
+        }
+      },
+      "block_order": [
+        "klaviyo_email_marketing_sms_form_embed_block_xxAkgt",
+        "marquee_item_xBGwDV",
+        "marquee_item_Ja6qwe",
+        "marquee_item_cqhhY4",
+        "marquee_item_xNMJWy",
+        "marquee_item_9qRhgW",
+        "marquee_item_G4z3GT",
+        "marquee_item_zfLhhF"
+      ],
+      "disabled": true,
+      "custom_css": [
+        "#hero {justify-content: center;}",
+        ".needsclick {min-width: 0; min-height: 0 !important;}",
+        ".klaviyo-form {margin: 0 !important; padding: 0 !important;}"
+      ],
+      "name": "2/10/26 PRE-SALES Hero Section",
+      "settings": {
+        "title": "Passes On Sale Now!",
+        "date": "JUNE 5 & 6, 2026",
+        "location": "CHARLESTON, SOUTH CAROLINA",
+        "disclaimer": "",
+        "show_hero_button": true,
+        "hero_button_text": "Buy Passes",
+        "hero_button_url": "shopify://collections/ticket",
+        "logo": "shopify://shop_images/High_Tide_Logo_Big.png",
+        "img_desktop": "shopify://shop_images/High_Tide_Hero.jpg",
+        "show_default_form": false,
+        "hero_height_mobile": 800,
+        "hero_height_desktop": 800
+      }
+    },
+    "hero_d33Exb": {
+      "type": "hero",
+      "blocks": {
+        "klaviyo_email_marketing_sms_form_embed_block_79AGeB": {
+          "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/form-embed-block/2632fe16-c075-4321-a88b-50b567f42507",
+          "disabled": true,
+          "settings": {
+            "formId": "XpEyWa"
+          }
+        },
+        "marquee_item_nGQUwx": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Food_trucks_331e3c0f-b0ea-4d80-a2c0-2c717e0e393d.png",
+            "text": "food trucks",
+            "hide_on_mobile": true,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_URCzBw": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Live_music.png",
+            "text": "live music",
+            "hide_on_mobile": true,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_UqVrNe": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Beverage_bars_28da6ee9-e331-455d-afae-7c154a8580a3.png",
+            "text": "Beverages & Bars",
+            "hide_on_mobile": true,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_XfeFQR": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/City_market.png",
+            "text": "City Market",
+            "hide_on_mobile": true,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_jL9dpV": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/DJ_Sets_c4afa39f-55f3-4a05-9ec9-2fb7209b95c9.png",
+            "text": "DJ Sets",
+            "hide_on_mobile": true,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_DHJ77z": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/Sustainable.png",
+            "text": "sustainable",
+            "hide_on_mobile": true,
+            "hide_on_desktop": false
+          }
+        },
+        "marquee_item_hNhhGi": {
+          "type": "marquee_item",
+          "settings": {
+            "icon": "shopify://shop_images/All_day_experience.png",
+            "text": "All-Day Experience",
+            "hide_on_mobile": true,
+            "hide_on_desktop": false
+          }
+        }
+      },
+      "block_order": [
+        "klaviyo_email_marketing_sms_form_embed_block_79AGeB",
+        "marquee_item_nGQUwx",
+        "marquee_item_URCzBw",
+        "marquee_item_UqVrNe",
+        "marquee_item_XfeFQR",
+        "marquee_item_jL9dpV",
+        "marquee_item_DHJ77z",
+        "marquee_item_hNhhGi"
+      ],
+      "custom_css": [
+        "#hero {justify-content: center;}",
+        ".needsclick {min-width: 0; min-height: 0 !important;}",
+        ".klaviyo-form {margin: 0 !important; padding: 0 !important;}"
+      ],
+      "name": "2/13/26 PRE-SALES AVAILABLE NOWHero Section",
+      "settings": {
+        "title": "Passes On Sale Now!",
+        "date": "JUNE 5 + 6, 2026",
+        "location": "CHARLESTON, SOUTH CAROLINA",
+        "disclaimer": "",
+        "show_hero_button": true,
+        "hero_button_text": "Buy Passes",
+        "hero_button_url": "shopify://collections/ticket",
+        "logo": "shopify://shop_images/High_Tide_Logo_Big.png",
+        "img_desktop": "shopify://shop_images/High_Tide_Hero.jpg",
+        "show_default_form": false,
+        "hero_height_mobile": 450,
+        "hero_height_desktop": 800
+      }
+    },
+    "banner_gYM3HX_desktop": {
+      "type": "banner",
+      "name": "lineup banner image (desktop)",
+      "settings": {
+        "layout_mobile": "text_first",
+        "layout_desktop": "text_first",
+        "show_on_mobile": false,
+        "show_on_desktop": true,
+        "heading": "start your summer off right",
+        "heading_mobile": "THE LINE UP",
+        "heading_desktop": "start your summer off right",
+        "hide_title_mobile": false,
+        "hide_title_desktop": false,
+        "button_position": "last",
+        "text": "",
+        "button_label": "BUY PASSES",
+        "button_link": "shopify://collections/ticket",
+        "image": "shopify://shop_images/50e3ccb51f6c738abc4b2c51c9666c4a82c7087a.png",
+        "background_color_mobile": "#d1e1ef",
+        "background_color_desktop": "#d1e1ef",
+        "heading_color": "#0b4166",
+        "text_color": "#0b4166",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0
+      }
+    },
+    "line_up_RkhREp": {
+      "type": "line-up",
+      "blocks": {
+        "artist_TyXKNc": {
+          "type": "artist",
+          "settings": {
+            "name": "THE CHAINSMOKERS",
+            "icon": "shopify://shop_images/lineup-one.png",
+            "name_color": "#e6772a",
+            "hover_image": "shopify://shop_images/chain-smokers.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1.3,
+            "font_size_desktop": 3.1
+          }
+        },
+        "artist_P89Qxa": {
+          "type": "artist",
+          "settings": {
+            "name": "LOUIS THE CHILD",
+            "icon": "shopify://shop_images/lineup-two.png",
+            "name_color": "#366eb6",
+            "hover_image": "shopify://shop_images/louis-the-child.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1.3,
+            "font_size_desktop": 3.1
+          }
+        },
+        "artist_yMVd8a": {
+          "type": "artist",
+          "settings": {
+            "name": "BOB MOSES (CLUB SET)",
+            "icon": "shopify://shop_images/lineup-three.png",
+            "name_color": "#0b4166",
+            "hover_image": "shopify://shop_images/bob-moses.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1,
+            "font_size_desktop": 2.5
+          }
+        },
+        "artist_wk9TAB": {
+          "type": "artist",
+          "settings": {
+            "name": "BUNT.",
+            "icon": "shopify://shop_images/lineup-four.png",
+            "name_color": "#e6772a",
+            "hover_image": "shopify://shop_images/blunt-square.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1.3,
+            "font_size_desktop": 3.1
+          }
+        },
+        "artist_CVxzza": {
+          "type": "artist",
+          "settings": {
+            "name": "ELDERBROOK (DJ SET)",
+            "icon": "shopify://shop_images/lineup-five.png",
+            "name_color": "#366eb6",
+            "hover_image": "shopify://shop_images/elder-square.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1,
+            "font_size_desktop": 2.5
+          }
+        },
+        "artist_V7yQC9": {
+          "type": "artist",
+          "settings": {
+            "name": "AUSTIN MILLZ",
+            "icon": "shopify://shop_images/lineup-six.png",
+            "name_color": "#0b4166",
+            "hover_image": "shopify://shop_images/austin-millz.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1.3,
+            "font_size_desktop": 3.1
+          }
+        },
+        "artist_R6C6Wd": {
+          "type": "artist",
+          "settings": {
+            "name": "JACKIE HOLLANDER",
+            "icon": "shopify://shop_images/lineup-seven.png",
+            "name_color": "#e6772a",
+            "hover_image": "shopify://shop_images/jackie-hollander-square.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1.3,
+            "font_size_desktop": 3.1
+          }
+        },
+        "artist_VzeRRF": {
+          "type": "artist",
+          "settings": {
+            "name": "RANGER TRUCCO",
+            "icon": "shopify://shop_images/lineup-eight.png",
+            "name_color": "#366eb6",
+            "hover_image": "shopify://shop_images/ranger-trucco.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1.3,
+            "font_size_desktop": 3.1
+          }
+        },
+        "artist_7QNpwf": {
+          "type": "artist",
+          "settings": {
+            "name": "DREYA V",
+            "icon": "shopify://shop_images/lineup-ten_faca89ad-811b-4fd0-91ea-c19db6b22724.png",
+            "name_color": "#0b4166",
+            "hover_image": "shopify://shop_images/dreya.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1.3,
+            "font_size_desktop": 3.1
+          }
+        },
+        "artist_KXFpDb": {
+          "type": "artist",
+          "settings": {
+            "name": "NATE WYATT",
+            "icon": "shopify://shop_images/lineup-nine.png",
+            "name_color": "#e6772a",
+            "hover_image": "shopify://shop_images/nate-wyatt-square.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1.3,
+            "font_size_desktop": 3.1
+          }
+        },
+        "artist_WJHAmj": {
+          "type": "artist",
+          "settings": {
+            "name": "WES MILLS",
+            "icon": "shopify://shop_images/lineup-eleven.png",
+            "name_color": "#366eb6",
+            "hover_image": "shopify://shop_images/wes-mills.jpg",
+            "image_shape": "square",
+            "link": "",
+            "font_size_mobile": 1.3,
+            "font_size_desktop": 3.1
+          }
+        }
+      },
+      "block_order": [
+        "artist_TyXKNc",
+        "artist_P89Qxa",
+        "artist_yMVd8a",
+        "artist_wk9TAB",
+        "artist_CVxzza",
+        "artist_V7yQC9",
+        "artist_R6C6Wd",
+        "artist_VzeRRF",
+        "artist_7QNpwf",
+        "artist_KXFpDb",
+        "artist_WJHAmj"
+      ],
+      "name": "Line Up",
+      "settings": {
+        "legend": "Meet The Family",
+        "legend_mobile": "MEET THE FAMILY",
+        "legend_desktop": "the line ups",
+        "heading": "THE LINE UP",
+        "heading_mobile": "THE LINE UP",
+        "heading_desktop": "The Sound of High Tide",
+        "section_background_color_mobile": "#f6f5f0",
+        "section_background_color_desktop": "#f6f5f0",
+        "legend_font_size_mobile": 14,
+        "legend_font_size_desktop": 18,
+        "legend_font_weight": "500",
+        "heading_font_size_mobile": 32,
+        "heading_line_height_mobile": 30,
+        "heading_font_size_desktop": 100,
+        "heading_line_height_desktop": 88,
+        "heading_font_weight": "400",
+        "lineups_by_day_text": "+ MANY MORE! →",
+        "lineups_by_day_text_mobile": "+ MANY MORE! →",
+        "lineups_by_day_text_desktop": "All Products",
+        "lineups_by_day_link": "shopify://collections/all",
+        "lineups_by_day_link_mobile": "https://hightidefestival.com/pages/daily-lineups",
+        "lineups_by_day_link_desktop": "",
+        "footer_label": "BUY PASSES",
+        "footer_label_mobile": "BUY PASSES",
+        "footer_label_desktop": "+MANY MORE!",
+        "footer_button_v2_mobile": true,
+        "footer_button_v2_desktop": false,
+        "footer_link": "shopify://collections/ticket",
+        "footer_link_mobile": "shopify://collections/ticket",
+        "footer_link_desktop": "shopify://pages/lineup"
+      }
+    },
+    "banner_gYM3HX": {
+      "type": "banner",
+      "name": "lineup banner image",
+      "settings": {
+        "layout_mobile": "text_first",
+        "layout_desktop": "text_first",
+        "show_on_mobile": true,
+        "show_on_desktop": false,
+        "heading": "start your summer off right",
+        "heading_mobile": "THE LINE UP",
+        "heading_desktop": "start your summer off right",
+        "hide_title_mobile": false,
+        "hide_title_desktop": false,
+        "button_position": "last",
+        "text": "",
+        "button_label": "BUY PASSES",
+        "button_link": "shopify://collections/ticket",
+        "image": "shopify://shop_images/50e3ccb51f6c738abc4b2c51c9666c4a82c7087a.png",
+        "background_color_mobile": "#d1e1ef",
+        "background_color_desktop": "#d1e1ef",
+        "heading_color": "#0b4166",
+        "text_color": "#0b4166",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0
+      }
+    },
+    "poster_Kmzp8E": {
+      "type": "poster",
+      "disabled": true,
+      "name": "Poster",
+      "settings": {}
+    },
+    "choose_your_vibe_feTJkK": {
+      "type": "choose-your-vibe",
+      "blocks": {
+        "stage_6wR9Gx": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1128.svg",
+            "title": "Main Stage",
+            "image": "shopify://shop_images/Stage_Image.jpg",
+            "description": "THE HEARTBEAT OF THE FESTIVAL. MASSIVE SOUND AND WORLD CLASS TALENT ALL WITH A SUNSET BACKDROP"
+          }
+        },
+        "stage_znqWUU": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1127.svg",
+            "title": "the park",
+            "image": "shopify://shop_images/Stage_Image-1.jpg",
+            "description": "ENJOY OUR GREEN GRASS, BEAUTIFUL SUNSETS & RIVERSIDE LOUNGING ALL AT OUR VENUE, RIVERFRONT PARK"
+          }
+        },
+        "stage_pBwkNz": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1129.svg",
+            "title": "silent disco",
+            "image": "shopify://shop_images/Stage_Image-2.jpg",
+            "description": "YOU GET THE POINT. HONESTLY THIS ONE'S FOR THE FREAKS"
+          }
+        },
+        "stage_bjpJky": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1125.svg",
+            "title": "HIGH TIDE CITY MARKET",
+            "image": "shopify://shop_images/Stage_Image-3.jpg",
+            "description": "VISIT OUR MARKETPLACE ON SITE FEATURING LOCAL BUSINESSES, ARTISTS, AND MORE"
+          }
+        },
+        "stage_zzA3WP": {
+          "type": "stage",
+          "settings": {
+            "icon": "shopify://shop_images/Frame_1126.svg",
+            "title": "food & bev",
+            "image": "shopify://shop_images/Stage_Image-4.jpg",
+            "description": "Y'ALL GONNA BE EATIN' GOOD WE PROMISE. GRAB A QUICK BITE AND GET BACK TO THE ACTION"
+          }
+        }
+      },
+      "block_order": [
+        "stage_6wR9Gx",
+        "stage_znqWUU",
+        "stage_pBwkNz",
+        "stage_bjpJky",
+        "stage_zzA3WP"
+      ],
+      "name": "Choose Your Vibe",
+      "settings": {
+        "legend": "explore the grounds",
+        "heading": "what to expect",
+        "description": "There’s so much more than just the music, maybe even the future love of your life!"
+      }
+    },
+    "get_your_passes_ajrgci": {
+      "type": "get-your-passes",
+      "name": "Get Your Passes",
+      "settings": {
+        "legend": "the experience",
+        "heading": "get your passes",
+        "product_1": "high-tide-2026-2-day-ga-pass",
+        "button_url_1": "shopify://collections/ticket",
+        "button_text_1": "Buy Passes",
+        "product_2": "high-tide-2026-2-day-vip-pass",
+        "button_url_2": "shopify://collections/ticket",
+        "button_text_2": "Buy Passes",
+        "product_3": "high-tide-2026-2-day-super-vip-pass",
+        "button_url_3": "shopify://collections/ticket",
+        "button_text_3": "Buy Passes",
+        "product_4": "high-tide-2026-2-day-stage-access",
+        "button_url_4": "shopify://collections/ticket",
+        "button_text_4": "Buy Passes"
+      }
+    },
+    "video_JweFh8": {
+      "type": "video",
+      "name": "Video",
+      "settings": {
+        "legend": "about high tide festival",
+        "title": "<p>SUMMER STARTS HERE</p>",
+        "description": "KICK IT OFF THE RIGHT WAY WITH A WEEKEND OF WORLD CLASS TALENT AT OUR Beautiful RIVERFRONT VENUE",
+        "youtube_link": "mTcvk-fq1nY",
+        "thumbnail": "shopify://shop_images/alive_all_weekend.jpg",
+        "overlay": 20
+      }
+    },
+    "where_to_stay_boxed_f7B9LF": {
+      "type": "where-to-stay-boxed",
+      "name": "Where to stay? Boxed",
+      "settings": {
+        "image": "shopify://shop_images/Somewhere_to_stay_47e4f226-2311-4bac-a14f-b8f117d86749.jpg",
+        "heading": "Need somewhere to stay?",
+        "description": "We’ve got you covered with a special discounted rate at The Moxy Hotel in Downtown Charleston, just a 10 minute drive to the festival site.  Also they have a sick rooftop… who doesn’t love that for a lil pre-game or whatevah. This is our official hotel partner and the best home base for the full High Tide experience.",
+        "price": "$225 / night",
+        "price_info": "(while supplies last - limited inventory)",
+        "button_title": "book your stay",
+        "button_url": "shopify://pages/where-to-stay"
+      }
+    },
+    "call_to_action_bfHGLf": {
+      "type": "call-to-action",
+      "blocks": {
+        "item_AHgNFQ": {
+          "type": "item",
+          "settings": {
+            "text": "HOUSE"
+          }
+        },
+        "item_84HrRA": {
+          "type": "item",
+          "settings": {
+            "text": "DANCE"
+          }
+        },
+        "item_nbHJmk": {
+          "type": "item",
+          "settings": {
+            "text": "DISCO & FUNK"
+          }
+        },
+        "item_aPKEni": {
+          "type": "item",
+          "settings": {
+            "text": "WATERFRONT"
+          }
+        },
+        "item_BbzgDV": {
+          "type": "item",
+          "settings": {
+            "text": "DUCKS"
+          }
+        }
+      },
+      "block_order": [
+        "item_AHgNFQ",
+        "item_84HrRA",
+        "item_nbHJmk",
+        "item_aPKEni",
+        "item_BbzgDV"
+      ],
+      "name": "Call to Action",
+      "settings": {
+        "image": "shopify://shop_images/grab-your-tickets_e2852e4b-9f86-44f1-a57d-9887668f1513.jpg",
+        "image_mobile": "shopify://shop_images/spend_the_day.jpg",
+        "heading": "<p>WE PUT THE ‘CH’ IN ‘CHARLESTON’</p>",
+        "button_title": "grab your passes",
+        "button_url": "shopify://collections/ticket"
+      }
+    },
+    "carousel_section_FtHTM6": {
+      "type": "carousel-section",
+      "name": "Product Slider",
+      "settings": {
+        "show_title": true,
+        "legend": "AND SOME CLASSICS FROM THE PAST",
+        "title": "the 2026 line",
+        "button_title": "shop all",
+        "button_url": "shopify://collections/merchandise",
+        "featured_collection": "curated",
+        "limit": 8,
+        "slides_per_view": 4,
+        "tablet_slides_per_view": 3,
+        "mobile_slides_per_view": "2",
+        "autoplay": true,
+        "autoplay_duration": 4000,
+        "loop": true,
+        "arrows_navigation": true,
+        "dots_navigation": false,
+        "card_show_rating": true,
+        "card_show_swatches": true,
+        "card_show_quick_add": true,
+        "card_show_compare_price": true
+      }
+    },
+    "social_wall_wfCVbU": {
+      "type": "social-wall",
+      "blocks": {
+        "slide_D6DtdF": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/GA_c63b315c-c3c6-489c-ab98-f4ddbef8f3d0.jpg"
+          }
+        },
+        "slide_zkBwbU": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_160606-1496_IMKEIKI.jpg"
+          }
+        },
+        "slide_aqiXcM": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_192633-3680_IMKEIKI.jpg"
+          }
+        },
+        "slide_Xhredr": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_194342-5284_ITSKINDERELLA.jpg"
+          }
+        },
+        "slide_QznHxH": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_194749-4012_IMKEIKI.jpg"
+          }
+        },
+        "slide_4RyFpE": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_195304-4232_IMKEIKI_1.jpg"
+          }
+        },
+        "slide_H9rmbD": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_195701-4341_IMKEIKI.jpg"
+          }
+        },
+        "slide_VEafwM": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_204735-4633_IMKEIKI.jpg"
+          }
+        },
+        "slide_KcmVNq": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_210458-4654_IMKEIKI-Enhanced-NR.jpg"
+          }
+        },
+        "slide_Me8g7k": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0607_135631-6600_ITSKINDERELLA.jpg"
+          }
+        },
+        "slide_7e8JGE": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0607_174546-7314_ITSKINDERELLA.jpg"
+          }
+        },
+        "slide_GWPR7B": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0607_191615-7400_IMKEIKI.jpg"
+          }
+        },
+        "slide_daFVdw": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0607_211012-9114_IMKEIKI.jpg"
+          }
+        },
+        "slide_NhcY4h": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0607_211825-9415_IMKEIKI.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "slide_D6DtdF",
+        "slide_zkBwbU",
+        "slide_aqiXcM",
+        "slide_Xhredr",
+        "slide_QznHxH",
+        "slide_4RyFpE",
+        "slide_H9rmbD",
+        "slide_VEafwM",
+        "slide_KcmVNq",
+        "slide_Me8g7k",
+        "slide_7e8JGE",
+        "slide_GWPR7B",
+        "slide_daFVdw",
+        "slide_NhcY4h"
+      ],
+      "name": "Social Wall",
+      "settings": {
+        "legend": "the high tide community",
+        "heading": "JOIN THE CREW"
+      }
+    },
+    "faq_3FyNiH": {
+      "type": "faq",
+      "blocks": {
+        "faq_item_h7hjzj": {
+          "type": "faq_item",
+          "settings": {
+            "question": "WHERE IS HIGH TIDE?",
+            "answer": "High Tide Festival is taking place at Riverfront Park in N. Charleston 1061 Everglades Ave, North Charleston, SC 29405"
+          }
+        },
+        "faq_item_PywFU6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the age limit?",
+            "answer": "21+ only. We scan IDs."
+          }
+        },
+        "faq_item_9QVyR4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the refund policy?",
+            "answer": "Tickets are non-refundable. No exceptions."
+          }
+        },
+        "faq_item_6JVGNK": {
+          "type": "faq_item",
+          "settings": {
+            "question": "When should I arrive?",
+            "answer": "Gates open at 12PM. Come early!"
+          }
+        },
+        "faq_item_NDWEUb": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there re-entry?",
+            "answer": "No re-entry due to venue policy."
+          }
+        },
+        "faq_item_YxaPEC": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What forms of payment are accepted?",
+            "answer": "This is a cashless event. Bring debit/credit cards"
+          }
+        },
+        "faq_item_FimB4x": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there a dress code?",
+            "answer": "No dress code - express yourself! Just remember this is a city-owned public park."
+          }
+        },
+        "faq_item_6fwBLx": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the bag policy?",
+            "answer": "No bags larger than a handheld purse. We are not responsible for lost items. Please don’t leave bags lying around."
+          }
+        },
+        "faq_item_T7mNHd": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I bring a CamelBak or water bottle?",
+            "answer": "Yes - but it must be empty. Water filling stations are available throughout the grounds."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_h7hjzj",
+        "faq_item_PywFU6",
+        "faq_item_9QVyR4",
+        "faq_item_6JVGNK",
+        "faq_item_NDWEUb",
+        "faq_item_YxaPEC",
+        "faq_item_FimB4x",
+        "faq_item_6fwBLx",
+        "faq_item_T7mNHd"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "image": "shopify://shop_images/Faq.png",
+        "legend": "got questions?",
+        "heading": "<p>we’ve got answers<br/></p>",
+        "button_text": "Learn more",
+        "button_url": "shopify://pages/info"
+      }
+    },
+    "newsletter_8Ttrpx": {
+      "type": "newsletter",
+      "blocks": {
+        "klaviyo_email_marketing_sms_form_embed_block_dBqUC9": {
+          "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/form-embed-block/2632fe16-c075-4321-a88b-50b567f42507",
+          "settings": {
+            "formId": "YjMmnK"
+          }
+        }
+      },
+      "block_order": [
+        "klaviyo_email_marketing_sms_form_embed_block_dBqUC9"
+      ],
+      "custom_css": [
+        ".needsclick {min-width: 0; min-height: 0 !important;}",
+        ".klaviyo-form {margin: 0 !important; padding: 0 !important;}"
+      ],
+      "name": "Newsletter",
+      "settings": {
+        "image": "shopify://shop_images/Newsletter.jpg",
+        "heading": "don’t miss the drop.",
+        "copy": "Get lineup leaks, secret party invites, and ticket drops before anyone else.",
+        "show_default_form": false
+      }
+    }
+  },
+  "order": [
+    "homepage_quick_links_CYEpEe",
+    "hero_B8rh4P",
+    "hero_TQ7kgJ",
+    "hero_d33Exb",
+    "banner_gYM3HX_desktop",
+    "line_up_RkhREp",
+    "banner_gYM3HX",
+    "poster_Kmzp8E",
+    "choose_your_vibe_feTJkK",
+    "get_your_passes_ajrgci",
+    "video_JweFh8",
+    "where_to_stay_boxed_f7B9LF",
+    "call_to_action_bfHGLf",
+    "carousel_section_FtHTM6",
+    "social_wall_wfCVbU",
+    "faq_3FyNiH",
+    "newsletter_8Ttrpx"
+  ]
+}

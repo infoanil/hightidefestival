@@ -1,0 +1,60 @@
+{% comment %}
+  Renders pagination controls
+{% endcomment %}
+
+{% if paginate.pages > 1 %}
+  <nav class="flex justify-center mt-10" aria-label="Pagination">
+    <ul class="flex items-center text-sm gap-1">
+
+      <!-- Previous -->
+      <li>
+        <a href="{{ paginate.previous.url }}" class="w-8 h-8 flex justify-center items-center  leading-tight text-[var(--text-primary)] bg-[var(--surface-primary)] border border-[var(--interactive-border)] rounded-[5px] hover:bg-[var(--surface-secondary)]/40 transition
+                 {{ paginate.previous.url | default: 'opacity-50 pointer-events-none' }}">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.99967 12.6673L3.33301 8.00065L7.99967 3.33398" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12.6663 8H3.33301" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+        </a>
+      </li>
+
+      <!-- Page Parts -->
+      {% for part in paginate.parts %}
+        {% assign part_is_current = false %}
+        {% if part.is_active or part.title == paginate.current_page %}
+          {% assign part_is_current = true %}
+        {% endif %}
+
+        {% if part_is_current %}
+          <li>
+            <span class="w-8 h-8 flex justify-center bg-secondary-navy text-white items-center rounded-[5px] leading-tight] font-medium border border-[var(--interactive-border)] z-10">
+              {{ part.title }}
+            </span>
+          </li>
+
+        {% elsif part.is_link %}
+          <li>
+            <a href="{{ part.url }}" class="w-8 h-8 flex  bg-[#FDFAF5] hover:bg-primary-deepblue hover:text-white text-black justify-center items-center rounded-[5px]  leading-tight transition font-medium border border-[var(--interactive-border)]">
+              {{ part.title }}
+            </a>
+          </li>
+
+        {% elsif part.title == '...' %}
+          <li>
+            <span class="w-8 h-8 flex justify-center items-center rounded-[5px] leading-tight text-[var(--text-secondary)] bg-[var(--surface-primary)] border border-[var(--interactive-border)]">...</span>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      <!-- Next -->
+      <li>
+        <a href="{{ paginate.next.url }}" class="w-8 h-8 flex justify-center items-center  leading-tight text-[var(--text-primary)] bg-[var(--surface-primary)] border border-[var(--interactive-border)] rounded-[5px] hover:bg-[var(--surface-secondary)]/40 transition
+                 {{ paginate.next.url | default: 'opacity-50 pointer-events-none' }}">
+             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.00033 12.6673L12.667 8.00065L8.00033 3.33398" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3.33366 8H12.667" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+{% endif %}

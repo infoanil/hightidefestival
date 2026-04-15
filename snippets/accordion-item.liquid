@@ -1,0 +1,25 @@
+<details class="ds-accordion border-b border-[var(--accordion-border)] pb-2">
+  <summary class="ds-accordion-summary flex justify-between items-center py-2 cursor-pointer font-bold text-xl uppercase text-secondary-navy tracking-[-1px] transition">
+    <span>{{ title }}</span>
+    <svg 
+      class="h-5 w-5 transition-transform duration-300 accordion-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </summary>
+
+  <div class="ds-accordion-content mt-2 pb-4 text-[17px] tracking-[-1px] text-primary-black [&_ul]:list-disc [&_ul]:ml-4">
+    {{ content }}
+  </div>
+</details>
+
+<style>
+  details[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+</style>

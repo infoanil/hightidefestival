@@ -1,0 +1,107 @@
+{%- assign layout = section.settings.desktop_layout | default: 'horizontal' -%}
+{%- assign force_scrolled_variant = false -%}
+{%- assign template_identifier = template.name -%}
+{%- if template.suffix != blank -%}
+  {%- assign template_identifier = template_identifier | append: '.' | append: template.suffix -%}
+{%- endif -%}
+{%- if template_identifier contains 'eab-WzPbtSq5Ak' or template.suffix == 'eab-WzPbtSq5Ak' -%}
+  {%- assign force_scrolled_variant = true -%}
+{%- endif -%}
+
+  <header
+  x-data="{ 
+    mobileMenuOpen: false, 
+    scrolled: {{ force_scrolled_variant | json }},
+    init() {
+      if ({{ force_scrolled_variant | json }}) return;
+      window.addEventListener('scroll', () => {
+        this.scrolled = window.scrollY > 50;
+      });
+    }
+  }"
+  :class="scrolled ? 'bg-primary-lightblue text-secondary-navy shadow-lg  ' : 'bg-transparent text-white'"
+  class="fixed w-full z-10 transition-all duration-300{% if force_scrolled_variant %} bg-primary-lightblue text-secondary-navy shadow-lg{% endif %}"
+  role="banner">
+  <div class="container{% if force_scrolled_variant %} py-2{% else %} py-4{% endif %}">
+    <nav class="relative flex items-center gap-4
+        {% if layout == 'horizontal' %}
+          justify-between
+        {% else %}
+          flex-wrap lg:flex-col lg:items-center
+        {% endif %}" aria-label="Main navigation">
+
+      {%- comment -%} Logo {%- endcomment -%}
+      <div class="flex flex-1 justify-center lg:justify-start">
+          <div{% unless force_scrolled_variant %} x-show="!scrolled"{% endunless %}{% if force_scrolled_variant %} class="hidden"{% endif %}>
+          {% render 'header-logo'
+            , logo_image: settings.logo_white %}
+          </div>
+          <div{% unless force_scrolled_variant %} x-show="scrolled"{% endunless %}{% if force_scrolled_variant %} class="block"{% endif %}>
+            {% render 'header-logo'
+            , logo_image: settings.dark_logo %}
+          </div>
+          <span class="hidden md:flex  items-center md:whitespace-nowrap font-bold h-auto border-l text-sm md:text-lg uppercase  border-inherit  pl-4.5 ml-4.5 lg:hidden ">
+              June 5 + 6, 2026 
+          </span>
+      </div>
+
+      {%- comment -%} Desktop navigation {%- endcomment -%}
+       <div class="flex-1 flex justify-center">
+         {% render 'header-nav-desktop'
+           , menu: settings.header_menu
+           , layout: layout %}
+       </div>
+
+      {%- comment -%} Header actions (search, account, cart) {%- endcomment -%}
+       <div class="flex-1 justify-end  flex">
+         {% render 'header-actions',
+          section:section
+           , layout: layout %}
+       </div>
+
+      {%- comment -%} Mobile menu trigger {%- endcomment -%}
+      <div class="flex lg:hidden ml-4">
+        <button
+          type="button"
+          @click="mobileMenuOpen = true"
+          class=" inline-flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--interactive-focus)]">
+          <span class="sr-only">Open main menu</span>
+          {% render 'icon-menu' %}
+        </button>
+      </div>
+    </nav>
+</div>
+
+  {%- comment -%} Mobile drawer, controlled via Alpine state {%- endcomment -%}
+  {% render 'mobile-menu'
+    , menu: settings.header_menu
+    , mobile_menu_state: 'mobileMenuOpen'
+  %}
+</header>
+
+{% schema %}
+  {
+    "name": "t:general.header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Desktop Layout"
+      },
+      {
+        "type": "select",
+        "id": "desktop_layout",
+        "label": "Desktop navigation style",
+        "options": [
+          {
+            "value": "horizontal",
+            "label": "Horizontal"
+          }, {
+            "value": "vertical",
+            "label": "Vertical"
+          }
+        ],
+        "default": "horizontal"
+      }
+    ]
+  }
+{% endschema %}

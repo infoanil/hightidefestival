@@ -1,0 +1,120 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.home",
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "hero_small_TVcaMC": {
+      "type": "hero-small",
+      "name": "Hero Small",
+      "settings": {
+        "subtitle": "Sponsorship",
+        "title": "Partner With Us",
+        "description": "Reach thousands of music lovers and culture-driven audiences.",
+        "button_label": "Let's Collab",
+        "button_link": "#section-partnership-form-template--26427706409256__partnership_form_xUfkft",
+        "img_desktop": "shopify://shop_images/bg_hero_small_832c8ac5-818e-44d2-aa98-f868787df5d6.png"
+      }
+    },
+    "partnership_benefits_E4XbQQ": {
+      "type": "partnership-benefits",
+      "blocks": {
+        "benefit_item_ALeTLn": {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "shopify://shop_images/Flower.svg",
+            "title": "Engaged Music Audience",
+            "title_color": "#0b4166",
+            "description": "Connect with a highly engaged community of music fans, creators, and cultural tastemakers.",
+            "description_color": "#374151"
+          }
+        },
+        "benefit_item_NgeKdc": {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "shopify://shop_images/wave.svg",
+            "title": "Brand Activations",
+            "title_color": "#0b4166",
+            "description": "Create immersive brand experiences, on-site activations, and memorable moments with festival attendees.",
+            "description_color": "#374151"
+          }
+        },
+        "benefit_item_JYDKd9": {
+          "type": "benefit_item",
+          "settings": {
+            "icon": "shopify://shop_images/palm.svg",
+            "title": "Multi-Channel Exposure",
+            "title_color": "#0b4166",
+            "description": "Amplify your brand through festival stages, digital promotion, social media, and live event visibility.",
+            "description_color": "#374151"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_item_ALeTLn",
+        "benefit_item_NgeKdc",
+        "benefit_item_JYDKd9"
+      ],
+      "name": "Partnership Benefits",
+      "settings": {
+        "heading": "",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60
+      }
+    },
+    "partnership_form_xUfkft": {
+      "type": "partnership-form",
+      "name": "Partnership Form",
+      "settings": {
+        "heading": "Start a Partnership",
+        "subtext": "Fill out the form below and our team will reach out to explore sponsorship opportunities.",
+        "success_heading": "Thank you for reaching out!",
+        "success_message": "Thank you! We'll be in touch soon.",
+        "bg_image": "shopify://shop_images/bg-note_ad2bf395-1797-4f79-892e-59a2cb7d8c16.png",
+        "label_company": "Company / Organization Name",
+        "placeholder_company": "Company name",
+        "label_contact": "Primary Contact Name & Title",
+        "placeholder_contact": "Your name",
+        "label_email": "Email",
+        "placeholder_email": "Email",
+        "label_phone": "Phone",
+        "placeholder_phone": "phone",
+        "label_website": "Company Website",
+        "placeholder_website": "URL",
+        "label_budget": "Budget",
+        "budget_option_1": "Select a budget range",
+        "budget_option_2": "$5,000 - $10,000",
+        "budget_option_3": "$10,000 - $25,000",
+        "budget_option_4": "$25,000 - $50,000",
+        "budget_option_5": "$50,000+",
+        "label_message": "Message / More Info (Optional)",
+        "placeholder_message": "Write your message here",
+        "terms_label": "Accepts terms & conditions",
+        "button_label": "Submit",
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60,
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80
+      }
+    }
+  },
+  "order": [
+    "main",
+    "hero_small_TVcaMC",
+    "partnership_benefits_E4XbQQ",
+    "partnership_form_xUfkft"
+  ]
+}

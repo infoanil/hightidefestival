@@ -1,0 +1,55 @@
+{% comment %}
+  Collection Banner Section
+  Displays a banner with collection image and title
+{% endcomment %}
+
+{%- comment -%}
+  Set the collection object
+{%- endcomment -%}
+{% assign collection_to_display = collection %}
+{% if collection_to_display == blank %}
+  {% assign collection_to_display = collections[section.settings.featured_collection] %}
+{% endif %}
+
+<div class="collection_banner h-[218px] md:h-[265px] bg-gray-200 flex items-end pb-5 md:pb-8 relative">
+  {% render 'image-helper'
+        , image: collection_to_display.image
+        , max_width: 100
+        , sizes: '(min-width: 1024px) 50vw, 100vw'
+        , class: ' absolute inset-0 w-full h-full object-cover object-bottom z-0 group-hover:scale-105 transition-transform duration-300 '
+  %}
+  <div class="container z-1 text-white ">
+    {% render 'breadcrumb' %}
+
+    {% comment %} --- Title  --- {% endcomment %}
+    {% if collection_to_display %}
+      <h1 class="mt-3  text-[70px] leading-[61px] md:text-[120px] md:leading-[105px] md:tracking-[-5px] lg:text-[80px] lg:leading-[74px] tracking-[-1px] font-amaya uppercase ">BUY {{ collection_to_display.title }}</h1>
+    {% else %}
+      <h1 class="pt-4 mb-8 text-3xl font-bold">{{ section.settings.heading_text }}</h1>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection Banner",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "featured_collection",
+        "label": "Collection to display"
+      },
+      {
+        "type": "text",
+        "id": "heading_text",
+        "label": "Fallback Heading Text",
+        "default": "Collection"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Banner"
+      }
+    ]
+  }
+{% endschema %}

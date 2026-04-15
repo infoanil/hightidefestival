@@ -1,0 +1,516 @@
+{% doc %}
+  @prompt
+    I want to list a bunch of different forms with buttons to each form and a title to each form next to it. would also love a photo thumbnail for each form. there are 6 in total
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-form-list-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: 40px 20px;
+  }
+
+  .ai-form-list__container-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    width: 100%;
+  }
+
+  .ai-form-list__item-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background-color: {{ block.settings.card_background_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    border: 1px solid {{ block.settings.card_border_color }};
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .ai-form-list__item-{{ ai_gen_id }}:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-form-list__thumbnail-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: {{ block.settings.thumbnail_border_radius }}px;
+    overflow: hidden;
+  }
+
+  .ai-form-list__thumbnail-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-form-list__thumbnail-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-form-list__thumbnail-placeholder-{{ ai_gen_id }} svg {
+    width: 40px;
+    height: 40px;
+    opacity: 0.3;
+  }
+
+  .ai-form-list__content-{{ ai_gen_id }} {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ai-form-list__title-{{ ai_gen_id }} {
+    margin: 0;
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.title_color }};
+    line-height: 1.3;
+  }
+
+  .ai-form-list__description-{{ ai_gen_id }} {
+    margin: 0;
+    font-size: {{ block.settings.description_font_size }}px;
+    color: {{ block.settings.description_color }};
+    line-height: 1.5;
+  }
+
+  .ai-form-list__button-{{ ai_gen_id }} {
+    flex-shrink: 0;
+    padding: 12px 24px;
+    background-color: {{ block.settings.button_background_color }};
+    color: {{ block.settings.button_text_color }};
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_font_size }}px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .ai-form-list__button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background_color }};
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-form-list__container-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-form-list__item-{{ ai_gen_id }} {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .ai-form-list__content-{{ ai_gen_id }} {
+      align-items: center;
+    }
+
+    .ai-form-list__button-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-form-list-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-form-list__container-{{ ai_gen_id }}">
+    {% for i in (1..6) %}
+      {% liquid
+        assign title_key = 'form_' | append: i | append: '_title'
+        assign description_key = 'form_' | append: i | append: '_description'
+        assign image_key = 'form_' | append: i | append: '_image'
+        assign button_text_key = 'form_' | append: i | append: '_button_text'
+        assign button_link_key = 'form_' | append: i | append: '_button_link'
+
+        assign form_title = block.settings[title_key]
+        assign form_description = block.settings[description_key]
+        assign form_image = block.settings[image_key]
+        assign button_text = block.settings[button_text_key]
+        assign button_link = block.settings[button_link_key]
+      %}
+
+      <div class="ai-form-list__item-{{ ai_gen_id }}">
+        <div class="ai-form-list__thumbnail-{{ ai_gen_id }}">
+          {% if form_image %}
+            <img
+              src="{{ form_image | image_url: width: 160 }}"
+              alt="{{ form_title | escape }}"
+              loading="lazy"
+              width="80"
+              height="80"
+            >
+          {% else %}
+            <div class="ai-form-list__thumbnail-placeholder-{{ ai_gen_id }}">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="ai-form-list__content-{{ ai_gen_id }}">
+          {% if form_title != blank %}
+            <h3 class="ai-form-list__title-{{ ai_gen_id }}">{{ form_title }}</h3>
+          {% endif %}
+          {% if form_description != blank %}
+            <p class="ai-form-list__description-{{ ai_gen_id }}">{{ form_description }}</p>
+          {% endif %}
+        </div>
+
+        {% if button_link != blank %}
+          <a
+            href="{{ button_link }}"
+            class="ai-form-list__button-{{ ai_gen_id }}"
+          >
+            {{ button_text | default: 'View Form' }}
+          </a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Form list",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Form 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "form_1_image",
+      "label": "Thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "form_1_title",
+      "label": "Title",
+      "default": "Volunteer Application"
+    },
+    {
+      "type": "textarea",
+      "id": "form_1_description",
+      "label": "Description",
+      "default": "Join our team and help make the festival amazing"
+    },
+    {
+      "type": "text",
+      "id": "form_1_button_text",
+      "label": "Button text",
+      "default": "Apply Now"
+    },
+    {
+      "type": "url",
+      "id": "form_1_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Form 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "form_2_image",
+      "label": "Thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "form_2_title",
+      "label": "Title",
+      "default": "Vendor Registration"
+    },
+    {
+      "type": "textarea",
+      "id": "form_2_description",
+      "label": "Description",
+      "default": "Become a vendor at High Tide Festival"
+    },
+    {
+      "type": "text",
+      "id": "form_2_button_text",
+      "label": "Button text",
+      "default": "Register"
+    },
+    {
+      "type": "url",
+      "id": "form_2_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Form 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "form_3_image",
+      "label": "Thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "form_3_title",
+      "label": "Title",
+      "default": "Artist Submission"
+    },
+    {
+      "type": "textarea",
+      "id": "form_3_description",
+      "label": "Description",
+      "default": "Submit your music to perform at the festival"
+    },
+    {
+      "type": "text",
+      "id": "form_3_button_text",
+      "label": "Button text",
+      "default": "Submit"
+    },
+    {
+      "type": "url",
+      "id": "form_3_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Form 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "form_4_image",
+      "label": "Thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "form_4_title",
+      "label": "Title",
+      "default": "Sponsorship Inquiry"
+    },
+    {
+      "type": "textarea",
+      "id": "form_4_description",
+      "label": "Description",
+      "default": "Partner with us and reach thousands of attendees"
+    },
+    {
+      "type": "text",
+      "id": "form_4_button_text",
+      "label": "Button text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "form_4_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Form 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "form_5_image",
+      "label": "Thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "form_5_title",
+      "label": "Title",
+      "default": "Media Credentials"
+    },
+    {
+      "type": "textarea",
+      "id": "form_5_description",
+      "label": "Description",
+      "default": "Apply for press and media access"
+    },
+    {
+      "type": "text",
+      "id": "form_5_button_text",
+      "label": "Button text",
+      "default": "Apply"
+    },
+    {
+      "type": "url",
+      "id": "form_5_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Form 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "form_6_image",
+      "label": "Thumbnail"
+    },
+    {
+      "type": "text",
+      "id": "form_6_title",
+      "label": "Title",
+      "default": "Contact Us"
+    },
+    {
+      "type": "textarea",
+      "id": "form_6_description",
+      "label": "Description",
+      "default": "Get in touch with our team"
+    },
+    {
+      "type": "text",
+      "id": "form_6_button_text",
+      "label": "Button text",
+      "default": "Contact"
+    },
+    {
+      "type": "url",
+      "id": "form_6_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_border_radius",
+      "label": "Thumbnail border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "description_font_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Form list"
+    }
+  ]
+}
+{% endschema %}

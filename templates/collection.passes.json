@@ -1,0 +1,470 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.home",
+  "sections": {
+    "collection_banner_dRpGgJ": {
+      "type": "collection-banner",
+      "name": "Collection Banner",
+      "settings": {
+        "featured_collection": "",
+        "heading_text": "Collection"
+      }
+    },
+    "collection_passes_XapezL": {
+      "type": "collection-passes",
+      "settings": {
+        "featured_collection": "",
+        "section_id": "collection-passes-two",
+        "section_title": "2-Day Pass",
+        "pass_type": "2_day",
+        "single_day_text": "2-Day:",
+        "two_day_text": "2-Day Starting at",
+        "starting_at_text": "",
+        "product_1": "high-tide-2026-2-day-ga-pass",
+        "button_url_1": "shopify://products/high-tide-2026-2-day-ga-pass",
+        "button_text_1": "buy passes",
+        "product_2": "high-tide-2026-2-day-vip-pass",
+        "button_url_2": "shopify://products/high-tide-2026-2-day-vip-pass",
+        "button_text_2": "buy passes",
+        "product_3": "high-tide-2026-2-day-stage-access",
+        "button_url_3": "shopify://products/high-tide-2026-2-day-stage-access",
+        "button_text_3": "buy passes",
+        "product_4": "high-tide-2026-2-day-super-vip-pass",
+        "button_url_4": "shopify://products/high-tide-2026-2-day-super-vip-pass",
+        "button_text_4": "buy passes"
+      }
+    },
+    "main": {
+      "type": "collection-passes",
+      "settings": {
+        "featured_collection": "",
+        "section_id": "collection-passes-friday",
+        "section_title": "Single Day Friday",
+        "pass_type": "single_day",
+        "single_day_text": "Single Day Friday:",
+        "two_day_text": "2-Day Starting at",
+        "starting_at_text": "",
+        "product_1": "high-tide-2026-single-day-friday-ga-pass",
+        "button_url_1": "shopify://products/high-tide-2026-single-day-friday-ga-pass",
+        "button_text_1": "buy passes",
+        "product_2": "high-tide-2026-single-day-friday-vip-pass",
+        "button_url_2": "shopify://products/high-tide-2026-single-day-friday-vip-pass",
+        "button_text_2": "buy passes",
+        "product_3": "high-tide-2026-single-day-friday-stage-access",
+        "button_url_3": "shopify://products/high-tide-2026-single-day-friday-stage-access",
+        "button_text_3": "buy passes",
+        "product_4": "high-tide-2026-single-day-friday-super-vip-pass",
+        "button_url_4": "shopify://products/high-tide-2026-single-day-friday-super-vip-pass",
+        "button_text_4": "buy passes"
+      }
+    },
+    "collection_passes_QeNreN": {
+      "type": "collection-passes",
+      "settings": {
+        "featured_collection": "",
+        "section_id": "collection-passes-thursday",
+        "section_title": "Single Day Saturday",
+        "pass_type": "single_day",
+        "single_day_text": "Single Day Saturday:",
+        "two_day_text": "2-Day Starting at",
+        "starting_at_text": "",
+        "product_1": "high-tide-2026-single-day-saturday-ga-pass",
+        "button_url_1": "shopify://products/high-tide-2026-single-day-saturday-ga-pass",
+        "button_text_1": "buy passes",
+        "product_2": "high-tide-2026-single-day-saturday-vip-pass",
+        "button_url_2": "shopify://products/high-tide-2026-single-day-saturday-vip-pass",
+        "button_text_2": "buy passes",
+        "product_3": "high-tide-2026-single-day-saturday-stage-access",
+        "button_url_3": "shopify://products/high-tide-2026-single-day-saturday-stage-access",
+        "button_text_3": "buy passes",
+        "product_4": "high-tide-2026-single-day-saturday-super-vip-pass",
+        "button_url_4": "shopify://products/high-tide-2026-single-day-saturday-super-vip-pass",
+        "button_text_4": "buy passes"
+      }
+    },
+    "image_text_8DbXdP": {
+      "type": "image-text",
+      "custom_css": [
+        "/* Target the GET DISCOUNT button in this specific Image with Text section */#template--26137485902120__image_text_8DbXdP button,#template--26137485902120__image_text_8DbXdP a.button {background-color: #e6772a !important;}"
+      ],
+      "name": "Image with Text",
+      "settings": {
+        "padding_y": 16,
+        "layout": "image_left",
+        "image_ratio": "aspect-h-3 aspect-w-4",
+        "image": "shopify://shop_images/15_off_discount.png",
+        "heading": "15% govx discount",
+        "text": "<p>High Tide Music Festival thanks you for your service and is proud to offer special ticket discounts to GOVX service members including Military, First Responder, Medical Service, Educator, and other Govt Employees.  Verify or login below to access 15% all passes and merch!</p>",
+        "button_label": "GET DISCOUNT",
+        "button_link": "https://offers.govx.com/public-offers/e3392b83-ff00-4031-d0af-08de70241681"
+      }
+    },
+    "faq_9p7DCj": {
+      "type": "faq",
+      "blocks": {
+        "faq_item_JKUw9V": {
+          "type": "faq_item",
+          "settings": {
+            "question": "WHERE IS HIGH TIDE?",
+            "answer": "High Tide Festival is taking place at Riverfront Park in N. Charleston 1061 Everglades Ave, North Charleston, SC 29405"
+          }
+        },
+        "faq_item_qVPJdp": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the age limit?",
+            "answer": "21+ only. We scan IDs."
+          }
+        },
+        "faq_item_PtXqEc": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the refund policy?",
+            "answer": "Tickets are non-refundable. No exceptions."
+          }
+        },
+        "faq_item_VyQzfJ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "When should I arrive?",
+            "answer": "Gates open at 12PM. Come early!"
+          }
+        },
+        "faq_item_nKwqVy": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there re-entry?",
+            "answer": "No re-entry due to venue policy."
+          }
+        },
+        "faq_item_JVqkUf": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What forms of payment are accepted?",
+            "answer": "This is a cashless event. Bring debit/credit cards"
+          }
+        },
+        "faq_item_FPr9iJ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there a dress code?",
+            "answer": "No dress code - express yourself! Just remember this is a city-owned public park."
+          }
+        },
+        "faq_item_wFYXCt": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the bag policy?",
+            "answer": "No bags larger than a handheld purse. We are not responsible for lost items. Please don’t leave bags lying around."
+          }
+        },
+        "faq_item_wiLFi6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I bring a CamelBak or water bottle?",
+            "answer": "Yes - but it must be empty. Water filling stations are available throughout the grounds."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_JKUw9V",
+        "faq_item_qVPJdp",
+        "faq_item_PtXqEc",
+        "faq_item_VyQzfJ",
+        "faq_item_nKwqVy",
+        "faq_item_JVqkUf",
+        "faq_item_FPr9iJ",
+        "faq_item_wFYXCt",
+        "faq_item_wiLFi6"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "image": "shopify://shop_images/Faq.png",
+        "legend": "got questions?",
+        "heading": "<p>we’ve got answers<br/></p>",
+        "button_text": "Ask us a question",
+        "button_url": "mailto:info@hightidefestival.com"
+      }
+    },
+    "item_restrictions_HrMQxj": {
+      "type": "item-restrictions",
+      "blocks": {
+        "item_6U8xnq": {
+          "type": "item",
+          "settings": {
+            "text": "A good attitude!",
+            "extra": "Let’s have some fun!"
+          }
+        },
+        "item_mEFphR": {
+          "type": "item",
+          "settings": {
+            "text": "Sunglasses",
+            "extra": ""
+          }
+        },
+        "item_JRrGcD": {
+          "type": "item",
+          "settings": {
+            "text": "Sunscreen",
+            "extra": ""
+          }
+        },
+        "item_dGXTNm": {
+          "type": "item",
+          "settings": {
+            "text": "Reusable water bottles",
+            "extra": ""
+          }
+        },
+        "item_VGNBbk": {
+          "type": "item",
+          "settings": {
+            "text": "Cell phone",
+            "extra": ""
+          }
+        },
+        "item_w4adJL": {
+          "type": "item",
+          "settings": {
+            "text": "Debit / Credit cards",
+            "extra": ""
+          }
+        },
+        "item_fYNFhH": {
+          "type": "item",
+          "settings": {
+            "text": "Valid ID",
+            "extra": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_6U8xnq",
+        "item_mEFphR",
+        "item_JRrGcD",
+        "item_dGXTNm",
+        "item_VGNBbk",
+        "item_w4adJL",
+        "item_fYNFhH"
+      ],
+      "name": "Item Restrictions",
+      "settings": {
+        "legend": "Highly Encouraged",
+        "heading": "ALLOWED ITEMS",
+        "description": "This is a long day in the sun in a place where weather changes fast. Be prepared!",
+        "disclaimer": "",
+        "restriction": "allowed"
+      }
+    },
+    "item_restrictions_tXEQAX": {
+      "type": "item-restrictions",
+      "blocks": {
+        "item_cG77Tn": {
+          "type": "item",
+          "settings": {
+            "text": "Anything unsealed",
+            "extra": ""
+          }
+        },
+        "item_4UJKAL": {
+          "type": "item",
+          "settings": {
+            "text": "Drugs / drug paraphernalia",
+            "extra": ""
+          }
+        },
+        "item_wkwiCf": {
+          "type": "item",
+          "settings": {
+            "text": "Cigarettes / E-cigs / Vapes",
+            "extra": ""
+          }
+        },
+        "item_6Eir3M": {
+          "type": "item",
+          "settings": {
+            "text": "Outside food & drink",
+            "extra": ""
+          }
+        },
+        "item_rDD6eD": {
+          "type": "item",
+          "settings": {
+            "text": "Laser pointers",
+            "extra": ""
+          }
+        },
+        "item_hwfRMt": {
+          "type": "item",
+          "settings": {
+            "text": "Lighters",
+            "extra": ""
+          }
+        },
+        "item_GXAqma": {
+          "type": "item",
+          "settings": {
+            "text": "Glass bottles or containers",
+            "extra": ""
+          }
+        },
+        "item_QW96fg": {
+          "type": "item",
+          "settings": {
+            "text": "Weapons of any kind",
+            "extra": ""
+          }
+        },
+        "item_BVjBqK": {
+          "type": "item",
+          "settings": {
+            "text": "Selfie sticks",
+            "extra": ""
+          }
+        },
+        "item_DY7Rtx": {
+          "type": "item",
+          "settings": {
+            "text": "Audio recording devices",
+            "extra": ""
+          }
+        },
+        "item_nQChjK": {
+          "type": "item",
+          "settings": {
+            "text": "Professional photo/video cameras",
+            "extra": ""
+          }
+        },
+        "item_chKN7Q": {
+          "type": "item",
+          "settings": {
+            "text": "Drones",
+            "extra": ""
+          }
+        },
+        "item_Vm6Amt": {
+          "type": "item",
+          "settings": {
+            "text": "Umbrellas",
+            "extra": "(Parasols are OK)"
+          }
+        },
+        "item_VrJ4kD": {
+          "type": "item",
+          "settings": {
+            "text": "Open makeup",
+            "extra": ""
+          }
+        },
+        "item_Q7ChLj": {
+          "type": "item",
+          "settings": {
+            "text": "Chalk, markers, sharpies",
+            "extra": ""
+          }
+        },
+        "item_cjx6DY": {
+          "type": "item",
+          "settings": {
+            "text": "Chains or chain wallets",
+            "extra": ""
+          }
+        },
+        "item_3BrBxi": {
+          "type": "item",
+          "settings": {
+            "text": "Stickers, flyers, or solicitations",
+            "extra": ""
+          }
+        },
+        "item_FCcmz9": {
+          "type": "item",
+          "settings": {
+            "text": "Pets",
+            "extra": "(Guide/Service dogs OK)"
+          }
+        },
+        "item_HTbFEH": {
+          "type": "item",
+          "settings": {
+            "text": "No glow sticks",
+            "extra": ""
+          }
+        },
+        "item_cUAx8k": {
+          "type": "item",
+          "settings": {
+            "text": "No confetti poppers",
+            "extra": ""
+          }
+        },
+        "item_bxxXJn": {
+          "type": "item",
+          "settings": {
+            "text": "No glitter bombs, mini inflatables, or disposable decor",
+            "extra": ""
+          }
+        },
+        "item_BADJ6F": {
+          "type": "item",
+          "settings": {
+            "text": "No confetti poppers",
+            "extra": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_cG77Tn",
+        "item_4UJKAL",
+        "item_wkwiCf",
+        "item_6Eir3M",
+        "item_rDD6eD",
+        "item_hwfRMt",
+        "item_GXAqma",
+        "item_QW96fg",
+        "item_BVjBqK",
+        "item_DY7Rtx",
+        "item_nQChjK",
+        "item_chKN7Q",
+        "item_Vm6Amt",
+        "item_VrJ4kD",
+        "item_Q7ChLj",
+        "item_cjx6DY",
+        "item_3BrBxi",
+        "item_FCcmz9",
+        "item_HTbFEH",
+        "item_cUAx8k",
+        "item_bxxXJn",
+        "item_BADJ6F"
+      ],
+      "name": "Item Restrictions",
+      "settings": {
+        "legend": "do not bring",
+        "heading": " PROHIBITED ITEMS",
+        "description": "Use your head. This is a short list. Security has final say.",
+        "disclaimer": "If I ever find out who brought a confetti popper last year, you will be billed extensively for my chiropractor. I picked those things up for hours. I have security cameras this year. I will find you. I am in pain. I hate you.",
+        "restriction": "prohibited"
+      }
+    }
+  },
+  "order": [
+    "collection_banner_dRpGgJ",
+    "collection_passes_XapezL",
+    "main",
+    "collection_passes_QeNreN",
+    "image_text_8DbXdP",
+    "faq_9p7DCj",
+    "item_restrictions_HrMQxj",
+    "item_restrictions_tXEQAX"
+  ]
+}

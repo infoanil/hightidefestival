@@ -1,0 +1,37 @@
+<div class="flex space-x-3 text-lg text-[var(--color-text-subtle)] justify-center md:justify-start">
+  {% if facebook_url != blank %}
+    <a
+      href="{{ facebook_url }}"
+      aria-label="Facebook"
+      class="hover:text-[var(--color-secondary)] transition">
+      {% render 'facebook-svg' %}
+    </a>
+  {% endif %}
+
+  {% if instagram_url != blank %}
+    <a
+      href="{{ instagram_url }}"
+      aria-label="Instagram"
+      class="hover:text-[var(--color-secondary)] transition">
+      {% render 'ig-svg' %}
+    </a>
+  {% endif %}
+
+  {% if youtube_url != blank %}
+    <a
+      href="{{ youtube_url }}"
+      aria-label="YouTube"
+      class="hover:text-[var(--color-secondary)] transition">
+      {% render 'youtube-svg' %}
+    </a>
+  {% endif %}
+
+  {% if x_url != blank %}
+    <a
+      href="{{ x_url }}"
+      aria-label="X"
+      class="hover:text-[var(--color-secondary)] transition">
+      {% render 'x-svg' %}
+    </a>
+  {% endif %}
+</div>

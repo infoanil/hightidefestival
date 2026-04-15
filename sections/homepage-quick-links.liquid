@@ -1,0 +1,466 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --quick-links-border: #0b4166;
+    --quick-links-highlight: #f5f5f5;
+    --quick-links-gap: 10px;
+    --quick-links-height: 32px;
+    --quick-links-mobile-side-padding: {{ section.settings.link_side_padding_mobile }}px;
+    --quick-links-font-size-mobile: {{ section.settings.link_font_size_mobile }}px;
+    --quick-links-font-size-desktop: {{ section.settings.link_font_size_desktop }}px;
+    --quick-links-font-weight: {{ section.settings.link_font_weight }};
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__scroller {
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-inline: 15px;
+    padding-top: 2px;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__inner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--quick-links-gap);
+    width: max-content;
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__item {
+    flex: 0 0 auto;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__item[data-clone='true'] {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__scroller[data-mobile-infinite='true'] .homepage-quick-links__item[data-clone='true'] {
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__link {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    width: auto;
+    height: var(--quick-links-height);
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--quick-links-mobile-side-padding);
+    border: 2px solid var(--quick-links-border);
+    border-radius: 5px;
+    background: transparent;
+    box-shadow: 3px 3px 0 0 var(--quick-links-highlight), 3px 3px 0 2px #003354;
+    color: var(--quick-links-border);
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__link span {
+    display: inline-block;
+    font-size: var(--quick-links-font-size-mobile) !important;
+    font-weight: var(--quick-links-font-weight) !important;
+    line-height: inherit !important;
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__link:hover,
+  #shopify-section-{{ section.id }} .homepage-quick-links__link:focus-visible {
+    transform: translate(-2px, -2px);
+    background: #ffffff;
+    box-shadow: 5px 5px 0 0 var(--quick-links-highlight), 5px 5px 0 2px #003354;
+  }
+
+  #shopify-section-{{ section.id }} .homepage-quick-links__link:focus-visible {
+    outline: 2px solid #003354;
+    outline-offset: 4px;
+  }
+
+  {% if section.settings.hide_on_mobile %}
+    @media (max-width: 767px) {
+      #shopify-section-{{ section.id }} {
+        display: none;
+      }
+    }
+  {% endif %}
+
+  @media (min-width: 768px) {
+    {% if section.settings.hide_on_desktop %}
+      #shopify-section-{{ section.id }} {
+        display: none;
+      }
+    {% endif %}
+
+    #shopify-section-{{ section.id }} .homepage-quick-links__inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: auto;
+    }
+
+    #shopify-section-{{ section.id }} .homepage-quick-links__link {
+      width: auto;
+      min-width: 81px;
+      padding-inline: 1.375rem;
+    }
+
+    #shopify-section-{{ section.id }} .homepage-quick-links__item {
+      min-width: 0;
+    }
+
+    #shopify-section-{{ section.id }} .homepage-quick-links__item[data-clone='true'] {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .homepage-quick-links__scroller {
+      overflow: visible;
+      padding-inline: 0;
+      scroll-snap-type: none;
+    }
+
+    #shopify-section-{{ section.id }} .homepage-quick-links__link span {
+      font-size: var(--quick-links-font-size-desktop) !important;
+    }
+  }
+{%- endstyle -%}
+
+{% assign rendered_links = 0 %}
+{% for block in section.blocks limit: 6 %}
+  {% if block.settings.label != blank %}
+    {% assign rendered_links = rendered_links | plus: 1 %}
+  {% endif %}
+{% endfor %}
+
+<section class="homepage-quick-links">
+  <div class="container">
+    <div
+      class="homepage-quick-links__scroller"
+      data-quick-links-scroller
+      data-mobile-infinite="{% if section.settings.enable_mobile_infinite_scroll and rendered_links > 1 %}true{% else %}false{% endif %}"
+    >
+      <div
+        class="homepage-quick-links__inner"
+        data-quick-links-track
+        role="list"
+        aria-label="{{ section.settings.accessibility_label | escape }}"
+      >
+        {% for block in section.blocks limit: 6 %}
+          {% if block.settings.label != blank %}
+            <div class="homepage-quick-links__item" role="listitem" {{ block.shopify_attributes }}>
+              {% if block.settings.link != blank %}
+                <a class="homepage-quick-links__link" href="{{ block.settings.link }}">
+                  <span>{{ block.settings.label }}</span>
+                </a>
+              {% else %}
+                <span class="homepage-quick-links__link">
+                  <span>{{ block.settings.label }}</span>
+                </span>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const section = document.getElementById('shopify-section-{{ section.id }}');
+    const scroller = section?.querySelector('[data-quick-links-scroller]');
+    const track = section?.querySelector('[data-quick-links-track]');
+
+    if (!section || !scroller || !track || scroller.dataset.mobileInfinite !== 'true' || track.dataset.loopReady === 'true') {
+      return;
+    }
+
+    const mobileQuery = window.matchMedia('(max-width: 767px)');
+    const originalItems = Array.from(track.children);
+
+    if (originalItems.length < 2) {
+      return;
+    }
+
+    let originalWidth = 0;
+    let appendSetStart = 0;
+    let isAdjusting = false;
+
+    const cloneItem = (item, position) => {
+      const clone = item.cloneNode(true);
+      clone.dataset.clone = 'true';
+      clone.dataset.clonePosition = position;
+      clone.removeAttribute('id');
+      clone.removeAttribute('data-shopify-editor-block');
+      clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
+      clone.querySelectorAll('a, button, input, select, textarea').forEach((element) => {
+        element.tabIndex = -1;
+      });
+      clone.setAttribute('aria-hidden', 'true');
+      return clone;
+    };
+
+    const updateMeasurements = () => {
+      const firstOriginal = originalItems[0];
+      const prependedStart = track.querySelector("[data-clone-position='prepend']");
+      const appendedStart = track.querySelector("[data-clone-position='append']");
+
+      if (!firstOriginal || !prependedStart || !appendedStart) {
+        originalWidth = 0;
+        appendSetStart = 0;
+        return;
+      }
+
+      originalWidth = firstOriginal.offsetLeft - prependedStart.offsetLeft;
+      appendSetStart = appendedStart.offsetLeft;
+    };
+
+    const snapToMiddleSet = () => {
+      if (!mobileQuery.matches || originalWidth <= 0) {
+        return;
+      }
+
+      scroller.scrollLeft = originalWidth;
+    };
+
+    const handleScroll = () => {
+      if (!mobileQuery.matches || originalWidth <= 0 || isAdjusting) {
+        return;
+      }
+
+      const leftEdgeThreshold = 2;
+      const rightEdgeThreshold = appendSetStart - 2;
+
+      if (scroller.scrollLeft <= leftEdgeThreshold) {
+        isAdjusting = true;
+        scroller.scrollLeft += originalWidth;
+        requestAnimationFrame(() => {
+          isAdjusting = false;
+        });
+      } else if (scroller.scrollLeft >= rightEdgeThreshold) {
+        isAdjusting = true;
+        scroller.scrollLeft -= originalWidth;
+        requestAnimationFrame(() => {
+          isAdjusting = false;
+        });
+      }
+    };
+
+    const prependFragment = document.createDocumentFragment();
+    const appendFragment = document.createDocumentFragment();
+
+    originalItems.forEach((item) => {
+      prependFragment.appendChild(cloneItem(item, 'prepend'));
+      appendFragment.appendChild(cloneItem(item, 'append'));
+    });
+
+    track.prepend(prependFragment);
+    track.append(appendFragment);
+    track.dataset.loopReady = 'true';
+
+    updateMeasurements();
+    requestAnimationFrame(snapToMiddleSet);
+
+    scroller.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      updateMeasurements();
+      if (mobileQuery.matches) {
+        snapToMiddleSet();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Homepage Quick Links",
+  "tag": "section",
+  "class": "section-homepage-quick-links",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility label",
+      "default": "Quick links"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f6f5f0"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_infinite_scroll",
+      "label": "Enable infinite swipe on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "link_side_padding_mobile",
+      "label": "Side padding (mobile)",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_mobile",
+      "label": "Font size (mobile)",
+      "min": 8,
+      "max": 24,
+      "step": 0.2,
+      "unit": "px",
+      "default": 10.4
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_desktop",
+      "label": "Font size (desktop)",
+      "min": 8,
+      "max": 24,
+      "step": 0.2,
+      "unit": "px",
+      "default": 10.4
+    },
+    {
+      "type": "select",
+      "id": "link_font_weight",
+      "label": "Font weight",
+      "default": "900",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        },
+        {
+          "value": "800",
+          "label": "Extrabold"
+        },
+        {
+          "value": "900",
+          "label": "Black"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Homepage Quick Links",
+      "blocks": [
+        {
+          "type": "link",
+          "settings": {
+            "label": "LINE UP"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "label": "PASSES"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "label": "FAQS"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "label": "MERCH"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

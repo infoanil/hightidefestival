@@ -1,0 +1,70 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "two_image_poster_H3xC6Y": {
+      "type": "two-image-poster",
+      "name": "Two Image Poster",
+      "settings": {
+        "heading": "Passes On Sale Now!",
+        "text": "<p>JUNE 5 & 6, 2026<br/>CHARLESTON SOUTH CAROLINA</p>",
+        "button_label": "buy passes",
+        "button_link": "shopify://collections/ticket",
+        "image": "shopify://shop_images/daily-lineup-one.png",
+        "image_2": "shopify://shop_images/daily-lineup-two.png",
+        "background_color": "#0b4166",
+        "heading_color": "#ffffff",
+        "text_color": "#ffffff",
+        "title_max_width_desktop": 660,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 120,
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0
+      }
+    },
+    "banner_MUDcdt": {
+      "type": "banner",
+      "name": "Banner",
+      "settings": {
+        "layout_mobile": "image_first",
+        "layout_desktop": "text_first",
+        "heading": "start your summer off right",
+        "text": "",
+        "button_label": "BUY PASSES",
+        "button_link": "shopify://collections/ticket",
+        "image": "shopify://shop_images/high-tide-banner.png",
+        "heading_color": "#0b4166",
+        "text_color": "#0b4166",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "two_image_poster_H3xC6Y",
+    "banner_MUDcdt"
+  ]
+}

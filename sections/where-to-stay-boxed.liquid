@@ -1,0 +1,86 @@
+
+
+<div class="where-to-stay pt-4 pb-17 md:pt-5 md:pb-18.5 lg:py-20">
+    <div class="container">
+        <div class="grid grid-cols lg:grid-cols-2 gap-7.5 md:12.5 lg:gap-20 bg-primary-lightblue rounded-[7px] border-2 border-secondary-navy p-3 md:p-4">
+            <div class="content order-2 lg:order-1 p-0 lg:px-6 lg:py-6 ">
+                <h2 class="font-amaya text-[50px] tracking-[-1px] leading-[46px] md:text-[100px] md:leading-[88px] text-secondary-navy mb-4 md:mb-6">{{ section.settings.heading }}</h2>
+                <p class="font-semibold text-[17px] leading-[24px] tracking-[-1px] mb-4 md:mb-6 lg:mb-7.5 text-[#555555] ">{{ section.settings.description }}</p>
+                <p class="font-semibold text-[17px] tracking-[-1px]"> 
+                    <span class="text-xl leading-[24px] text-secondary-navy">{{ section.settings.price }}</span>
+                    <span class="text-secondary-navy/70">{{ section.settings.price_info }}</span>
+                </p>
+                <a href="{{ section.settings.button_url }}" class="font-extrabold text-lg tracking-[-1px] uppercase px-6 py-4 rounded-[10px] bg-trietary-orange hover:bg-secondary-navy text-white inline-block mt-3.5 transition duration-200">
+                    {{ section.settings.button_title }}
+                </a>
+
+            </div>
+            <div class="media rounded-[7px] border-2 border-secondary-navy overflow-hidden order-1 lg:order-2">
+                    {% render 'image-helper'
+                        , image: section.settings.image
+                        , max_width: 500
+                        , sizes: '(min-width: 1024px) 50vw, 100vw'
+                        , class: 'w-full h-full object-cover object-bottom aspect-[353/366] md:aspect-[734/512] lg:aspect-[559/458]'
+                    %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% schema %}
+  {
+  "name": "Where to stay? Boxed",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titl",
+      "default": "Need somewhere to stay? "
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We’ve got you covered with a special discounted rate at The Moxy Hotel in Downtown Charleston, just a 10 minute drive to the festival site.  Also they have a sick rooftop… who doesn’t love that for a lil pre-game or whatevah. This is our official hotel partner and the best home base for the full High Tide experience."
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Price",
+      "default": "$225 / night "
+    },
+    {
+      "type": "text",
+      "id": "price_info",
+      "label": "Price Info",
+      "default": "  (while supplies last - limited inventory)"
+    },
+    {
+      "type": "text",
+      "id": "button_title",
+      "label": "Button Title",
+      "default": "book your stay"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button Url"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Where to stay? Boxed"
+    }
+  ]
+}  
+{% endschema %}

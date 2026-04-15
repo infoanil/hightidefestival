@@ -1,0 +1,90 @@
+<div class="newsletter z-0 min-h-[800px] relative flex items-end {{ section.id }} py-20 overflow-hidden">
+    <div class="media absolute inset-0 z-[-1] bg-gray-400">    
+        {% render 'image-helper'
+            , image: section.settings.image
+            , max_width: 2000
+            , sizes: '(min-width: 1024px) 50vw, 100vw'
+            , class: 'w-full h-full object-cover object-bottom'
+        %}
+    </div>
+    <div class="mx-auto container">
+      <div class="max-w-[513px]">
+        <div class="headings text-white ">
+            <h2 class="max-sm:max-w-[230px] font-amaya text-[60px] leading-[51px] md:text-[120px] md:leading-[105px] text-balance  uppercase tracking-[-4px] mb-[30px]">{{  section.settings.heading | default: "Subscribe to our newsletter" }}</h2>
+            <p class=" text-xl  md:tracking-[-3px] md:text-[30px] font-bold mb-[25px] tracking-[-1px]">{{  section.settings.copy | default:'Lorem ipsum dolor sit amet' }}</p>
+        </div>
+        {% if section.settings.show_default_form %}
+          <div class="form">
+              <form
+                method="post"
+                action="/contact#newsletter"
+                class=" flex flex-col md:flex-row gap-[9px] lg:flex-row items-center lg:bg-white p-1 rounded-[10px]">
+                <input
+                  type="hidden"
+                  name="form_type"
+                  value="customer" />
+                <input
+                  type="hidden"
+                  name="contact[tags]"
+                  value="newsletter" />
+
+                <input
+                  type="email"
+                  name="contact[email]"
+                    placeholder="Enter your email address"
+                    required
+                  class="p-2  rounded-md text-sm text-center h-[53px] bg-white
+                        w-full placeholder-[#555555] font-semibold text-[17px]">
+
+                <button type="submit" class="h-[53px] bg-primary-lightblue text-secondary-navy p-2 rounded-md font-extrabold uppercase
+                        hover:bg-secondary-navy hover:text-white transition w-full">
+                  join the waitlist
+                </button>
+              </form>
+          </div>
+        {% else %}
+          {% content_for 'blocks' %}  
+        {% endif %} 
+      </div>
+    </div>
+</div>
+
+
+{% schema %}
+  {
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Copy"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_default_form",
+      "label": "Show default form?",
+      "default": false
+    }
+  ],
+      "blocks": [
+     {
+        "type": "@app"
+      },
+    ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}  
+{% endschema %}
