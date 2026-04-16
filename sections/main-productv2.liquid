@@ -283,7 +283,7 @@
       line-height: 20px;
       letter-spacing: -1px;
       margin-bottom: 24px;
-      color: #0B4166CC;
+      color: #0B4166;
   }
 
   /* Same-to-Same Benefit Card */
@@ -936,8 +936,10 @@
               {% case block.type %}
                 {% when 'accordion' %}
                   {% render 'accordion-item', title: block.settings.title, content: block.settings.content %}
-                  {% when 'reviews' %}
-                      {% render 'product-reviews' %}
+                {% when 'reviews' %}
+                    {% render 'product-reviews' %}
+                {% when 'video_vibes' %}
+                    {% render 'product-video-vibes', block: block %}
               {% endcase %}
             {% endfor %}
           </div>
@@ -1336,7 +1338,59 @@
    {
       "type": "reviews",
       "name": "Product Reviews"
-   }
+   },
+   {
+      "type": "video_vibes",
+      "name": "Video Vibes",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "High Tide Vibes"
+        },
+        {
+          "type": "video",
+          "id": "video_1",
+          "label": "Video 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_1",
+          "label": "Cover image 1 (optional)"
+        },
+        {
+          "type": "video",
+          "id": "video_2",
+          "label": "Video 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_2",
+          "label": "Cover image 2 (optional)"
+        },
+        {
+          "type": "video",
+          "id": "video_3",
+          "label": "Video 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_3",
+          "label": "Cover image 3 (optional)"
+        },
+        {
+          "type": "video",
+          "id": "video_4",
+          "label": "Video 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_4",
+          "label": "Cover image 4 (optional)"
+        }
+      ]
+    }
   ],
   "presets": [
     {
