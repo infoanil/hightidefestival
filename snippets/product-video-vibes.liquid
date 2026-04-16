@@ -5,26 +5,28 @@
     </h2>
   {% endif %}
 
-  <div class="flex gap-1 md:gap-4">
-    {% for i in (1..4) %}
-      {% capture video_id %}video_{{ i }}{% endcapture %}
-      {% capture cover_id %}cover_{{ i }}{% endcapture %}
-      {% assign video = block.settings[video_id] %}
-      {% assign cover = block.settings[cover_id] | default: video.preview_image %}
+  <div class="flex gap-1 md:gap-4 overflow-x-auto no-scrollbar">
+    {% liquid
+      if block.settings.use_metaobject
+        assign meta_videos = product.metafields.custom.artist_ab_test_details.value.media_for_slider.value
+      endif
+    %}
 
-      {% if video != blank %}
+    {% if block.settings.use_metaobject and meta_videos != blank %}
+      {% for video in meta_videos %}
+        {% assign cover = video.preview_image %}
         <div
-          class="video-card relative aspect-[9/16] rounded-[10px] overflow-hidden bg-black group cursor-pointer"
+          class="video-card relative aspect-[9/16] rounded-[10px] overflow-hidden bg-black group cursor-pointer shrink-0"
           x-data="
             {
               playing: false,
               currentTime: '0:01',
               duration: '0:24',
-              progress: 15,
+              progress: 0,
               togglePlay() {
                 const v = this.$refs.video;
                 if (v.paused) {
-                  v.play();
+                  v.play().catch(() => {});
                   this.playing = true;
                 } else {
                   v.pause();
@@ -33,6 +35,7 @@
               },
               updateProgress() {
                 const v = this.$refs.video;
+                if (!v.duration) return;
                 this.progress = (v.currentTime / v.duration) * 100;
                 this.currentTime = this.formatTime(v.currentTime);
                 this.duration = this.formatTime(v.duration);
@@ -62,56 +65,141 @@
             {% endfor %}
           </video>
 
-          <!-- Overlay Controls (Matches target exactly) -->
+          <!-- Overlay Controls -->
           <div
             class="video-controls absolute inset-x-0 bottom-0 w-full p-4 pb-5md:p-5 md:pb-3.5 bg-gradient-to-t from-black/80 to-transparent pointer-events-none"
             style="bottom: 0;"
           >
             <div class="flex items-center gap-1.5 text-white" style="height: 48px;">
-              <!-- Small Play triangle -->
               <div class="shrink-0 flex items-center">
-                <svg
-                  x-show="!playing"
-                  width="12"
-                  height="13"
-                  viewBox="0 0 12 13"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg x-show="!playing" width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.6312 4.79555C11.8563 5.50281 11.8563 7.27097 10.6312 7.97825L2.75625 12.5249C1.53125 13.2321 0 12.348 0 10.9335V1.84024C0 0.425732 1.53125 -0.458337 2.75625 0.248922L10.6312 4.79555Z" fill="white" />
                 </svg>
-                <svg
-                  x-show="playing"
-                  width="12"
-                  height="13"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="#000000"
-                  width="11px"
-                  height="12px"
-                  viewBox="0 0 120 140"
-                >
+                <svg x-show="playing" width="12" height="13" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 120 140">
                   <path d="M25 0a25 25 0 0 1 25 25v90a25 25 0 1 1-50 0V25A25 25 0 0 1 25 0zm70 0a25 25 0 0 1 25 25v90a25 25 0 1 1-50 0V25A25 25 0 0 1 95 0z" fill="white"/>
                 </svg>
               </div>
-              <!-- Bold Timer -->
               <div class="video-timer text-[14px] font-black tracking-tighter leading-none flex items-center">
-                <span x-text="currentTime">0:01</span>
+                <span x-text="currentTime">0:00</span>
                 <span>&nbsp;/&nbsp;</span>
-                <span x-text="duration">0:24</span>
+                <span x-text="duration">0:00</span>
               </div>
             </div>
-
-            <!-- Bottom Progress Line -->
             <div class="w-full rounded-full overflow-hidden" style="height: 4px; background:#FFFFFF4D;">
-              <div
-                class="h-full bg-white rounded-full transition-all duration-100 ease-linear"
-                :style="`width: ${progress || 0}%`"
-              ></div>
+              <div class="h-full bg-white rounded-full transition-all duration-100 ease-linear" :style="`width: ${progress || 0}%`"></div>
             </div>
           </div>
         </div>
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
+    {% else %}
+      {% for i in (1..4) %}
+        {% capture video_id %}video_{{ i }}{% endcapture %}
+        {% capture cover_id %}cover_{{ i }}{% endcapture %}
+        {% assign video = block.settings[video_id] %}
+        {% assign cover = block.settings[cover_id] | default: video.preview_image %}
+
+        {% if video != blank %}
+          <div
+            class="video-card relative aspect-[9/16] rounded-[10px] overflow-hidden bg-black group cursor-pointer shrink-0"
+            x-data="
+              {
+                playing: false,
+                currentTime: '0:01',
+                duration: '0:24',
+                progress: 15,
+                togglePlay() {
+                  const v = this.$refs.video;
+                  if (v.paused) {
+                    v.play();
+                    this.playing = true;
+                  } else {
+                    v.pause();
+                    this.playing = false;
+                  }
+                },
+                updateProgress() {
+                  const v = this.$refs.video;
+                  this.progress = (v.currentTime / v.duration) * 100;
+                  this.currentTime = this.formatTime(v.currentTime);
+                  this.duration = this.formatTime(v.duration);
+                },
+                formatTime(time) {
+                  if (isNaN(time)) return '0:00';
+                  const mins = Math.floor(time / 60);
+                  const secs = Math.floor(time % 60);
+                  return `${mins}:${secs.toString().padStart(2, '0')}`;
+                }
+              }
+            "
+            @click="togglePlay()"
+          >
+            <video
+              x-ref="video"
+              @timeupdate="updateProgress()"
+              @loadedmetadata="updateProgress()"
+              class="w-full h-full object-cover"
+              loop
+              playsinline
+              preload="metadata"
+              poster="{{ cover | image_url: width: 800 }}"
+            >
+              {% for source in video.sources %}
+                <source src="{{ source.url }}" type="{{ source.mime_type }}">
+              {% endfor %}
+            </video>
+
+            <!-- Overlay Controls (Matches target exactly) -->
+            <div
+              class="video-controls absolute inset-x-0 bottom-0 w-full p-4 pb-5md:p-5 md:pb-3.5 bg-gradient-to-t from-black/80 to-transparent pointer-events-none"
+              style="bottom: 0;"
+            >
+              <div class="flex items-center gap-1.5 text-white" style="height: 48px;">
+                <!-- Small Play triangle -->
+                <div class="shrink-0 flex items-center">
+                  <svg
+                    x-show="!playing"
+                    width="12"
+                    height="13"
+                    viewBox="0 0 12 13"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M10.6312 4.79555C11.8563 5.50281 11.8563 7.27097 10.6312 7.97825L2.75625 12.5249C1.53125 13.2321 0 12.348 0 10.9335V1.84024C0 0.425732 1.53125 -0.458337 2.75625 0.248922L10.6312 4.79555Z" fill="white" />
+                  </svg>
+                  <svg
+                    x-show="playing"
+                    width="12"
+                    height="13"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="#000000"
+                    width="11px"
+                    height="12px"
+                    viewBox="0 0 120 140"
+                  >
+                    <path d="M25 0a25 25 0 0 1 25 25v90a25 25 0 1 1-50 0V25A25 25 0 0 1 25 0zm70 0a25 25 0 0 1 25 25v90a25 25 0 1 1-50 0V25A25 25 0 0 1 95 0z" fill="white"/>
+                  </svg>
+                </div>
+                <!-- Bold Timer -->
+                <div class="video-timer text-[14px] font-black tracking-tighter leading-none flex items-center">
+                  <span x-text="currentTime">0:01</span>
+                  <span>&nbsp;/&nbsp;</span>
+                  <span x-text="duration">0:24</span>
+                </div>
+              </div>
+
+              <!-- Bottom Progress Line -->
+              <div class="w-full rounded-full overflow-hidden" style="height: 4px; background:#FFFFFF4D;">
+                <div
+                  class="h-full bg-white rounded-full transition-all duration-100 ease-linear"
+                  :style="`width: ${progress || 0}%`"
+                ></div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
   </div>
 </div>
 

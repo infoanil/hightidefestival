@@ -44,32 +44,48 @@
     "main_productv2_wLKRCj": {
       "type": "main-productv2",
       "blocks": {
+        "video_vibes_w8XtfY": {
+          "type": "video_vibes",
+          "settings": {
+            "use_metaobject": true,
+            "title": "High Tide Vibes"
+          }
+        },
         "accordion_3JPPNJ": {
           "type": "accordion",
           "settings": {
             "title": "WHAT TO EXPECT",
-            "content": "<p>&lcub;what_to_expect&rcub;</p>"
+            "content": "<p>&lcub;what_to_expect&rcub;</p>",
+            "open_by_default": true
           }
         },
         "accordion_y9zm4f": {
           "type": "accordion",
           "settings": {
             "title": "Shipping Details",
-            "content": "<p>Passes will be delivered digitally closer to the festival dates.</p>"
+            "content": "<p>Passes will be delivered digitally closer to the festival dates.</p>",
+            "open_by_default": false
           }
         },
         "accordion_9gcgbK": {
           "type": "accordion",
           "settings": {
             "title": "FULL LINEUP",
-            "content": "{{ product.metafields.custom.artist_ab_test_details.value.full_lineup | metafield_tag }}"
+            "content": "{{ product.metafields.custom.artist_ab_test_details.value.full_lineup | metafield_tag }}",
+            "open_by_default": false
           }
+        },
+        "reviews_Re99fR": {
+          "type": "reviews",
+          "settings": {}
         }
       },
       "block_order": [
+        "video_vibes_w8XtfY",
         "accordion_3JPPNJ",
         "accordion_y9zm4f",
-        "accordion_9gcgbK"
+        "accordion_9gcgbK",
+        "reviews_Re99fR"
       ],
       "name": "Main Product V2",
       "settings": {
@@ -77,11 +93,17 @@
         "hide_on_desktop": false,
         "enable_sticky_media": true,
         "gallery_title": "",
+        "add_to_cart_text": "21+ only. Rain or shine. No refunds or exchanges. Lineup subject to change. Entry subject to posted Terms & Conditions.",
         "gallery_title_mobile_spacing": 16,
         "manual_product_title": "",
         "product_title_mobile_padding_top": 0,
-        "gallery_image_1": "shopify://shop_images/715ee921b262f8e40b489f06fed5c49cc0e86db9.png",
-        "gallery_video_1": "shopify://files/videos/download.mp4",
+        "variant_selector_type": "buttons",
+        "most_popular_value": "General Admission",
+        "best_value_value": "VIP",
+        "gallery_image_1": "{{ product.metafields.custom.artist_ab_test_details.value.gallery_thumbnail_1.value }}",
+        "gallery_video_1": "{{ product.metafields.custom.artist_ab_test_details.value.gallery_video_1.value }}",
+        "gallery_image_2": "{{ product.metafields.custom.artist_ab_test_details.value.gallery_thumbnail_2.value }}",
+        "gallery_video_2": "{{ product.metafields.custom.artist_ab_test_details.value.gallery_video_2.value }}",
         "play_video_inline": true,
         "play_video_audio_on_click": true,
         "show_video_controls": false,

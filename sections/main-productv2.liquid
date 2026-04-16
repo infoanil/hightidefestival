@@ -15,6 +15,7 @@
   assign fallback_gallery_image_6 = product_images[5]
   assign fallback_gallery_image_7 = product_images[6]
   assign gallery_video_1 = section.settings.gallery_video_1
+  assign gallery_video_2 = section.settings.gallery_video_2
   assign gallery_image_1 = section.settings.gallery_image_1 | default: fallback_gallery_image_1
   assign gallery_image_2 = section.settings.gallery_image_2 | default: fallback_gallery_image_2
   assign gallery_image_3 = section.settings.gallery_image_3 | default: fallback_gallery_image_3
@@ -41,6 +42,9 @@
   if gallery_image_2 != blank
     assign gallery_item_count = gallery_item_count | plus: 1
   endif
+    if gallery_video_2 != blank
+        assign gallery_item_count = gallery_item_count | plus: 1
+    endif
   if gallery_image_3 != blank
     assign gallery_item_count = gallery_item_count | plus: 1
   endif
@@ -201,8 +205,6 @@
       width: auto;
     }
   }
-
-  /*AB test design starts*/
   
   /*AB test design starts*/
   .artist-ab-test .variant-card-grid {
@@ -342,29 +344,25 @@
       color: #0B4166CC;
   }
   
-  @media (max-width: 1023px) {
-      .artist-ab-test .product-v2-gallery-slide {
-          width: 80%;
-      }
+  /*AB test design starts */
+  .artist-ab-test .product-v2-gallery-dot {
+      width: 14px !important;
+      height: 14px !important;
+      border: 1px solid #000000 !important;
+      margin-top: 12px;
+  }
+  .artist-ab-test .product-v2-gallery-dot.bg-secondary-navy {
+      background-color: #000000 !important;
+  }
+  .artist-ab-test .product-v2-gallery-dot.bg-transparent {
+      background-color: transparent !important;
+  }
 
-      .artist-ab-test .product-v2-title {
-          font-weight: 400 !important;
-          font-size: 36.7px !important;
-          line-height: 46px !important;
-          letter-spacing: -1px !important;
-      }
-      
-      .artist-ab-test .product-v2-gallery-dot {
-          width: 10px !important;
-          height: 10px !important;
-      }
-      .artist-ab-test .product-v2-gallery-dot-container {
-          margin-bottom: 14px !important;
-      }
-      .artist-ab-test .product-v2-rating-container {
-          margin-top: 8px !important;
-      }
-      .artist-ab-test .product-description {
+  .artist-ab-test .product-v2-gallery-slide {
+      width: 80%;
+  }
+
+  .artist-ab-test .product-description {
           margin-top: 10px !important;
       }
       .artist-ab-test .product-description ul{
@@ -393,8 +391,138 @@
           background-size: 18px 18px;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'%3E%3Cpath d='M18 9C18 11.3869 17.0518 13.6761 15.364 15.364C13.6761 17.0518 11.3869 18 9 18C6.61305 18 4.32387 17.0518 2.63604 15.364C0.948212 13.6761 0 11.3869 0 9C0 6.61305 0.948212 4.32387 2.63604 2.63604C4.32387 0.948212 6.61305 0 9 0C11.3869 0 13.6761 0.948212 15.364 2.63604C17.0518 4.32387 18 6.61305 18 9ZM13.5337 5.59125C13.4534 5.51117 13.3577 5.44812 13.2524 5.40587C13.1471 5.36361 13.0344 5.34303 12.921 5.34534C12.8076 5.34765 12.6958 5.37281 12.5923 5.41931C12.4888 5.46582 12.3958 5.53271 12.3187 5.616L8.41162 10.5941L6.057 8.23837C5.89705 8.08933 5.6855 8.0082 5.46691 8.01205C5.24832 8.01591 5.03976 8.10446 4.88518 8.25905C4.73059 8.41364 4.64204 8.6222 4.63818 8.84079C4.63432 9.05938 4.71546 9.27093 4.8645 9.43088L7.84125 12.4087C7.92144 12.4888 8.01693 12.5519 8.12203 12.5942C8.22713 12.6366 8.33968 12.6573 8.45296 12.6552C8.56625 12.6531 8.67795 12.6282 8.78141 12.582C8.88486 12.5358 8.97795 12.4692 9.05512 12.3863L13.5461 6.7725C13.6992 6.61331 13.7838 6.40043 13.7817 6.17958C13.7796 5.95872 13.691 5.74749 13.5349 5.59125H13.5337Z' fill='%230B4166'/%3E%3C/svg%3E");
       }
-      
+
+      .artist-ab-test .product-v2-add-to-cart-text {
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 20px;
+          letter-spacing: -1px;
+          color: #0B4166;
+
+      }
+  @media (min-width: 1024px) {
+    .artist-ab-test .product-v2-gallery {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 0 !important;
+      border: 1px solid #0B4166;
+      border-radius: 4px;
+      overflow-x: auto !important;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      width: 567px !important;
+      height: 567px !important;
+      max-width: 100%;
+    }
+    .artist-ab-test .product-v2-gallery::-webkit-scrollbar {
+      display: none;
+    }
+    .artist-ab-test .product-v2-gallery-slide,
+    .artist-ab-test .product-v2-gallery-slide > div {
+      width: 567px !important;
+      flex: 0 0 567px !important;
+      height: 567px !important;
+      aspect-ratio: auto !important;
+      scroll-snap-align: start;
+    }
+
+    @media (min-width: 1024px) and (max-width: 1280px) {
+      .artist-ab-test .product-v2-gallery {
+        width: 440px !important;
+        height: 440px !important;
+      }
+      .artist-ab-test .product-v2-gallery-slide,
+      .artist-ab-test .product-v2-gallery-slide > div {
+        width: 440px !important;
+        height: 440px !important;
+      }
+      .artist-ab-test .product-v2-thumbnails {
+        width: 60px !important;
+      }
+    }
+
+    .artist-ab-test-container {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+    }
+    @media (min-width: 1024px) {
+      .artist-ab-test-container {
+        grid-template-columns: auto 1fr !important;
+        gap: 73px !important;
+      }
+    }
+    .artist-ab-test .product-v2-gallery-slide,
+    .artist-ab-test .product-v2-gallery-slide > div {
+      width: 567px !important;
+      height: 567px !important;
+      aspect-ratio: auto !important;
+    }
+    .artist-ab-test .product-v2-thumbnails {
+      width: 80px !important; 
+      gap: 0 !important;
+    }
+    .artist-ab-test .product-v2-thumbnails button {
+      transition: all 0.2s ease;
+      background: white;
+      border: 1px solid transparent;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .artist-ab-test .product-v2-thumbnails button.active-thumb {
+      border-color: #0B4166;
+      border-width: 2px;
+      outline: 1px solid #0B4166;
+      outline-offset: 3px;
+    }
   }
+
+  @media (max-width: 1023px) {
+
+  .artist-ab-test .product-v2-gallery-dot {
+      width: 10px !important;
+      height: 10px !important;
+      border: 1px solid #0B4166 !important;
+  }
+  .artist-ab-test .product-v2-gallery-dot.bg-secondary-navy {
+      background-color: #0B4166 !important;
+  }
+
+      .artist-ab-test .product-v2-title {
+          font-weight: 400 !important;
+          font-size: 36.7px !important;
+          line-height: 46px !important;
+          letter-spacing: -1px !important;
+      }
+      .artist-ab-test .product-v2-gallery-dot-container {
+          margin-bottom: 14px !important;
+      }
+      .artist-ab-test .product-v2-rating-container {
+          margin-top: 8px !important;
+      }     
+  }
+
+  @media (min-width: 768px) {
+      .artist-ab-test .variant-card-button {
+        padding: 19px 14px !important;
+        font-size: 17px !important;
+      }
+      .artist-ab-test .product-v2-title {
+        font-weight: 400 !important;
+        font-size: 44px !important;
+        line-height: 54px !important;
+        letter-spacing: -1px !important;
+      }
+      .artist-ab-test .product-v2-rating-container {
+        margin-top: 10px !important;
+      }
+      .artist-ab-test .product-v2-rating-container .product-v2-price{
+        line-height: 37.5px !important;
+      }
+      .artist-ab-test .product-description ul{
+        margin-top: 20px !important;
+      }
+    }
 
   /*AB test design ends*/
 </style>
@@ -402,7 +530,7 @@
 <div class="{% if section.settings.hide_on_mobile %}hidden md:block{% endif %}{% if section.settings.hide_on_desktop %} md:hidden{% endif %}">
   <div class="bg-bg-color">
     <div class="container py-5 md:py-12 lg:py-16">
-    <div class="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-5">
+    <div class="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-5 {% if template.suffix == 'artist-ab-test' %}artist-ab-test-container{% endif %}">
       <div class="{% if section.settings.enable_sticky_media %}lg:sticky lg:top-8 self-start{% endif %}">
         {% if section.settings.gallery_title != blank %}
           <p
@@ -416,29 +544,62 @@
         <div
           x-data="{
             currentIndex: 0,
-            isVideoOpen: false,
-            isInlineVideoPlaying: {{ initial_inline_video_playing | json }},
+            activeVideoId: null,
             inlineVideoMuted: {{ section.settings.autoplay_muted_inline | json }},
             playVideoInline: {{ section.settings.play_video_inline | json }},
             playAudioOnClick: {{ section.settings.play_video_audio_on_click | json }},
             showVideoControls: {{ section.settings.show_video_controls | json }},
             autoplayMutedInline: {{ section.settings.autoplay_muted_inline | json }},
             total: {{ gallery_item_count | json }},
+            isManualScroll: false,
             init() {
-              if (this.playVideoInline && this.autoplayMutedInline && this.isInlineVideoPlaying) {
-                this.playInlineVideo({ muted: true });
+              if (this.playVideoInline && this.autoplayMutedInline) {
+                this.setupVideoObserver();
               }
             },
+            setupVideoObserver() {
+              const options = {
+                root: this.$refs.gallery,
+                threshold: 0.8
+              };
+
+              const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                  const video = entry.target.querySelector('video');
+                  if (!video) return;
+
+                  if (entry.isIntersecting) {
+                    video.play().catch(() => {});
+                  } else {
+                    video.pause();
+                  }
+                });
+              }, options);
+
+              this.$nextTick(() => {
+                const slides = this.$refs.gallery?.querySelectorAll('.product-v2-gallery-slide') || [];
+                slides.forEach(slide => {
+                  if (slide.querySelector('video')) {
+                    observer.observe(slide);
+                  }
+                });
+              });
+            },
             goTo(index) {
+              this.isManualScroll = true;
               this.currentIndex = index;
               const slide = this.$refs.gallery?.children?.[index];
               if (slide) {
                 slide.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
               }
+              setTimeout(() => {
+                this.isManualScroll = false;
+              }, 600);
             },
-            playInlineVideo({ muted = this.autoplayMutedInline } = {}) {
+            playInlineVideo(id, { muted = this.autoplayMutedInline } = {}) {
               this.$nextTick(() => {
-                const video = this.$root.querySelector('[data-inline-gallery-video] video');
+                const videoSelector = id === 1 ? '[data-inline-gallery-video] video' : `[data-inline-gallery-video-${id}] video`;
+                const video = this.$root.querySelector(videoSelector);
                 if (!video) return;
                 video.currentTime = 0;
                 video.muted = muted;
@@ -449,10 +610,11 @@
                 }
               });
             },
-            toggleInlineAudio() {
-              if (!this.playVideoInline || !this.isInlineVideoPlaying || !this.playAudioOnClick) return;
+            toggleInlineAudio(id) {
+              if (!this.playVideoInline || !this.playAudioOnClick) return;
 
-              const video = this.$root.querySelector('[data-inline-gallery-video] video');
+              const videoSelector = id === 1 ? '[data-inline-gallery-video] video' : `[data-inline-gallery-video-${id}] video`;
+              const video = this.$root.querySelector(videoSelector);
               if (!video) return;
 
               video.muted = !video.muted;
@@ -465,13 +627,12 @@
                 }
               }
             },
-            openVideo() {
+            openVideo(id) {
               if (this.playVideoInline) {
-                this.isInlineVideoPlaying = true;
-                this.playInlineVideo({ muted: !this.playAudioOnClick });
+                this.playInlineVideo(id, { muted: !this.playAudioOnClick });
                 return;
               }
-              this.isVideoOpen = true;
+              this.activeVideoId = id;
               document.documentElement.classList.add('overflow-hidden');
               this.$nextTick(() => {
                 const video = this.$root.querySelector('.product-v2-video-panel video');
@@ -484,7 +645,7 @@
               });
             },
             closeVideo() {
-              this.isVideoOpen = false;
+              this.activeVideoId = null;
               const video = this.$root.querySelector('.product-v2-video-panel video');
               if (video) {
                 video.pause();
@@ -492,28 +653,64 @@
               document.documentElement.classList.remove('overflow-hidden');
             },
             syncIndex() {
-              if (window.innerWidth >= 768 || !this.$refs.gallery) return;
-              const slideWidth = this.$refs.gallery.children?.[0]?.getBoundingClientRect().width || 1;
-              this.currentIndex = Math.round(this.$refs.gallery.scrollLeft / slideWidth);
+              if (this.isManualScroll) return;
+              if (window.innerWidth >= 1024) {
+                {% if template.suffix == 'artist-ab-test' %}
+                  if (!this.$refs.gallery) return;
+                  const slideWidth = this.$refs.gallery.children?.[0]?.getBoundingClientRect().width || 1;
+                  this.currentIndex = Math.round(this.$refs.gallery.scrollLeft / slideWidth);
+                {% else %}
+                  return;
+                {% endif %}
+              } else {
+                if (!this.$refs.gallery) return;
+                const slideWidth = this.$refs.gallery.children?.[0]?.getBoundingClientRect().width || 1;
+                this.currentIndex = Math.round(this.$refs.gallery.scrollLeft / slideWidth);
+              }
             }
           }"
-          class="flex flex-col gap-[15px]"
+          class="flex flex-col {% if template.suffix == 'artist-ab-test' %}lg:flex-row{% endif %} gap-[15px] items-stretch"
         >
-          <div
-            x-ref="gallery"
-            @scroll.passive="syncIndex()"
-            class="product-v2-gallery flex snap-x snap-mandatory gap-[10px] overflow-x-auto md:grid md:grid-cols-2 md:overflow-visible"
-          >
+          {% if template.suffix == 'artist-ab-test' %}
+            <div class="hidden lg:flex flex-col gap-[9px] w-[70px] shrink-0 h-full overflow-y-auto product-v2-thumbnails pr-1">
+              {%- comment -%}Slide 1 Thumbs{%- endcomment -%}
+              {% if gallery_image_1 != blank or gallery_video_1 != blank %}
+                <button type="button" @click="goTo(0)" class="aspect-square rounded-[3px] border overflow-hidden" :class="currentIndex === 0 ? 'active-thumb' : ''">
+                  {% render 'image-helper', image: gallery_image_1 | default: gallery_video_1.preview_image, max_width: 200, class: 'h-full w-full object-cover' %}
+                </button>
+              {% endif %}
+              {%- comment -%}Slide 2 Thumbs{%- endcomment -%}
+              {% if gallery_image_2 != blank or gallery_video_2 != blank %}
+                <button type="button" @click="goTo(1)" class="aspect-square rounded-[3px] border overflow-hidden" :class="currentIndex === 1 ? 'active-thumb' : ''">
+                  {% render 'image-helper', image: gallery_image_2 | default: gallery_video_2.preview_image, max_width: 200, class: 'h-full w-full object-cover' %}
+                </button>
+              {% endif %}
+              {%- comment -%}Slides 3-7 Thumbs{%- endcomment -%}
+              {% if gallery_image_3 != blank %}<button type="button" @click="goTo(2)" class="aspect-square rounded-[3px] border overflow-hidden" :class="currentIndex === 2 ? 'active-thumb' : ''">{% render 'image-helper', image: gallery_image_3, max_width: 200, class: 'h-full w-full object-cover' %}</button>{% endif %}
+              {% if gallery_image_4 != blank %}<button type="button" @click="goTo(3)" class="aspect-square rounded-[3px] border overflow-hidden" :class="currentIndex === 3 ? 'active-thumb' : ''">{% render 'image-helper', image: gallery_image_4, max_width: 200, class: 'h-full w-full object-cover' %}</button>{% endif %}
+              {% if gallery_image_5 != blank %}<button type="button" @click="goTo(4)" class="aspect-square rounded-[3px] border overflow-hidden" :class="currentIndex === 4 ? 'active-thumb' : ''">{% render 'image-helper', image: gallery_image_5, max_width: 200, class: 'h-full w-full object-cover' %}</button>{% endif %}
+              {% if gallery_image_6 != blank %}<button type="button" @click="goTo(5)" class="aspect-square rounded-[3px] border overflow-hidden" :class="currentIndex === 5 ? 'active-thumb' : ''">{% render 'image-helper', image: gallery_image_6, max_width: 200, class: 'h-full w-full object-cover' %}</button>{% endif %}
+              {% if gallery_image_7 != blank %}<button type="button" @click="goTo(6)" class="aspect-square rounded-[3px] border overflow-hidden" :class="currentIndex === 6 ? 'active-thumb' : ''">{% render 'image-helper', image: gallery_image_7, max_width: 200, class: 'h-full w-full object-cover' %}</button>{% endif %}
+            </div>
+          {% endif %}
+
+          <div class="flex-1 min-w-0 flex flex-col items-center">
+            <div
+              x-ref="gallery"
+              @scroll.passive="syncIndex()"
+              class="product-v2-gallery w-full flex snap-x snap-mandatory gap-[10px] items-start overflow-x-auto {% if template.suffix == 'artist-ab-test' %}lg:grid-cols-1 lg:gap-0{% else %}md:grid md:grid-cols-2{% endif %} md:overflow-visible"
+            >
             {% if first_gallery_media_exists %}
               <div class="product-v2-gallery-slide shrink-0 snap-start">
                 <div class="overflow-hidden rounded-[5px] border border-secondary-navy bg-surface-secondary aspect-square md:aspect-[353/366] lg:aspect-[568/683]">
                   {% if gallery_video_1 != blank %}
-                    <template x-if="playVideoInline && isInlineVideoPlaying">
+                    {% if section.settings.play_video_inline %}
                       <div
                         class="h-full w-full"
                         data-inline-gallery-video
-                        @click="toggleInlineAudio()"
+                        @click="toggleInlineAudio(1)"
                       >
+                        {% assign poster_1 = gallery_image_1 | default: gallery_video_1.preview_image | image_url: width: 1600 %}
                         {{
                           gallery_video_1
                           | video_tag:
@@ -523,17 +720,16 @@
                             loop: true,
                             muted: section.settings.autoplay_muted_inline,
                             playsinline: true,
+                            poster: poster_1,
                             class: 'h-full w-full object-cover'
                         }}
                       </div>
-                    </template>
-
-                    <template x-if="!playVideoInline || !isInlineVideoPlaying">
+                    {% else %}
                       <button
                         type="button"
                         class="product-v2-video-trigger"
-                        @click="openVideo()"
-                        :aria-label="playVideoInline ? 'Play featured gallery video inline' : 'Play featured gallery video'"
+                        @click="openVideo(1)"
+                        aria-label="Play gallery video 1"
                       >
                         {% render 'image-helper',
                           image: gallery_image_1 | default: gallery_video_1.preview_image,
@@ -547,7 +743,7 @@
                           </svg>
                         </span>
                       </button>
-                    </template>
+                    {% endif %}
                   {% else %}
                     {% render 'image-helper',
                       image: gallery_image_1,
@@ -560,15 +756,58 @@
               </div>
             {% endif %}
 
-            {% if gallery_image_2 != blank %}
+            {% if gallery_image_2 != blank or gallery_video_2 != blank %}
               <div class="product-v2-gallery-slide shrink-0 snap-start">
                 <div class="overflow-hidden rounded-[5px] border border-secondary-navy bg-surface-secondary aspect-square md:aspect-[353/366] lg:aspect-[568/683]">
-                  {% render 'image-helper',
-                    image: gallery_image_2,
-                    max_width: 1600,
-                    sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
-                    class: 'h-full w-full object-cover'
-                  %}
+                  {% if gallery_video_2 != blank %}
+                    {% if section.settings.play_video_inline %}
+                      <div
+                        class="h-full w-full"
+                        data-inline-gallery-video-2
+                        @click="toggleInlineAudio(2)"
+                      >
+                        {% assign poster_2 = gallery_image_2 | default: gallery_video_2.preview_image | image_url: width: 1600 %}
+                        {{
+                          gallery_video_2
+                          | video_tag:
+                            image_size: '1600x',
+                            autoplay: section.settings.autoplay_muted_inline,
+                            controls: section.settings.show_video_controls,
+                            loop: true,
+                            muted: section.settings.autoplay_muted_inline,
+                            playsinline: true,
+                            poster: poster_2,
+                            class: 'h-full w-full object-cover'
+                        }}
+                      </div>
+                    {% else %}
+                      <button
+                        type="button"
+                        class="product-v2-video-trigger"
+                        @click="openVideo(2)"
+                        aria-label="Play gallery video 2"
+                      >
+                        {% render 'image-helper',
+                          image: gallery_image_2 | default: gallery_video_2.preview_image,
+                          max_width: 1600,
+                          sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                          class: 'h-full w-full object-cover'
+                        %}
+                        <span class="product-v2-video-play" aria-hidden="true">
+                          <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21.0674 11.8207C21.9199 12.3191 21.9199 13.5528 21.0674 14.0512L2.08008 25.1518C1.22051 25.6542 0.140625 25.0341 0.140625 24.0365V1.83537C0.140625 0.837792 1.22052 0.217696 2.08008 0.720115L21.0674 11.8207Z" fill="currentColor"/>
+                          </svg>
+                        </span>
+                      </button>
+                    {% endif %}
+                  {% else %}
+                    {% render 'image-helper',
+                      image: gallery_image_2,
+                      max_width: 1600,
+                      sizes: '(min-width: 1024px) 50vw, (min-width: 768px) 50vw, 86vw',
+                      class: 'h-full w-full object-cover'
+                    %}
+                  {% endif %}
                 </div>
               </div>
             {% endif %}
@@ -639,8 +878,8 @@
             {% endif %}
           </div>
 
-          {% if show_gallery_dots %}
-            <div class="flex items-center justify-center gap-[5px] md:hidden mb-5 product-v2-gallery-dot-container">
+          {% if show_gallery_dots or template.suffix == 'artist-ab-test' %}
+            <div class="flex items-center justify-center gap-[5px] {% if template.suffix != 'artist-ab-test' %}md:hidden lg:hidden{% endif %} mb-5 product-v2-gallery-dot-container">
               {% for i in (1..7) %}
                 {% if i <= gallery_item_count %}
                   <button
@@ -655,42 +894,66 @@
             </div>
           {% endif %}
 
-          {% if gallery_video_1 != blank %}
-            <template x-if="isVideoOpen">
-              <div
-                class="product-v2-video-modal"
-                @click.self="closeVideo()"
-                @keydown.escape.window="closeVideo()"
-                role="dialog"
-                aria-modal="true"
-                aria-label="Featured gallery video"
-              >
-                <div class="product-v2-video-panel">
-                  <button
-                    type="button"
-                    class="absolute right-3 top-3 z-1 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-secondary-navy"
-                    @click="closeVideo()"
-                    aria-label="Close video"
-                  >
-                    <span class="text-2xl leading-none">&times;</span>
-                  </button>
-                  {{
-                    gallery_video_1
-                    | video_tag:
-                      image_size: '1600x',
-                      autoplay: true,
-                      controls: section.settings.show_video_controls,
-                      loop: true,
-                      muted: modal_video_muted,
-                      playsinline: true,
-                      class: 'w-full'
-                  }}
-                </div>
+          <template x-if="activeVideoId !== null">
+            <div
+              class="product-v2-video-modal"
+              @click.self="closeVideo()"
+              @keydown.escape.window="closeVideo()"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Featured gallery video"
+            >
+              <div class="product-v2-video-panel">
+                <button
+                  type="button"
+                  class="absolute right-3 top-3 z-1 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-secondary-navy"
+                  @click="closeVideo()"
+                  aria-label="Close video"
+                >
+                  <span class="text-2xl leading-none">&times;</span>
+                </button>
+
+                {% if gallery_video_1 != blank %}
+                  <template x-if="activeVideoId === 1">
+                    {% assign poster_1 = gallery_image_1 | default: gallery_video_1.preview_image | image_url: width: 1600 %}
+                    {{
+                      gallery_video_1
+                      | video_tag:
+                        image_size: '1600x',
+                        autoplay: true,
+                        controls: section.settings.show_video_controls,
+                        loop: true,
+                        muted: modal_video_muted,
+                        playsinline: true,
+                        poster: poster_1,
+                        class: 'w-full'
+                    }}
+                  </template>
+                {% endif %}
+
+                {% if gallery_video_2 != blank %}
+                  <template x-if="activeVideoId === 2">
+                    {% assign poster_2 = gallery_image_2 | default: gallery_video_2.preview_image | image_url: width: 1600 %}
+                    {{
+                      gallery_video_2
+                      | video_tag:
+                        image_size: '1600x',
+                        autoplay: true,
+                        controls: section.settings.show_video_controls,
+                        loop: true,
+                        muted: modal_video_muted,
+                        playsinline: true,
+                        poster: poster_2,
+                        class: 'w-full'
+                    }}
+                  </template>
+                {% endif %}
               </div>
-            </template>
-          {% endif %}
+            </div>
+          </template>
         </div>
       </div>
+    </div>
 
       <div>
         {% if section.settings.show_vendor %}
@@ -736,7 +999,7 @@
                 {% endif %}
               </div>
             {% endif %}
-          <p class="shrink-0 text-[20px] leading-[37.5px] text-primary-deepblue font-extrabold tracking-[-1px] md:text-[25px] md:leading-[25px]">
+          <p class="shrink-0 text-[20px] leading-[37.5px] text-primary-deepblue font-extrabold tracking-[-1px] md:text-[25px] product-v2-price">
             {{ product.price | money }}
           </p>
         </div>
@@ -796,17 +1059,23 @@
             activeBenefit: null
           }"
           x-init="initFromProductData()"
-          class="mt-6"
+          class="md:mt-8 mt-6"
         >
           {%- form 'product', product, id: product_form_id, novalidate: 'novalidate' -%}
             <input type="hidden" name="id" x-model="currentVariantId">
             <input type="hidden" name="return_to" value="/products/{{ product.handle }}">
 
             {%- unless product.has_only_default_variant -%}
-              <div class="space-y-4 mb-6">
+              {% liquid
+                assign selector_type = 'selectbox'
+                if template.suffix == 'artist-ab-test'
+                  assign selector_type = 'buttons'
+                endif
+              %}
+              <div class="space-y-4 mb-6 md:mb-9">
                 {%- for option in product.options_with_values -%}
                   <div>
-                    {% if section.settings.variant_selector_type == 'buttons' %}
+                    {% if selector_type == 'buttons' %}
                       <h3 class="variant-selection-title">Select {{ option.name }}</h3>
                       
                       <div class="variant-card-grid">
@@ -883,7 +1152,7 @@
 
             {% assign current_variant = product.selected_or_first_available_variant %}
 
-            <div class="flex items-stretch gap-[5px] rounded-[5px] bg-trietary-orange p-[5px]">
+            <div class="flex items-stretch gap-[5px] rounded-[5px] bg-trietary-orange hover:bg-secondary-navy p-[5px]">
               <div class="flex shrink-0 items-center overflow-hidden rounded-[4px] bg-white">
                 <button
                   type="button"
@@ -916,12 +1185,16 @@
                 type="submit"
                 name="add"
                 {% unless current_variant.available %}disabled{% endunless %}
-                class="flex min-h-[58px] flex-1 items-center justify-center px-6 py-3 text-center text-base font-extrabold uppercase text-white transition hover:bg-secondary-navy disabled:cursor-not-allowed disabled:bg-[var(--surface-disabled)] disabled:text-[var(--text-disabled)]"
+                class="flex min-h-[58px] flex-1 items-center justify-center px-6 py-3 text-center text-base font-extrabold uppercase text-white transition disabled:cursor-not-allowed disabled:bg-[var(--surface-disabled)] disabled:text-[var(--text-disabled)]"
               >
                 {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
               </button>
             </div>
           {%- endform -%}
+            
+            <div class="product-v2-add-to-cart-text mt-4">
+                {{ section.settings.add_to_cart_text }}
+            </div>
         </div>
 
         {% if after_cart_info != blank %}
@@ -935,7 +1208,7 @@
             {% for block in section.blocks %}
               {% case block.type %}
                 {% when 'accordion' %}
-                  {% render 'accordion-item', title: block.settings.title, content: block.settings.content %}
+                  {% render 'accordion-item', title: block.settings.title, content: block.settings.content, open: block.settings.open_by_default %}
                 {% when 'reviews' %}
                     {% render 'product-reviews' %}
                 {% when 'video_vibes' %}
@@ -1105,6 +1378,11 @@
       "label": "Manual gallery title",
       "default": "2-Day Pass"
     },
+   {
+      "type": "text",
+      "id": "add_to_cart_text",
+      "label": "Add to cart bottom text"
+   },
     {
       "type": "range",
       "id": "gallery_title_mobile_spacing",
@@ -1163,6 +1441,16 @@
       "label": "Gallery video for item 1"
     },
     {
+      "type": "image_picker",
+      "id": "gallery_image_2",
+      "label": "Gallery image 2 / video thumbnail"
+    },
+    {
+      "type": "video",
+      "id": "gallery_video_2",
+      "label": "Gallery video for item 2"
+    },
+    {
       "type": "checkbox",
       "id": "play_video_inline",
       "label": "Play gallery video inline instead of opening dialog",
@@ -1186,11 +1474,7 @@
       "label": "Autoplay muted inline video",
       "default": true
     },
-    {
-      "type": "image_picker",
-      "id": "gallery_image_2",
-      "label": "Gallery image 2"
-    },
+
     {
       "type": "image_picker",
       "id": "gallery_image_3",
@@ -1332,6 +1616,12 @@
           "id": "content",
           "label": "Content",
           "default": "<p>Accordion content goes here.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by default",
+          "default": false
         }
       ]
     },
@@ -1343,6 +1633,12 @@
       "type": "video_vibes",
       "name": "Video Vibes",
       "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_metaobject",
+          "label": "Use Metaobject for videos",
+          "default": false
+        },
         {
           "type": "text",
           "id": "title",
