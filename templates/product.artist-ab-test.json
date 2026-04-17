@@ -125,6 +125,140 @@
         "related_limit": 4
       }
     },
+    "faq_UrTYhX": {
+      "type": "faq",
+      "blocks": {
+        "faq_item_qdQkJT": {
+          "type": "faq_item",
+          "settings": {
+            "question": "WHERE IS HIGH TIDE?",
+            "answer": "High Tide Festival is taking place at Riverfront Park in N. Charleston 1061 Everglades Ave, North Charleston, SC 29405"
+          }
+        },
+        "faq_item_QnNwik": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the age limit?",
+            "answer": "21+ only. We scan IDs."
+          }
+        },
+        "faq_item_96aiFQ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the refund policy?",
+            "answer": "Tickets are non-refundable. No exceptions."
+          }
+        },
+        "faq_item_ed33Af": {
+          "type": "faq_item",
+          "settings": {
+            "question": "When should I arrive?",
+            "answer": "Gates open at 12PM. Come early!"
+          }
+        },
+        "faq_item_WMBV3P": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there re-entry?",
+            "answer": "No re-entry due to venue policy."
+          }
+        },
+        "faq_item_jaqtTT": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What forms of payment are accepted?",
+            "answer": "This is a cashless event. Bring debit/credit cards"
+          }
+        },
+        "faq_item_yK7mfa": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is there a dress code?",
+            "answer": "No dress code - express yourself! Just remember this is a city-owned public park."
+          }
+        },
+        "faq_item_xgMbn8": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the bag policy?",
+            "answer": "No bags larger than a handheld purse. We are not responsible for lost items. Please don’t leave bags lying around."
+          }
+        },
+        "faq_item_zxUJbg": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I bring a CamelBak or water bottle?",
+            "answer": "Yes - but it must be empty. Water filling stations are available throughout the grounds."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_qdQkJT",
+        "faq_item_QnNwik",
+        "faq_item_96aiFQ",
+        "faq_item_ed33Af",
+        "faq_item_WMBV3P",
+        "faq_item_jaqtTT",
+        "faq_item_yK7mfa",
+        "faq_item_xgMbn8",
+        "faq_item_zxUJbg"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "image": "shopify://shop_images/Faq.png",
+        "legend": "got questions?",
+        "heading": "<p>we’ve got answers<br/></p>",
+        "button_text": "Ask us a question",
+        "button_url": "mailto:info@hightidefestival.com"
+      }
+    },
+    "social_wall_jQ9nL6": {
+      "type": "social-wall",
+      "blocks": {
+        "slide_XEmgtF": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/9bade4b701e391f6775f69569de63d6f2d961ca1.jpg"
+          }
+        },
+        "slide_4G4j69": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_160606-1496_IMKEIKI.jpg"
+          }
+        },
+        "slide_LGDRiX": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_192633-3680_IMKEIKI.jpg"
+          }
+        },
+        "slide_jHyT8j": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/HTF2025_0606_194342-5284_ITSKINDERELLA.jpg"
+          }
+        },
+        "slide_R37i9q": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/a0d067669b02477589c6ac896175937a7d73ce18.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "slide_XEmgtF",
+        "slide_4G4j69",
+        "slide_LGDRiX",
+        "slide_jHyT8j",
+        "slide_R37i9q"
+      ],
+      "name": "Social Wall",
+      "settings": {
+        "legend": "",
+        "heading": ""
+      }
+    },
     "fun_gallery_V6tYkN": {
       "type": "fun-gallery",
       "blocks": {
@@ -201,6 +335,7 @@
         "image_NjRaBq",
         "image_4LwByH"
       ],
+      "disabled": true,
       "name": "Fun Gallery",
       "settings": {
         "heading": "high tide, all the ways up"
@@ -273,6 +408,8 @@
   "order": [
     "main_product_section",
     "main_productv2_wLKRCj",
+    "faq_UrTYhX",
+    "social_wall_jQ9nL6",
     "fun_gallery_V6tYkN",
     "choose_your_vibe_3ffcVR"
   ]

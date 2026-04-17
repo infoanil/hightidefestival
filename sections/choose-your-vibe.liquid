@@ -38,12 +38,12 @@
           <div x-show="active !== {{ index }}" x-transition.opacity class="gradient absolute inset-0 bg-black/50"></div>
           
           <div x-show="active !== {{ index }}" x-transition.opacity class="bg-black/50 w-full h-full flex {% if template.suffix == 'artist-ab-test' %}flex-row{% else %}lg:flex-col-reverse{% endif %} items-center justify-between [&_*]:z-1 lg:pt-[33px] lg:pb-[42px] px-5" style="{% if template.suffix == 'artist-ab-test' %}height: 117px;{% endif %}">
-            <h3 class="font-extrabold text-white uppercase text-[25px] md:text-[30px] leading-[24px] tracking-[-1px] {% if template.suffix != 'artist-ab-test' %}lg:[writing-mode:vertical-rl] lg:rotate-180{% endif %} z-1 pointer-events-none max-sm:w-[164px] {% if template.suffix == 'artist-ab-test' %} hidden{% endif %}">
+            <h3 class="font-extrabold text-white uppercase text-[25px] md:text-[30px] leading-[24px] tracking-[-1px] {% if template.suffix != 'artist-ab-test' %}lg:[writing-mode:vertical-rl] lg:rotate-180{% endif %} z-1 pointer-events-none max-sm:w-[164px]">
               {{ block.settings.title }}
             </h3>
             <img
             src="{{ block.settings.icon | img_url: 'master' }}"
-            class="w-[50px] md:w-[58px] {% if template.suffix == 'artist-ab-test' %} hidden{% endif %}"
+            class="w-[50px] md:w-[58px]"
             >
           </div>
 

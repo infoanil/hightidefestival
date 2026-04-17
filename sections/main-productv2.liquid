@@ -255,6 +255,7 @@
       font-size: 14px;
       line-height: 14px;
       letter-spacing: 0.5px;
+      cursor: pointer;
   }
 
   .artist-ab-test .variant-card-button.is-selected {
@@ -536,7 +537,10 @@
       }
       .artist-ab-test .product-v2-rating-container {
           margin-top: 8px !important;
-      }     
+      }
+      .artist-ab-test .pdp-v2-container{
+          padding-top: 14px !important;
+      }
   }
 
   @media (min-width: 768px) {
@@ -565,7 +569,7 @@
 </style>
 <div class="{% if section.settings.hide_on_mobile %}hidden md:block{% endif %}{% if section.settings.hide_on_desktop %} md:hidden{% endif %}">
   <div class="bg-bg-color">
-    <div class="container {% if template.suffix == 'artist-ab-test' %}max-md:py-7 pt-4 md:py-4{% else %}py-5 md:py-12 lg:py-16{% endif %}">
+    <div class="container {% if template.suffix == 'artist-ab-test' %}max-md:py-7 pt-8 md:py-4 pdp-v2-container{% else %}py-5 md:py-12 lg:py-16{% endif %}">
     <div class="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-5 {% if template.suffix == 'artist-ab-test' %}artist-ab-test-container{% endif %}">
       <div class="{% if section.settings.enable_sticky_media %}lg:sticky lg:top-8 self-start{% endif %}">
         {% if section.settings.gallery_title != blank %}
