@@ -1,3 +1,11 @@
+{% liquid
+    assign eventDate = section.settings.when
+    if product.handle == 'the-chainsmokers'
+        assign eventDate = 'June 5 2026'
+    elsif product.handle == 'louis-the-child'
+        assign eventDate = 'June 6 2026'
+    endif
+%}
 <div class="event-details bg-primary-lightblue">
     <h2 class="sr-only">Event Details</h2>
     <div class="container">
@@ -8,7 +16,7 @@
             </div>
             <div class="location py-8 md:py-18 text-center max-sm:border-t md:border-l lg:border-secondary-navy">
                 <p class="text-lg font-bold text-primary-deepblue uppercase mb-1.5 md:mb-4 tracking-[-1px]">When</p>
-                <p class="text-lg  leading-[21px] tracking-[-1px] md:text-[35px] md:leading-[38px] lg:text-[50px] lg:leading-[54px] md:tracking-[-4px] font-extrabold uppercase text-secondary-navy md:max-w-[160px] lg:max-w-[247px] mx-auto">{{ section.settings.when }}</p>
+                <p class="text-lg  leading-[21px] tracking-[-1px] md:text-[35px] md:leading-[38px] lg:text-[50px] lg:leading-[54px] md:tracking-[-4px] font-extrabold uppercase text-secondary-navy md:max-w-[160px] lg:max-w-[247px] mx-auto">{{ eventDate }}</p>
             </div>
         </div>
     </div>
