@@ -128,3 +128,16 @@
   ]
 }  
 {% endschema %}
+
+{% if template.suffix == 'artist-ab-test' %}
+    <style>
+        .artist-ab-test #faq{
+            padding-bottom: 55px !important;
+        }
+        @media (max-width: 767px) {
+            .artist-ab-test #faq{
+                padding-bottom: 0 !important;
+            }
+        }
+    </style>
+{% endif %}
