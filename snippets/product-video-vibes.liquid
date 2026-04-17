@@ -5,7 +5,7 @@
     </h2>
   {% endif %}
 
-  <div class="flex gap-1 md:gap-4 overflow-x-auto no-scrollbar">
+  <div class="flex gap-1 overflow-x-auto no-scrollbar">
     {% liquid
       if block.settings.use_metaobject
         assign meta_videos = product.metafields.custom.artist_ab_test_details.value.media_for_slider.value
@@ -215,5 +215,9 @@
   }
   .video-timer {
     font-weight: 400;
+  }
+  .artist-ab-test .variant-selection-title.uppercase{
+      font-size: 20px;
+      color: #0B4166;
   }
 </style>

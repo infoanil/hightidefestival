@@ -4,7 +4,7 @@
 {% else %}
 <div class="container mx-auto py-20">
 {% endif %}
-    <div class="headings flex flex-col lg:flex-row lg:justify-between lg:items-end lg:mb-[50px] text-secondary-navy">
+    <div class="headings flex flex-col lg:flex-row lg:justify-between lg:items-end {% if template.suffix == 'artist-ab-test' %}mb-8 description-container{% else %}lg:mb-[50px]{% endif %} text-secondary-navy">
         {% if section.settings.heading != blank or section.settings.legend != blank %}
         <div class="">
             <p class="legend uppercase text-lg font-bold mb-4">{{ section.settings.legend }}</p>
@@ -12,7 +12,7 @@
         </div>
         {% endif %}
         <div class="tabs flex lg:max-w-[533px]  mt-5 mb-8 lg:my-0">
-           <p class="font-semibold">{{ section.settings.description }}</p>
+           <p class="font-semibold accordion-description">{{ section.settings.description }}</p>
         </div>
     </div>
     <div class="flex {% if template.suffix == 'artist-ab-test' %}flex-col h-auto{% else %}flex-col lg:flex-row h-[853px] lg:h-[600px]{% endif %} w-full gap-2"
@@ -37,13 +37,13 @@
 
           <div x-show="active !== {{ index }}" x-transition.opacity class="gradient absolute inset-0 bg-black/50"></div>
           
-          <div x-show="active !== {{ index }}" x-transition.opacity class="bg-black/50 w-full h-full flex {% if template.suffix == 'artist-ab-test' %}flex-row{% else %}lg:flex-col-reverse{% endif %} items-center justify-between [&_*]:z-1 lg:pt-[33px] lg:pb-[42px] px-5" >
-            <h3 class="font-extrabold text-white uppercase text-[25px] md:text-[30px] leading-[24px] tracking-[-1px] {% if template.suffix != 'artist-ab-test' %}lg:[writing-mode:vertical-rl] lg:rotate-180{% endif %} z-1 pointer-events-none max-sm:w-[164px]">
+          <div x-show="active !== {{ index }}" x-transition.opacity class="bg-black/50 w-full h-full flex {% if template.suffix == 'artist-ab-test' %}flex-row{% else %}lg:flex-col-reverse{% endif %} items-center justify-between [&_*]:z-1 lg:pt-[33px] lg:pb-[42px] px-5" style="{% if template.suffix == 'artist-ab-test' %}height: 117px;{% endif %}">
+            <h3 class="font-extrabold text-white uppercase text-[25px] md:text-[30px] leading-[24px] tracking-[-1px] {% if template.suffix != 'artist-ab-test' %}lg:[writing-mode:vertical-rl] lg:rotate-180{% endif %} z-1 pointer-events-none max-sm:w-[164px] {% if template.suffix == 'artist-ab-test' %} hidden{% endif %}">
               {{ block.settings.title }}
             </h3>
             <img
             src="{{ block.settings.icon | img_url: 'master' }}"
-            class="w-[50px] md:w-[58px]"
+            class="w-[50px] md:w-[58px] {% if template.suffix == 'artist-ab-test' %} hidden{% endif %}"
             >
           </div>
 
@@ -53,6 +53,7 @@
             x-transition:enter-start="opacity-0 translate-y-8"
             x-transition:enter-end="opacity-100 translate-y-0"
             class="flex flex-col justify-between relative px-3 py-5 md:p-7 w-full h-full z-1 bg-gradient-to-b from-transparent to-black/40"
+            style="{% if template.suffix == 'artist-ab-test' %}height: stretch;{% endif %}"
           >
             <img
             src="{{ block.settings.icon | img_url: 'master' }}"
@@ -182,3 +183,18 @@
     ]
   }
   {% endschema %}
+{% if template.suffix == 'artist-ab-test' %}
+<style>
+    .artist-ab-test .accordion-description{
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: normal;
+    }
+    @media (max-width: 767px) {
+        .artist-ab-test .description-container{
+            margin-bottom: 0 !important;
+        }
+    }
+</style>
+{% endif %}

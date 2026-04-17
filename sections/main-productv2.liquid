@@ -7,15 +7,38 @@
   assign ab_cart_subdescription = product.metafields.custom.ab_test_cart_subdesc
   assign use_ab_cart_descriptions = section.settings.use_ab_cart_descriptions
   assign product_images = product.media | where: 'media_type', 'image'
-  assign fallback_gallery_image_1 = product_images[0]
-  assign fallback_gallery_image_2 = product_images[1]
-  assign fallback_gallery_image_3 = product_images[2]
-  assign fallback_gallery_image_4 = product_images[3]
-  assign fallback_gallery_image_5 = product_images[4]
-  assign fallback_gallery_image_6 = product_images[5]
-  assign fallback_gallery_image_7 = product_images[6]
   assign gallery_video_1 = section.settings.gallery_video_1
   assign gallery_video_2 = section.settings.gallery_video_2
+
+  if template.suffix == 'artist-ab-test'
+    assign image_index = 0
+    if gallery_video_1 == blank
+      assign fallback_gallery_image_1 = product_images[image_index]
+      assign image_index = image_index | plus: 1
+    endif
+    if gallery_video_2 == blank
+      assign fallback_gallery_image_2 = product_images[image_index]
+      assign image_index = image_index | plus: 1
+    endif
+    assign fallback_gallery_image_3 = product_images[image_index]
+    assign image_index = image_index | plus: 1
+    assign fallback_gallery_image_4 = product_images[image_index]
+    assign image_index = image_index | plus: 1
+    assign fallback_gallery_image_5 = product_images[image_index]
+    assign image_index = image_index | plus: 1
+    assign fallback_gallery_image_6 = product_images[image_index]
+    assign image_index = image_index | plus: 1
+    assign fallback_gallery_image_7 = product_images[image_index]
+  else
+    assign fallback_gallery_image_1 = product_images[0]
+    assign fallback_gallery_image_2 = product_images[1]
+    assign fallback_gallery_image_3 = product_images[2]
+    assign fallback_gallery_image_4 = product_images[3]
+    assign fallback_gallery_image_5 = product_images[4]
+    assign fallback_gallery_image_6 = product_images[5]
+    assign fallback_gallery_image_7 = product_images[6]
+  endif
+
   assign gallery_image_1 = section.settings.gallery_image_1 | default: fallback_gallery_image_1
   assign gallery_image_2 = section.settings.gallery_image_2 | default: fallback_gallery_image_2
   assign gallery_image_3 = section.settings.gallery_image_3 | default: fallback_gallery_image_3
@@ -39,12 +62,9 @@
   if first_gallery_media_exists
     assign gallery_item_count = gallery_item_count | plus: 1
   endif
-  if gallery_image_2 != blank
+  if gallery_image_2 != blank or gallery_video_2 != blank
     assign gallery_item_count = gallery_item_count | plus: 1
   endif
-    if gallery_video_2 != blank
-        assign gallery_item_count = gallery_item_count | plus: 1
-    endif
   if gallery_image_3 != blank
     assign gallery_item_count = gallery_item_count | plus: 1
   endif
@@ -285,7 +305,7 @@
       line-height: 20px;
       letter-spacing: -1px;
       margin-bottom: 24px;
-      color: #0B4166;
+      color: #0B4166CC;
   }
 
   /* Same-to-Same Benefit Card */
@@ -363,7 +383,7 @@
   }
 
   .artist-ab-test .product-description {
-          margin-top: 10px !important;
+          margin-top: 15px !important;
       }
       .artist-ab-test .product-description ul{
           margin-top: 10px !important;
@@ -397,7 +417,7 @@
           font-size: 16px;
           line-height: 20px;
           letter-spacing: -1px;
-          color: #0B4166;
+          color: #0B4166CC;
 
       }
   @media (min-width: 1024px) {
@@ -405,8 +425,6 @@
       display: flex !important;
       flex-direction: row !important;
       gap: 0 !important;
-      border: 1px solid #0B4166;
-      border-radius: 4px;
       overflow-x: auto !important;
       overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
@@ -414,6 +432,7 @@
       width: 567px !important;
       height: 567px !important;
       max-width: 100%;
+        border: none;
     }
     .artist-ab-test .product-v2-gallery::-webkit-scrollbar {
       display: none;
@@ -425,6 +444,8 @@
       height: 567px !important;
       aspect-ratio: auto !important;
       scroll-snap-align: start;
+        border:none;
+        border-radius: 0;
     }
 
     @media (min-width: 1024px) and (max-width: 1280px) {
@@ -438,7 +459,8 @@
         height: 440px !important;
       }
       .artist-ab-test .product-v2-thumbnails {
-        width: 60px !important;
+        width: 76px !important;
+        height: 440px !important;
       }
     }
 
@@ -459,8 +481,11 @@
       aspect-ratio: auto !important;
     }
     .artist-ab-test .product-v2-thumbnails {
-      width: 80px !important; 
+      width: 92px !important; 
       gap: 0 !important;
+      height: 567px !important;
+      overflow-y: auto !important;
+      scrollbar-width: none;
     }
     .artist-ab-test .product-v2-thumbnails button {
       transition: all 0.2s ease;
@@ -468,6 +493,7 @@
       border: 1px solid transparent;
       cursor: pointer;
       margin: 5px;
+      min-height: 76px;
     }
     .artist-ab-test .product-v2-thumbnails button.active-thumb {
       border-color: #0B4166;
@@ -526,10 +552,9 @@
 
   /*AB test design ends*/
 </style>
-
 <div class="{% if section.settings.hide_on_mobile %}hidden md:block{% endif %}{% if section.settings.hide_on_desktop %} md:hidden{% endif %}">
   <div class="bg-bg-color">
-    <div class="container py-5 md:py-12 lg:py-16">
+    <div class="container {% if template.suffix == 'artist-ab-test' %}py-7 md:py-5{% else %}py-5 md:py-12 lg:py-16{% endif %}">
     <div class="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-5 {% if template.suffix == 'artist-ab-test' %}artist-ab-test-container{% endif %}">
       <div class="{% if section.settings.enable_sticky_media %}lg:sticky lg:top-8 self-start{% endif %}">
         {% if section.settings.gallery_title != blank %}
@@ -676,13 +701,21 @@
               {%- comment -%}Slide 1 Thumbs{%- endcomment -%}
               {% if gallery_image_1 != blank or gallery_video_1 != blank %}
                 <button type="button" @click="goTo(0)" class="aspect-square rounded-[3px] border overflow-hidden" :class="currentIndex === 0 ? 'active-thumb' : ''">
-                  {% render 'image-helper', image: gallery_image_1 | default: gallery_video_1.preview_image, max_width: 200, class: 'h-full w-full object-cover' %}
+                  {% if gallery_video_1 != blank %}
+                    {{ gallery_video_1 | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'h-full w-full object-cover' }}
+                  {% else %}
+                    {% render 'image-helper', image: gallery_image_1, max_width: 200, class: 'h-full w-full object-cover' %}
+                  {% endif %}
                 </button>
               {% endif %}
               {%- comment -%}Slide 2 Thumbs{%- endcomment -%}
               {% if gallery_image_2 != blank or gallery_video_2 != blank %}
                 <button type="button" @click="goTo(1)" class="aspect-square rounded-[3px] border overflow-hidden" :class="currentIndex === 1 ? 'active-thumb' : ''">
-                  {% render 'image-helper', image: gallery_image_2 | default: gallery_video_2.preview_image, max_width: 200, class: 'h-full w-full object-cover' %}
+                  {% if gallery_video_2 != blank %}
+                    {{ gallery_video_2 | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'h-full w-full object-cover' }}
+                  {% else %}
+                    {% render 'image-helper', image: gallery_image_2, max_width: 200, class: 'h-full w-full object-cover' %}
+                  {% endif %}
                 </button>
               {% endif %}
               {%- comment -%}Slides 3-7 Thumbs{%- endcomment -%}
@@ -694,7 +727,7 @@
             </div>
           {% endif %}
 
-          <div class="flex-1 min-w-0 flex flex-col items-center">
+          <div class="flex-1 min-w-0 flex flex-col items-center {% if template.suffix != 'artist-ab-test' %} gap-[15px]{% endif %}">
             <div
               x-ref="gallery"
               @scroll.passive="syncIndex()"

@@ -117,12 +117,14 @@
   .pr-star--empty {
     color: #ddd;
   }
-  .pr-content {
+  .pr-content,
+  .artist-ab-test .metafield-rich_text_field{
     font-weight: 600;
     font-size: 17px;
     line-height: 20px;
     letter-spacing: -1px;
     margin: 0 0 10px 0;
+      color: #0B4166;
   }
   .pr-nav-btn {
     flex-shrink: 0;
@@ -177,7 +179,27 @@
     }
     .pr-reviews-section {
       padding: 29px 0 25px 0;
+        background: #D1E1EF;
+        border: 1px solid #0B4166;
+        border-left: 0;
+        border-right: 0;
+        margin-left: -16px;
+        margin-right: -16px;
+        margin-top: 21px;
     }
+      .pr-card{
+          margin: 0 26px;
+      }
+      .pr-nav-next{
+          right: 10px;
+      }
+      .pr-nav-prev{
+          left: 10px;
+      }
+      .pr-card-header {
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+      }
   }
 </style>
 
