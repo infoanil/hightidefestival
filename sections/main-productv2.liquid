@@ -382,6 +382,10 @@
   .artist-ab-test .product-v2-gallery-slide {
       width: 80%;
   }
+  [data-show-feature] {
+      cursor: pointer;
+      display: none;
+  }
 
   .artist-ab-test .product-description {
           margin-top: 15px !important;
@@ -1010,7 +1014,7 @@
                     "price": {{ variant.price | json }},
                     "price_formatted": {{ variant.price | money | json }},
                     "available": {{ variant.available | json }},
-                    "description": {{ variant.metafields.custom.event_features | metafield_tag | json }}
+                    "description": {{ variant.metafields.custom.event_features | metafield_tag | replace: '&lt;', '<' | replace: '&gt;', '>' | json }}
                   }{% unless forloop.last %},{% endunless %}
                 {% endfor %}
               ],
@@ -1099,11 +1103,11 @@
         {%- elsif template.suffix == 'artist-ab-test' -%}
             {% liquid
                 assign selectedVariant = product.selected_or_first_available_variant
-                assign variant_description = selectedVariant.metafields.custom.event_features | metafield_tag
+                assign variant_description = selectedVariant.metafields.custom.event_features | metafield_tag | replace: '&lt;', '<' | replace: '&gt;', '>'
             %}
-            <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80" data-artist="{{ selectedVariant.title }}" x-show="currentVariantDescription" x-html="currentVariantDescription">
+            <span class="product-description block mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80" data-artist="{{ selectedVariant.title }}" x-show="currentVariantDescription" x-html="currentVariantDescription">
                 {{ variant_description }}
-            </div>
+            </span>
         {%- elsif use_ab_cart_descriptions and ab_cart_description != blank -%}
           <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80" data-anil>
             {% if ab_cart_description.type == 'rich_text_field' %}
