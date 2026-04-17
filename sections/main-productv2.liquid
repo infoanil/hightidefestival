@@ -470,8 +470,9 @@
     }
     @media (min-width: 1024px) {
       .artist-ab-test-container {
-        grid-template-columns: auto 1fr !important;
+        grid-template-columns: auto 450px !important;
         gap: 73px !important;
+        justify-content: center !important;
       }
     }
     .artist-ab-test .product-v2-gallery-slide,
@@ -504,7 +505,13 @@
   }
 
   @media (max-width: 1023px) {
+      .artist-ab-test .product-v2-add-to-cart-text {
+          font-size: 14px;
+      }
 
+  .artist-ab-test .product-v2-gallery {
+      border-radius: 5px;
+  }
   .artist-ab-test .product-v2-gallery-dot {
       width: 10px !important;
       height: 10px !important;
@@ -554,7 +561,7 @@
 </style>
 <div class="{% if section.settings.hide_on_mobile %}hidden md:block{% endif %}{% if section.settings.hide_on_desktop %} md:hidden{% endif %}">
   <div class="bg-bg-color">
-    <div class="container {% if template.suffix == 'artist-ab-test' %}py-7 md:py-5{% else %}py-5 md:py-12 lg:py-16{% endif %}">
+    <div class="container {% if template.suffix == 'artist-ab-test' %}max-md:py-7 pt-4 md:py-4{% else %}py-5 md:py-12 lg:py-16{% endif %}">
     <div class="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-5 {% if template.suffix == 'artist-ab-test' %}artist-ab-test-container{% endif %}">
       <div class="{% if section.settings.enable_sticky_media %}lg:sticky lg:top-8 self-start{% endif %}">
         {% if section.settings.gallery_title != blank %}
