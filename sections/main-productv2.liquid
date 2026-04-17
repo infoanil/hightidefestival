@@ -999,7 +999,45 @@
       </div>
     </div>
 
-      <div>
+        <script id="product-data-v2-{{ section.id }}" type="application/json">
+          {
+            {% if template.suffix == 'artist-ab-test' %}
+              "variants": [
+                {% for variant in product.variants %}
+                  {
+                    "id": {{ variant.id }},
+                    "options": {{ variant.options | json }},
+                    "price": {{ variant.price | json }},
+                    "price_formatted": {{ variant.price | money | json }},
+                    "available": {{ variant.available | json }},
+                    "description": {{ variant.metafields.custom.event_features | metafield_tag | json }}
+                  }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              ],
+            {% else %}
+              "variants": {{ product.variants | json }},
+            {% endif %}
+            "selectedOptions": {{ product.selected_or_first_available_variant.options | json }},
+            "currentVariantId": {{ product.selected_or_first_available_variant.id | json }}
+          }
+        </script>
+
+      <div
+        {% if template.suffix == 'artist-ab-test' %}
+          x-data="{
+            ...variantSelectorV2('product-data-v2-{{ section.id }}'),
+            quantity: 1,
+            decreaseQty() {
+              if (this.quantity > 1) this.quantity--;
+            },
+            increaseQty() {
+              this.quantity++;
+            },
+            activeBenefit: null
+          }"
+          x-init="initFromProductData()"
+        {% endif %}
+      >
         {% if section.settings.show_vendor %}
           <p class="uppercase text-lg font-bold text-secondary-navy/60 mb-4">{{ product.vendor }}</p>
         {% endif %}
@@ -1043,7 +1081,7 @@
                 {% endif %}
               </div>
             {% endif %}
-          <p class="shrink-0 text-[20px] leading-[37.5px] text-primary-deepblue font-extrabold tracking-[-1px] md:text-[25px] product-v2-price">
+          <p class="shrink-0 text-[20px] leading-[37.5px] text-primary-deepblue font-extrabold tracking-[-1px] md:text-[25px] product-v2-price" {% if template.suffix == 'artist-ab-test' %}x-text="currentVariantPrice"{% endif %}>
             {{ product.price | money }}
           </p>
         </div>
@@ -1058,8 +1096,16 @@
           <div class="product-v2-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
             {{ description_override }}
           </div>
+        {%- elsif template.suffix == 'artist-ab-test' -%}
+            {% liquid
+                assign selectedVariant = product.selected_or_first_available_variant
+                assign variant_description = selectedVariant.metafields.custom.event_features | metafield_tag
+            %}
+            <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80" data-artist="{{ selectedVariant.title }}" x-show="currentVariantDescription" x-html="currentVariantDescription">
+                {{ variant_description }}
+            </div>
         {%- elsif use_ab_cart_descriptions and ab_cart_description != blank -%}
-          <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
+          <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80" data-anil>
             {% if ab_cart_description.type == 'rich_text_field' %}
               {{ ab_cart_description | metafield_tag }}
             {% else %}
@@ -1067,7 +1113,7 @@
             {% endif %}
           </div>
         {%- elsif product.description != blank -%}
-          <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80">
+          <div class="product-description mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80" data-octal>
             {{ product.description }}
           </div>
         {%- endif -%}
@@ -1082,28 +1128,21 @@
           </div>
         {%- endif -%}
 
-        <script id="product-data-v2-{{ section.id }}" type="application/json">
-          {
-            "variants": {{ product.variants | json }},
-            "selectedOptions": {{ product.selected_or_first_available_variant.options | json }},
-            "currentVariantId": {{ product.selected_or_first_available_variant.id | json }}
-          }
-        </script>
-
-        <div
-          x-data="{
-            ...variantSelectorV2('product-data-v2-{{ section.id }}'),
-            quantity: 1,
-            decreaseQty() {
-              if (this.quantity > 1) this.quantity--;
-            },
-            increaseQty() {
-              this.quantity++;
-            },
-            activeBenefit: null
-          }"
-          x-init="initFromProductData()"
-          class="md:mt-8 mt-6"
+        <div class="md:mt-8 mt-6"
+          {% unless template.suffix == 'artist-ab-test' %}
+            x-data="{
+              ...variantSelectorV2('product-data-v2-{{ section.id }}'),
+              quantity: 1,
+              decreaseQty() {
+                if (this.quantity > 1) this.quantity--;
+              },
+              increaseQty() {
+                this.quantity++;
+              },
+              activeBenefit: null
+            }"
+            x-init="initFromProductData()"
+          {% endunless %}
         >
           {%- form 'product', product, id: product_form_id, novalidate: 'novalidate' -%}
             <input type="hidden" name="id" x-model="currentVariantId">
@@ -1228,10 +1267,20 @@
               <button
                 type="submit"
                 name="add"
-                {% unless current_variant.available %}disabled{% endunless %}
+                {% if template.suffix == 'artist-ab-test' %}
+                  :disabled="!currentVariantAvailable"
+                {% else %}
+                  {% unless current_variant.available %}disabled{% endunless %}
+                {% endif %}
                 class="flex min-h-[58px] flex-1 items-center justify-center px-6 py-3 text-center text-base font-extrabold uppercase text-white transition disabled:cursor-not-allowed disabled:bg-[var(--surface-disabled)] disabled:text-[var(--text-disabled)]"
               >
-                {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
+                {% if template.suffix == 'artist-ab-test' %}
+                  <span x-text="currentVariantAvailable ? 'Add to cart' : 'Sold out'">
+                    {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
+                  </span>
+                {% else %}
+                  {% if current_variant.available %}Add to cart{% else %}Sold out{% endif %}
+                {% endif %}
               </button>
             </div>
           {%- endform -%}
@@ -1291,6 +1340,9 @@
       variants: [],
       selectedOptions: [],
       currentVariantId: null,
+      currentVariantPrice: '',
+      currentVariantAvailable: true,
+      currentVariantDescription: '',
 
       initFromProductData() {
         const dataEl = document.getElementById(dataElementId);
@@ -1300,6 +1352,7 @@
         this.variants = data.variants;
         this.selectedOptions = data.selectedOptions;
         this.currentVariantId = data.currentVariantId;
+        this.updateVariant();
       },
 
       updateVariant() {
@@ -1309,6 +1362,14 @@
 
         if (variant) {
           this.currentVariantId = variant.id;
+          this.currentVariantPrice = variant.price_formatted;
+          this.currentVariantAvailable = variant.available;
+          this.currentVariantDescription = variant.description || '';
+        } else {
+          this.currentVariantId = null;
+          this.currentVariantPrice = 'Unavailable';
+          this.currentVariantAvailable = false;
+          this.currentVariantDescription = '';
         }
       }
     };
