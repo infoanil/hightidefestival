@@ -1,0 +1,41 @@
+{% comment %}
+  Custom Pass Info Component
+  Handles dynamic variant description and info modals for benefit types.
+  Accepts:
+  - variant_description: The initial liquid description (string)
+  - selectedVariant: The selected variant object
+{% endcomment %}
+
+<div class="relative"
+    @click="
+        if ($event.target.closest('[data-var-info]')) {
+            const type = $event.target.closest('[data-var-info]').dataset.varInfo;
+            activeBenefit = (activeBenefit === 'info-' + type ? null : 'info-' + type);
+        }
+    "
+>
+    <custom-pass-info>
+        <span class="product-description block mt-4 text-[17px] font-semibold tracking-[-1px] leading-[20px] text-secondary-navy/80" 
+              data-artist="{{ selectedVariant.title }}" 
+              x-show="currentVariantDescription" 
+              x-html="currentVariantDescription">
+            {{ variant_description }}
+        </span>
+    </custom-pass-info>
+
+    {%- comment -%} Benefit Modal Cards for icons in text {%- endcomment -%}
+    {%- assign benefit_types = 'vip,stage-access,super-vip' | split: ',' -%}
+    {%- for type in benefit_types -%}
+        <div 
+            x-show="activeBenefit === 'info-{{ type }}'" 
+            x-cloak
+            @click.away="activeBenefit = null"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            class="stacked-card-wrapper"
+        >
+            {% render 'variant-benefit-card', value: type %}
+        </div>
+    {%- endfor -%}
+</div>
