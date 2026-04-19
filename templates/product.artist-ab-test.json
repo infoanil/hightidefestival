@@ -41,6 +41,15 @@
         "related_limit": 8
       }
     },
+    "counter_nB7CXt": {
+      "type": "counter",
+      "name": "Counter",
+      "settings": {
+        "subheading_text": "LAST CHANCE",
+        "heading_text": "PASSES PRICE INCREASE",
+        "end_time": "2026/12/31 23:59:59"
+      }
+    },
     "main_productv2_wLKRCj": {
       "type": "main-productv2",
       "blocks": {
@@ -123,6 +132,89 @@
         "use_ab_cart_descriptions": false,
         "show_related_products": false,
         "related_limit": 4
+      }
+    },
+    "fun_gallery_V6tYkN": {
+      "type": "fun-gallery",
+      "blocks": {
+        "image_8WWbRW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433901_803cb943-927d-4308-9386-da28b4154b1b.jpg"
+          }
+        },
+        "image_yya7Mh": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433902_776539e7-9dbb-48d0-a346-b9373cdb24a3.jpg"
+          }
+        },
+        "image_KhYQzP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433903_a6fd7ca3-1eef-4b9b-b1f2-6af364f099fc.jpg"
+          }
+        },
+        "image_VQkWMw": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433904_5283e20c-24bf-4deb-a64d-f6010bdb8a4f.jpg"
+          }
+        },
+        "image_Uxc8NG": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433896_1eacfd07-6cfd-426d-9c5f-4bea514a317d.jpg"
+          }
+        },
+        "image_VJJipW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433905_5b5fa44b-4e78-497f-b153-f81c53550258.jpg"
+          }
+        },
+        "image_xGHHJV": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433897_ce9ce09a-68e9-4b79-b292-a24d988ff7d5.jpg"
+          }
+        },
+        "image_DX8Y8X": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433898_4df6aada-3773-4268-a8a3-d54a589875ff.jpg"
+          }
+        },
+        "image_NjRaBq": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433899_ea435c4d-1aa1-4c75-b777-291c3a39bceb.jpg"
+          }
+        },
+        "image_4LwByH": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_3433900_31860494-0f38-4d6b-a781-f47228398307.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_8WWbRW",
+        "image_yya7Mh",
+        "image_KhYQzP",
+        "image_VQkWMw",
+        "image_Uxc8NG",
+        "image_VJJipW",
+        "image_xGHHJV",
+        "image_DX8Y8X",
+        "image_NjRaBq",
+        "image_4LwByH"
+      ],
+      "name": "Fun Gallery",
+      "settings": {
+        "heading": "high tide, all the ways up",
+        "hide_desktop": true,
+        "hide_mobile": false
       }
     },
     "faq_UrTYhX": {
@@ -259,88 +351,6 @@
         "heading": ""
       }
     },
-    "fun_gallery_V6tYkN": {
-      "type": "fun-gallery",
-      "blocks": {
-        "image_8WWbRW": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433901_803cb943-927d-4308-9386-da28b4154b1b.jpg"
-          }
-        },
-        "image_yya7Mh": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433902_776539e7-9dbb-48d0-a346-b9373cdb24a3.jpg"
-          }
-        },
-        "image_KhYQzP": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433903_a6fd7ca3-1eef-4b9b-b1f2-6af364f099fc.jpg"
-          }
-        },
-        "image_VQkWMw": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433904_5283e20c-24bf-4deb-a64d-f6010bdb8a4f.jpg"
-          }
-        },
-        "image_Uxc8NG": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433896_1eacfd07-6cfd-426d-9c5f-4bea514a317d.jpg"
-          }
-        },
-        "image_VJJipW": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433905_5b5fa44b-4e78-497f-b153-f81c53550258.jpg"
-          }
-        },
-        "image_xGHHJV": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433897_ce9ce09a-68e9-4b79-b292-a24d988ff7d5.jpg"
-          }
-        },
-        "image_DX8Y8X": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433898_4df6aada-3773-4268-a8a3-d54a589875ff.jpg"
-          }
-        },
-        "image_NjRaBq": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433899_ea435c4d-1aa1-4c75-b777-291c3a39bceb.jpg"
-          }
-        },
-        "image_4LwByH": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Frame_3433900_31860494-0f38-4d6b-a781-f47228398307.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "image_8WWbRW",
-        "image_yya7Mh",
-        "image_KhYQzP",
-        "image_VQkWMw",
-        "image_Uxc8NG",
-        "image_VJJipW",
-        "image_xGHHJV",
-        "image_DX8Y8X",
-        "image_NjRaBq",
-        "image_4LwByH"
-      ],
-      "disabled": true,
-      "name": "Fun Gallery",
-      "settings": {
-        "heading": "high tide, all the ways up"
-      }
-    },
     "choose_your_vibe_3ffcVR": {
       "type": "choose-your-vibe",
       "blocks": {
@@ -407,10 +417,11 @@
   },
   "order": [
     "main_product_section",
+    "counter_nB7CXt",
     "main_productv2_wLKRCj",
+    "fun_gallery_V6tYkN",
     "faq_UrTYhX",
     "social_wall_jQ9nL6",
-    "fun_gallery_V6tYkN",
     "choose_your_vibe_3ffcVR"
   ]
 }
