@@ -102,7 +102,8 @@
         "hide_on_desktop": false,
         "enable_sticky_media": true,
         "gallery_title": "",
-        "add_to_cart_text": "21+ only. Rain or shine. No refunds or exchanges. Lineup subject to change. Entry subject to posted Terms & Conditions.",
+        "add_to_cart_text": "",
+        "use_variant_metafield_text": true,
         "gallery_title_mobile_spacing": 16,
         "manual_product_title": "",
         "product_title_mobile_padding_top": 0,
@@ -300,7 +301,7 @@
         "image": "shopify://shop_images/Faq.png",
         "legend": "got questions?",
         "heading": "<p>we’ve got answers<br/></p>",
-        "button_text": "Ask us a question",
+        "button_text": "Learn more",
         "button_url": "mailto:info@hightidefestival.com"
       }
     },
@@ -348,7 +349,7 @@
       "name": "Social Wall",
       "settings": {
         "legend": "",
-        "heading": ""
+        "heading": "JOIN THE CREW"
       }
     },
     "choose_your_vibe_3ffcVR": {

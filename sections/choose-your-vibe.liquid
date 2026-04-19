@@ -25,7 +25,7 @@
           {% if template.suffix != 'artist-ab-test' %}@mouseenter="active = {{ index }}"{% endif %}
           @click="active = {{ index }}"
           class="relative overflow-hidden cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] shadow-2xl rounded-xl flex items-end"
-          :class="active === {{ index }} ? 'flex-[3] md:flex-[5] lg:flex-[6] bg-[#363636] min-h-[400px]' : 'flex-1 h-auto bg-[#2a2a2a] min-h-[80px]'"
+          :class="active === {{ index }} ? 'flex-[3] md:flex-[5] lg:flex-[6] bg-[#363636] min-h-[400px] choose-your-vibe-active' : 'flex-1 h-auto bg-[#2a2a2a] min-h-[80px]'"
         >
           
           <img 
@@ -57,11 +57,11 @@
           >
             <img
             src="{{ block.settings.icon | img_url: 'master' }}"
-            class="w-[50px] md:w-[58px]"
+            class="{% if template.suffix == 'artist-ab-test' %}w-[50px]{% else %}w-[50px] md:w-[58px]{% endif %}"
             >
               <div>
-                <h3 class="text-[25px] leading-[24px] tracking-[-2px] md:text-[40px] lg:text-[50px] lg:leading-[1em] md:tracking-[-4px] font-black mb-3 uppercase  text-white ">{{  block.settings.title }}</h3>
-                <p class="text-[15px] leading-[18px] md:text-xl md:leading-[22px] uppercase  text-white font-bold lg:font-extrabold tracking-[-1px]">
+                <h3 class="text-[25px] leading-[24px]  {% if template.suffix == 'artist-ab-test' %} md:text-[40px] lg:text-[24px] tracking-[-2px]{% else %} md:text-[40px] lg:text-[50px] tracking-[-2px] md:tracking-[-4px] {% endif %} lg:leading-[1em] font-black mb-3 uppercase  text-white ">{{  block.settings.title }}</h3>
+                <p class="{% if template.suffix == 'artist-ab-test' %}leading-[18px] text-[15px] font-bold {% else %} text-[15px] md:text-xl font-bold lg:font-extrabold leading-[18px] md:leading-[22px]{% endif %}  uppercase  text-white  tracking-[-1px]">
                   {{ block.settings.description }}
                 </p>
               </div>
@@ -190,6 +190,9 @@
         font-size: 16px;
         line-height: 24px;
         letter-spacing: normal;
+    }
+    .artist-ab-test .choose-your-vibe-active{
+        min-height: 350px;
     }
     @media (max-width: 767px) {
         .artist-ab-test .description-container{

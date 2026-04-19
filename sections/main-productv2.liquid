@@ -371,6 +371,7 @@
       height: 14px !important;
       border: 1px solid #000000 !important;
       margin-top: 12px;
+      cursor: pointer;
   }
   .artist-ab-test .product-v2-gallery-dot.bg-secondary-navy {
       background-color: #000000 !important;
@@ -387,6 +388,10 @@
       cursor: pointer;
   }
 
+  .artist-ab-test .add-to-cart-button-wrapper,
+  .artist-ab-test .add-to-cart-button-wrapper button{
+      cursor: pointer;
+  }
   .artist-ab-test .product-description {
           margin-top: 15px !important;
       }
@@ -401,7 +406,7 @@
       }
 
       .artist-ab-test .product-description li + li {
-          margin-top: 12px;
+          margin-top: 8px;
       }
 
       .artist-ab-test .product-description li::before {
@@ -497,7 +502,7 @@
       aspect-ratio: auto !important;
     }
     .artist-ab-test .product-v2-thumbnails {
-      width: 92px !important; 
+      width: 90px !important; 
       gap: 0 !important;
       height: 567px !important;
       overflow-y: auto !important;
@@ -506,14 +511,13 @@
     .artist-ab-test .product-v2-thumbnails button {
       transition: all 0.2s ease;
       background: white;
-      border: 1px solid transparent;
+      border: 0;
       cursor: pointer;
       margin: 5px;
       min-height: 76px;
     }
     .artist-ab-test .product-v2-thumbnails button.active-thumb {
-      border-color: #0B4166;
-      border-width: 2px;
+      border: 1px solid #0B4166;
       outline: 1px solid #0B4166;
       outline-offset: 3px;
     }
@@ -719,7 +723,7 @@
               }
             }
           }"
-          class="flex flex-col {% if template.suffix == 'artist-ab-test' %}lg:flex-row{% endif %} gap-[15px] items-stretch"
+          class="flex flex-col {% if template.suffix == 'artist-ab-test' %}lg:flex-row gap-[5px]{% else %}gap-[15px]{% endif %} items-stretch"
         >
           {% if template.suffix == 'artist-ab-test' %}
             <div class="hidden lg:flex flex-col gap-[9px] w-[70px] shrink-0 h-full overflow-y-auto product-v2-thumbnails pr-1">
@@ -1016,18 +1020,19 @@
         <script id="product-data-v2-{{ section.id }}" type="application/json">
           {
             {% if template.suffix == 'artist-ab-test' %}
-              "variants": [
-                {% for variant in product.variants %}
-                  {
-                    "id": {{ variant.id }},
-                    "options": {{ variant.options | json }},
-                    "price": {{ variant.price | json }},
-                    "price_formatted": {{ variant.price | money | json }},
-                    "available": {{ variant.available | json }},
-                    "description": {{ variant.metafields.custom.event_features | metafield_tag | replace: '&lt;', '<' | replace: '&gt;', '>' | json }}
-                  }{% unless forloop.last %},{% endunless %}
-                {% endfor %}
-              ],
+            "variants": [
+              {% for variant in product.variants %}
+                {
+                  "id": {{ variant.id }},
+                  "options": {{ variant.options | json }},
+                  "price": {{ variant.price | json }},
+                    "price_formatted": {{ variant.price | money_without_trailing_zeros | json }},
+                  "available": {{ variant.available | json }},
+                  "description": {{ variant.metafields.custom.event_features | metafield_tag | replace: '&lt;', '<' | replace: '&gt;', '>' | json }},
+                  "warning": {{ variant.metafields.custom.event_warning | metafield_tag | replace: '&lt;', '<' | replace: '&gt;', '>' | json }}
+                }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ],
             {% else %}
               "variants": {{ product.variants | json }},
             {% endif %}
@@ -1096,7 +1101,12 @@
               </div>
             {% endif %}
           <p class="shrink-0 text-[20px] leading-[37.5px] text-primary-deepblue font-extrabold tracking-[-1px] md:text-[25px] product-v2-price" {% if template.suffix == 'artist-ab-test' %}x-text="currentVariantPrice"{% endif %}>
+          {% if template.suffix == 'artist-ab-test' %}
+              {{ product.price | money_without_trailing_zeros }}
+              {% else %}
             {{ product.price | money }}
+          {% endif %}
+              
           </p>
         </div>
 
@@ -1171,7 +1181,7 @@
                 {%- for option in product.options_with_values -%}
                   <div>
                     {% if selector_type == 'buttons' %}
-                      <h3 class="variant-selection-title">Select {{ option.name }}</h3>
+                      <h3 class="variant-selection-title"><span class="md:hidden inline-block">{{ forloop.index }}.</span> Select {{ option.name }}</h3>
                       
                       <div class="variant-card-grid">
                         {% for value in option.values %}
@@ -1247,7 +1257,7 @@
 
             {% assign current_variant = product.selected_or_first_available_variant %}
 
-            <div class="flex items-stretch gap-[5px] rounded-[5px] bg-trietary-orange hover:bg-secondary-navy p-[5px]">
+            <div class="flex items-stretch gap-[5px] rounded-[5px] bg-trietary-orange hover:bg-secondary-navy p-[5px] add-to-cart-button-wrapper">
               <div class="flex shrink-0 items-center overflow-hidden rounded-[4px] bg-white">
                 <button
                   type="button"
@@ -1297,8 +1307,19 @@
             </div>
           {%- endform -%}
             
-            <div class="product-v2-add-to-cart-text mt-4">
-                {{ section.settings.add_to_cart_text }}
+            <div class="product-v2-add-to-cart-text mt-4"
+                {% if section.settings.use_variant_metafield_text %}
+                    x-html="currentVariantWarning || $el.dataset.defaultText"
+                    data-default-text="{{ section.settings.add_to_cart_text | escape }}"
+                {% endif %}
+            >
+                {%- liquid
+                    assign cart_text = section.settings.add_to_cart_text
+                    if section.settings.use_variant_metafield_text and current_variant.metafields.custom.event_warning != blank
+                        assign cart_text = current_variant.metafields.custom.event_warning | metafield_tag | replace: '&lt;', '<' | replace: '&gt;', '>'
+                    endif
+                -%}
+                {{ cart_text }}
             </div>
         </div>
 
@@ -1355,6 +1376,7 @@
       currentVariantPrice: '',
       currentVariantAvailable: true,
       currentVariantDescription: '',
+      currentVariantWarning: '',
 
       initFromProductData() {
         const dataEl = document.getElementById(dataElementId);
@@ -1377,11 +1399,13 @@
           this.currentVariantPrice = variant.price_formatted;
           this.currentVariantAvailable = variant.available;
           this.currentVariantDescription = variant.description || '';
+          this.currentVariantWarning = variant.warning || '';
         } else {
           this.currentVariantId = null;
           this.currentVariantPrice = 'Unavailable';
           this.currentVariantAvailable = false;
           this.currentVariantDescription = '';
+          this.currentVariantWarning = '';
         }
       }
     };
@@ -1496,9 +1520,15 @@
       "default": "2-Day Pass"
     },
    {
-      "type": "text",
+      "type": "richtext",
       "id": "add_to_cart_text",
       "label": "Add to cart bottom text"
+   },
+   {
+      "type": "checkbox",
+       "id": "use_variant_metafield_text",
+       "label": "Use variant metafield for bottom text",
+       "default": false
    },
     {
       "type": "range",
