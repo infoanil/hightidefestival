@@ -1,4 +1,4 @@
-<div class="fun-gallery {% if template.suffix == 'artist-ab-test' %} max-md:py-[30px] py-[60px]{% else %} py-[60px] {% endif %} md:py-[100px] lg:py-[120px]">
+<div class="fun-gallery {% if section.settings.hide_desktop %} md:hidden {% endif %} {% if section.settings.hide_mobile %} hidden md:block {% endif %} {% if template.suffix == 'artist-ab-test' %} max-md:py-[30px] py-[60px]{% else %} py-[60px] {% endif %} md:py-[100px] lg:py-[120px]">
 
     <div class="media relative flex shrink-0 w-full  justify-center gap-1 lg:gap-[14px] overflow-hidden">
         {% for block in section.blocks limit:5  %}
@@ -66,6 +66,18 @@
       "type": "text",
       "id": "heading",
       "label": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on Desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on Mobile",
+      "default": false
     }
   ],
   "blocks": [
