@@ -1,0 +1,213 @@
+<style>
+  .countdown-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    gap: 40px;
+  }
+
+  .counter-timer {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  .countdown-notice {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0%;
+  }
+
+  .countdown-title {
+    font-family: 'TAY Amaya', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 150%;
+    letter-spacing: 0%;
+  }
+
+  .time-value {
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .time-label {
+    font-family: Karla, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+
+  .colon-icon {
+    width: 44px;
+    height: 48px;
+  }
+
+  @media (max-width: 767px) {
+    .countdown-wrapper {
+      height: 50px;
+    }
+
+    .counter-timer {
+      padding: 0;
+    }
+
+    .countdown-notice {
+      font-size: 8px;
+    }
+
+    .countdown-title {
+      font-size: 14px;
+    }
+
+    .time-value {
+      font-size: 12.08px;
+      line-height: 12.5px;
+    }
+
+    .time-label {
+      font-size: 8.31px;
+      line-height: 12.5px;
+    }
+
+    .colon-icon {
+      width: 23px;
+      height: 26px;
+    }
+  }
+</style>
+
+<section
+  x-data="
+    {
+      endTime: '{{ section.settings.end_time }}',
+      days: '00',
+      hours: '00',
+      minutes: '00',
+      seconds: '00',
+      interval: null,
+      init() {
+        const updateTime = () => {
+          if (!this.endTime) return;
+
+          const targetDate = new Date(this.endTime.replace(/-/g, '/')).getTime();
+          const now = new Date().getTime();
+
+          if (isNaN(targetDate)) return;
+
+          const distance = targetDate - now;
+
+          if (distance < 0) {
+            this.days = '00';
+            this.hours = '00';
+            this.minutes = '00';
+            this.seconds = '00';
+            if (this.interval) clearInterval(this.interval);
+            return;
+          }
+
+          const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+          this.days = String(d).padStart(2, '0');
+          this.hours = String(h).padStart(2, '0');
+          this.minutes = String(m).padStart(2, '0');
+          this.seconds = String(s).padStart(2, '0');
+        };
+
+        updateTime();
+        this.interval = setInterval(updateTime, 1000);
+      }
+    }
+  "
+  class="countdown-wrapper w-full text-white flex justify-between items-center"
+  style="background-color: #0d466e;"
+>
+  <div class="flex flex-col">
+    <span class="countdown-notice">
+      {{- section.settings.subheading_text -}}
+    </span>
+    <h2 class="countdown-title">
+      {{ section.settings.heading_text }}
+    </h2>
+  </div>
+
+  <div class="counter-timer">
+    <div class="flex flex-col items-center">
+      <span class="time-value" x-text="days">00</span>
+      <span class="time-label">Days</span>
+    </div>
+
+    <svg class="colon-icon" fill="none" viewBox="0 0 23 26" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11.2722 18.1154C10.9792 18.1154 10.7276 18.0118 10.5175 17.8047C10.3103 17.5945 10.2067 17.343 10.2067 17.0499C10.2067 16.7599 10.3103 16.5113 10.5175 16.3041C10.7276 16.0969 10.9792 15.9933 11.2722 15.9933C11.5563 15.9933 11.8049 16.0969 12.018 16.3041C12.2311 16.5113 12.3377 16.7599 12.3377 17.0499C12.3377 17.2453 12.2874 17.4243 12.1867 17.5871C12.0891 17.7469 11.9603 17.8757 11.8005 17.9734C11.6407 18.0681 11.4646 18.1154 11.2722 18.1154ZM11.2722 13.3385C10.9792 13.3385 10.7276 13.2349 10.5175 13.0277C10.3103 12.8206 10.2067 12.569 10.2067 12.273C10.2067 11.983 10.3103 11.7358 10.5175 11.5316C10.7276 11.3244 10.9792 11.2208 11.2722 11.2208C11.5563 11.2208 11.8049 11.3244 12.018 11.5316C12.2311 11.7358 12.3377 11.983 12.3377 12.273C12.3377 12.4713 12.2874 12.6519 12.1867 12.8146C12.0891 12.9745 11.9603 13.1017 11.8005 13.1964C11.6407 13.2911 11.4646 13.3385 11.2722 13.3385Z" fill="white"/>
+    </svg>
+
+    <div class="flex flex-col items-center">
+      <span class="time-value" x-text="hours">00</span>
+      <span class="time-label">Hrs</span>
+    </div>
+
+    <svg class="colon-icon" fill="none" viewBox="0 0 23 26" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11.2722 18.1154C10.9792 18.1154 10.7276 18.0118 10.5175 17.8047C10.3103 17.5945 10.2067 17.343 10.2067 17.0499C10.2067 16.7599 10.3103 16.5113 10.5175 16.3041C10.7276 16.0969 10.9792 15.9933 11.2722 15.9933C11.5563 15.9933 11.8049 16.0969 12.018 16.3041C12.2311 16.5113 12.3377 16.7599 12.3377 17.0499C12.3377 17.2453 12.2874 17.4243 12.1867 17.5871C12.0891 17.7469 11.9603 17.8757 11.8005 17.9734C11.6407 18.0681 11.4646 18.1154 11.2722 18.1154ZM11.2722 13.3385C10.9792 13.3385 10.7276 13.2349 10.5175 13.0277C10.3103 12.8206 10.2067 12.569 10.2067 12.273C10.2067 11.983 10.3103 11.7358 10.5175 11.5316C10.7276 11.3244 10.9792 11.2208 11.2722 11.2208C11.5563 11.2208 11.8049 11.3244 12.018 11.5316C12.2311 11.7358 12.3377 11.983 12.3377 12.273C12.3377 12.4713 12.2874 12.6519 12.1867 12.8146C12.0891 12.9745 11.9603 13.1017 11.8005 13.1964C11.6407 13.2911 11.4646 13.3385 11.2722 13.3385Z" fill="white"/>
+    </svg>
+
+    <div class="flex flex-col items-center">
+      <span class="time-value" x-text="minutes">00</span>
+      <span class="time-label">Min</span>
+    </div>
+
+    <svg class="colon-icon" fill="none" viewBox="0 0 23 26" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11.2722 18.1154C10.9792 18.1154 10.7276 18.0118 10.5175 17.8047C10.3103 17.5945 10.2067 17.343 10.2067 17.0499C10.2067 16.7599 10.3103 16.5113 10.5175 16.3041C10.7276 16.0969 10.9792 15.9933 11.2722 15.9933C11.5563 15.9933 11.8049 16.0969 12.018 16.3041C12.2311 16.5113 12.3377 16.7599 12.3377 17.0499C12.3377 17.2453 12.2874 17.4243 12.1867 17.5871C12.0891 17.7469 11.9603 17.8757 11.8005 17.9734C11.6407 18.0681 11.4646 18.1154 11.2722 18.1154ZM11.2722 13.3385C10.9792 13.3385 10.7276 13.2349 10.5175 13.0277C10.3103 12.8206 10.2067 12.569 10.2067 12.273C10.2067 11.983 10.3103 11.7358 10.5175 11.5316C10.7276 11.3244 10.9792 11.2208 11.2722 11.2208C11.5563 11.2208 11.8049 11.3244 12.018 11.5316C12.2311 11.7358 12.3377 11.983 12.3377 12.273C12.3377 12.4713 12.2874 12.6519 12.1867 12.8146C12.0891 12.9745 11.9603 13.1017 11.8005 13.1964C11.6407 13.2911 11.4646 13.3385 11.2722 13.3385Z" fill="white"/>
+    </svg>
+
+    <div class="flex flex-col items-center">
+      <span class="time-value" x-text="seconds">00</span>
+      <span class="time-label">Sec</span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "counter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading_text",
+      "label": "Sub Heading",
+      "default": "LAST CHANCE"
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading Text",
+      "default": "PASSES PRICE INCREASE IN:"
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "End Time",
+      "info": "Format: YYYY/MM/DD HH:MM:SS (Optionally add timezone: -0500)",
+      "default": "2025/12/31 23:59:59"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Counter"
+    }
+  ]
+}
+{% endschema %}
