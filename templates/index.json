@@ -961,6 +961,10 @@
         "copy": "Get lineup leaks, secret party invites, and ticket drops before anyone else.",
         "show_default_form": false
       }
+    },
+    "177644901390eb399c": {
+      "type": "_blocks",
+      "settings": {}
     }
   },
   "order": [
@@ -978,6 +982,7 @@
     "carousel_section_FtHTM6",
     "social_wall_wfCVbU",
     "faq_3FyNiH",
-    "newsletter_8Ttrpx"
+    "newsletter_8Ttrpx",
+    "177644901390eb399c"
   ]
 }

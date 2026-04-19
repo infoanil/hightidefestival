@@ -16,7 +16,7 @@
     {% else %}
       lg:absolute lg:right-4 lg:top-1/2 lg:-translate-y-1/2 lg:order-2
     {% endif %}">
-  {% render 'search-dropdown' %}
+  {% comment %} {% render 'search-dropdown' %} {% endcomment %}
 
   {% if shop.customer_accounts_enabled %}
     <a href="{{ routes.account_url }}" class="text-[var(--text-primary)] hover:text-[var(--link-hover)]

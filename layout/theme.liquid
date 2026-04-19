@@ -1,7 +1,15 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
-
+<!-- Google Tag Manager -->
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id=GTM-P8GPJQ84'+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P8GPJQ84');
+</script>
+<!-- End Google Tag Manager -->
     <script>/* >> Heatmap.com :: Snippet << */(function (h,e,a,t,m,ap) { (h._heatmap_paq = []).push([ 'setTrackerUrl', (h.heatUrl = e) + a]); h.hErrorLogs=h.hErrorLogs || []; ap=t.createElement('script');  ap.src=h.heatUrl+'preprocessor.min.js?sid='+m;  ap.defer=true; t.head.appendChild(ap); ['error', 'unhandledrejection'].forEach(function (ty) {     h.addEventListener(ty, function (et) { h.hErrorLogs.push({ type: ty, event: et }); }); });})(window,'https://dashboard.heatmap.com/','heatmap.php',document,5374);</script>
 
     
@@ -26,9 +34,14 @@
       {{ 'magicpass.css' | asset_url | stylesheet_tag }}
     {% endif %}
     {{ content_for_header }}
-  </head>
 
-  <body class="bg-bg-color{% if template.suffix == 'artist-ab-test' %} artist-ab-test{% endif %}">
+</head>
+
+  <body class="bg-bg-color">
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P8GPJQ84"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
     {% sections 'header-group' %}
 
     {% comment %} Password protection for passes page {% endcomment %}
@@ -52,5 +65,25 @@
         console.log('[High Tide Debug] passes-unlocked event fired');
       });
     </script>
+    {% if template contains 'account' %}
+  {% if customer.metafields.custom.ticket_id != blank %}
+    <div class="custom-ticket-wrap" style="max-width: 450px; margin: 40px auto; padding: 30px; border: 4px solid #000; border-radius: 15px; background-color: #fff; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.15); position: relative; z-index: 100;">
+      <h2 style="margin: 0 0 10px 0; font-size: 1.8em; color: #000; letter-spacing: 1px;">🎟️ YOUR ENTRY PASS</h2>
+      <p style="color: #666; margin-bottom: 20px; font-weight: 500;">Please have this QR code ready to scan at the gate.</p>
+      
+      <div style="background: #fff; padding: 15px; display: inline-block; border-radius: 10px; border: 1px solid #eee;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data={{ customer.metafields.custom.ticket_id }}" 
+             alt="Ticket QR Code" style="display: block; margin: 0 auto;">
+      </div>
+      
+      <div style="margin-top: 25px;">
+        <span style="font-family: monospace; font-size: 1.2em; font-weight: bold; background: #000; color: #fff; padding: 8px 20px; border-radius: 5px; letter-spacing: 3px;">
+          {{ customer.metafields.custom.ticket_id }}
+        </span>
+      </div>
+      <p style="margin-top: 15px; font-size: 0.8em; color: #999; text-transform: uppercase; letter-spacing: 1px;">Valid for One Entry Only</p>
+    </div>
+  {% endif %}
+{% endif %}
   </body>
 </html>

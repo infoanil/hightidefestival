@@ -202,11 +202,6 @@
         "disabled": false,
         "settings": {}
       },
-      "17676059084223943535": {
-        "type": "shopify://apps/triplewhale/blocks/triple_pixel_snippet/483d496b-3f1a-4609-aea7-8eee3b6b7a2a",
-        "disabled": false,
-        "settings": {}
-      },
       "14429071373314833104": {
         "type": "shopify://apps/candy-rack/blocks/head/cb9c657f-334f-4905-80c2-f69cca01460c",
         "disabled": false,
@@ -214,13 +209,18 @@
           "script_load_mode": "async"
         }
       },
-      "6176556142592085346": {
-        "type": "shopify://apps/justuno-email-sms-pop-ups/blocks/star_rating/ea1f1a23-7069-4266-a6e1-df04f87c7e94",
+      "377650522495455440": {
+        "type": "shopify://apps/elevate-ab-testing/blocks/abtester/4ce51acb-a9f5-4e05-ae92-4c018aa51124",
         "disabled": false,
         "settings": {}
       },
-      "377650522495455440": {
-        "type": "shopify://apps/elevate-ab-testing/blocks/abtester/4ce51acb-a9f5-4e05-ae92-4c018aa51124",
+      "2200952712151285029": {
+        "type": "shopify://apps/microsoft-clarity/blocks/brandAgents_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      },
+      "2567389343055140935": {
+        "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
         "disabled": false,
         "settings": {}
       }
